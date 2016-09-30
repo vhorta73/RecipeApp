@@ -1,0 +1,6 @@
+out/
+*.jar
+*.sc
+.idea
+*.xml
+src/META-INF
