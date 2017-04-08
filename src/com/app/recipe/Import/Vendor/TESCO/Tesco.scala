@@ -9,9 +9,9 @@ import com.app.recipe.Database.RecipeDatabase
 import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Model.ProductImport
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
@@ -74,7 +74,7 @@ object Tesco extends VendorBase {
    * List of private methods to help with matching the several product fields.
    */
   private final def getName(string : String) : String = new MatchName(string).getMatch()
-  private final def getNutritionInformation(string : String) : List[NutritionInformation] = new MatchNutritionInformation(string).getMatch()
+  private final def getProductInformation(string : String) : List[ProductInformation] = new MatchNutritionInformation(string).getMatch()
   private final def getHalal(string : String) : Boolean = new MatchHalal(string).getMatch()
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
   private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
@@ -121,10 +121,10 @@ object Tesco extends VendorBase {
       ,baseCcy                  = pricePerUnit._2                          // Product base price currency.
       ,baseValue                = pricePerUnit._3                          // Product base value amount for base price.
       ,baseUnit                 = pricePerUnit._4                          // Product base value units.
-//      ,nutrition = getNutritionInformation(productString)                  // Nutrition details
-      ,productUrl = productUrl + ""                                        // Product details url.
-      ,smallImgUrl = getSmallImage(productString)                          // Product small image representation.
-      ,largeImgUrl = getExtraLargeImage(productString)                     // Extra large image representation.
+      ,details                  = getProductInformation(productString)     // Product details
+      ,productUrl               = productUrl + ""                          // Product details url.
+      ,smallImgUrl              = getSmallImage(productString)             // Product small image representation.
+      ,largeImgUrl              = getExtraLargeImage(productString)        // Extra large image representation.
     )
   }
 

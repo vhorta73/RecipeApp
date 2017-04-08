@@ -3,8 +3,8 @@ package com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition
 import scala.util.matching.Regex.Match
 
 import com.app.recipe.Import.Product.Nutrition.Model.Energy
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kcal
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kj
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
@@ -21,10 +21,10 @@ class MatchEnergy(productString : String) extends RecipeLogging {
   /**
    * Returns the Energy case class with the detailed values as displaying on the web page.
    */
-  def getMatch() : List[NutritionInformation] = {
+  def getMatch() : List[ProductInformation] = {
 
     // Adding all elements to this list which is to be returned last.
-    var finalList : List[NutritionInformation] = Nil
+    var finalList : List[ProductInformation] = Nil
 
     // Interested only in finding the first match.
     val valuesMatch = getFirstMatch(productString)
@@ -100,7 +100,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
   /**
    * Returns the parsed composite element as a NutritionInformation object.
    */
-  private final def getCompositeElement(givenString : String) : NutritionInformation = {
+  private final def getCompositeElement(givenString : String) : ProductInformation = {
 
     // Allowing string to be cleaned without changing original value.
     var string = givenString

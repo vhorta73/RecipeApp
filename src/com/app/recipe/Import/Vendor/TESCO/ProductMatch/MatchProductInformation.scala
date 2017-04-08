@@ -1,17 +1,18 @@
 package com.app.recipe.Import.Vendor.TESCO.ProductMatch
 
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
 import com.app.recipe.Import.Product.Nutrition.Model._
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition.MatchEnergy
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition.MatchFat
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition.MatchFat
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition.MatchSaturates
+import com.app.recipe.Log.RecipeLogging
 
 /**
  * Class to find the product nutrition information from the supplied product string.
  */
-class MatchNutritionInformation(productString : String) {
+class MatchNutritionInformation(productString : String) extends RecipeLogging {
 
   /**
    * List of all methods to capture nutrition values from a string line.
@@ -19,22 +20,22 @@ class MatchNutritionInformation(productString : String) {
   private final def isEnergy(string : String)     : Boolean = new MatchEnergy(string).isEnergy()
   private final def isFat(string : String)        : Boolean = new MatchFat(string).isFat()
   private final def isSaturates(string : String)  : Boolean = new MatchSaturates(string).isSaturates()
-  private final def getEnergy(string : String)    : List[NutritionInformation] = new MatchEnergy(string).getMatch()
-  private final def getFat(string : String)       : List[NutritionInformation] = new MatchFat(string).getMatch()
-  private final def getSaturates(string : String) : List[NutritionInformation] = new MatchSaturates(string).getMatch()
+  private final def getEnergy(string : String)    : List[ProductInformation] = new MatchEnergy(string).getMatch()
+  private final def getFat(string : String)       : List[ProductInformation] = new MatchFat(string).getMatch()
+  private final def getSaturates(string : String) : List[ProductInformation] = new MatchSaturates(string).getMatch()
 // TODO: Allergens?...  
   /**
    * Returns the list of nutrition information objects with the data displaying
    * on the product details web page.
    */
-  def getMatch() : List[NutritionInformation] = {
+  def getMatch() : List[ProductInformation] = {
 
     // Reduce the string length to the Nutrition table.
     val nutritionTableRegex = """table>(.*)</table""".r
     val nutritionTable = nutritionTableRegex.findFirstIn(productString)
-
+debug(nutritionTable.toString())
     // Initialise the final list to be returned.
-    var finalList : List[NutritionInformation] = List()
+    var finalList : List[ProductInformation] = List()
 
     // If nothing was found, nothing to match.
     if ( nutritionTable.isEmpty ) return finalList

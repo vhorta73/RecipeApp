@@ -11,7 +11,7 @@ object Startup extends App {
   override def main(args: Array[String]): Unit = {
     
   val vendor = VendorFactory.get(VendorEnum.TESCO)
-  val productList = vendor.search("cerelac")//"banana")
+  val productList = vendor.search("banana")//"banana")
   }
 //  println("got: "+productList.size+" products")
 //  var ingredientListToUpdate : List[ProductImport] = Nil

@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Currency
 import java.util.Locale
 
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 
@@ -38,7 +38,7 @@ case class ProductImport (
     // (Double,Units)
     ,val baseValue                : Double = 0.0
     ,val baseUnit                 : StandardUnits.Units = StandardUnits.UNIT
-    ,val nutrition                : List[NutritionInformation] = Nil
+    ,val details                  : List[ProductInformation] = Nil
     ,val productUrl               : String = ""
     ,val smallImgUrl              : String = ""
     ,val largeImgUrl              : String = ""
@@ -62,7 +62,7 @@ case class ProductImport (
    s"\nBase Ccy                 \t: $baseCcy" + 
    s"\nBase Value               \t: $baseValue" + 
    s"\nBase Units               \t: $baseUnit" + 
-    "\nNutrition                \t: " + nutrition.map { nutrition => ("\n\t"+ nutrition) } + 
+    "\nDetails                  \t: " + details.map { details => ("\n\t"+ details) } + 
    s"\nProduct Url              \t: $productUrl" + 
    s"\nSmall Image Url          \t: $smallImgUrl" + 
    s"\nLarge Image Url          \t: $largeImgUrl" + 

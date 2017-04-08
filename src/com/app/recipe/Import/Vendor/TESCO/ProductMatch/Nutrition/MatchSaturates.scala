@@ -1,7 +1,7 @@
 package com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition
 
 import com.app.recipe.Import.Product.Nutrition.Model.Fat
-import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
+import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
@@ -18,7 +18,7 @@ class MatchSaturates(productString : String) extends RecipeLogging {
   /**
    * Returns the Fat case class with the detailed values as displaying on the web page.
    */
-  def getMatch() : List[NutritionInformation] = {
+  def getMatch() : List[ProductInformation] = {
 
     // regex for finding the saturation values per 100g
     val valuesRegex = """(?<=td>)(\d+)[^</td|^g<]*""".r
