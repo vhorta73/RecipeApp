@@ -8,7 +8,7 @@ import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabase
-import com.app.recipe.Import.Model.URLBuilderFactory
+import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
@@ -16,7 +16,7 @@ import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
 import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
-import com.app.recipe.Import.Vendor.Model.VendorBase
+import com.app.recipe.Import.Vendor.VendorBase
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal

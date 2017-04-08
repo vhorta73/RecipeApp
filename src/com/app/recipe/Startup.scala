@@ -1,7 +1,7 @@
 package com.app.recipe
 
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.VendorFactory
+import com.app.recipe.Import.Vendor.VendorFactory
 
 
 /**

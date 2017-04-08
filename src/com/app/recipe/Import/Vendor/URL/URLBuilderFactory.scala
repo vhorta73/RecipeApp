@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Model
+package com.app.recipe.Import.Vendor.URL
 
 import com.app.recipe.Import.Vendor.URL.Model.OCADOURLBuilder
 import com.app.recipe.Import.Vendor.URL.Model.MORRISONSURLBuilder

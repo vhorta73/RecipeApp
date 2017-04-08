@@ -1,6 +1,5 @@
-package com.app.recipe.Import.Vendor.Model
+package com.app.recipe.Import.Vendor
 
-import com.typesafe.scalalogging.LazyLogging
 import com.app.recipe.Log.RecipeLogging
 
 /**

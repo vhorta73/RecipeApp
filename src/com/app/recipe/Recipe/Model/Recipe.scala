@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Recipe.Model
+package com.app.recipe.Recipe.Model
 
 
 object Recipe {
