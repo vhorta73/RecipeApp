@@ -11,16 +11,25 @@ class MatchExtraLargeImage(productString : String) extends RecipeLogging {
    * Returns the url for the extra large image or empty string if nothing.
    */
   def getMatch() : String = {
-    // regex for extra large source image
-    // productImageExtraLargeButtonList"><li><a href="https://img.tesco.com/Groceries/pi/095/8410100099095/IDShot_540x540.jpg">Zoom</a></li>
-    val imgExtraLargeRegex = """(?<=productImageExtraLargeButtonList"><li><a href=")[^"]*""".r
-    var largeImage = imgExtraLargeRegex.findFirstMatchIn(productString).getOrElse("").toString()
-    if ( largeImage.isEmpty() ) {
-      val imgLargeRegex = """(?<=productImage"><a href=")[^"]*""".r
-      largeImage = imgLargeRegex.findFirstMatchIn(productString).getOrElse("").toString()
-      
-      if ( largeImage.isEmpty() ) warn(s"No extra large image found")
+    // regex for large source image
+    // https://img.tesco.com/Groceries/pi/209/5060162210209/IDShot_540x540.jpg
+    
+    // Regex on all links
+    val imgLargeRegex = """(?<=href="|src=")[^"]*""".r
+
+    // Match them all into an iterator
+    val imageLargeUrl = imgLargeRegex.findAllMatchIn(productString)
+
+    var largeImageUrl : String = ""
+    if ( ! imageLargeUrl.isEmpty ) {
+      // Find the list of a small image with contains string: IDShot_225x225
+      var possibleChoices = imageLargeUrl.filter { link => link.toString().contains("IDShot_540x540") }
+      if ( ! possibleChoices.isEmpty ) largeImageUrl = possibleChoices.next().toString()
+      else info(s"Large image url not found for [$productString]")
     }
-    largeImage
+    else {
+      info(s"Large image url not found for [$productString]")
+    }
+    largeImageUrl
   }
 }

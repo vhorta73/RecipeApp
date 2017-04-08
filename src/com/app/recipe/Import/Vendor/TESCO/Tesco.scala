@@ -9,8 +9,8 @@ import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabase
 import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
-import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Model.ProductDetails
+import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
@@ -65,6 +65,11 @@ object Tesco extends VendorBase {
   private final val TITLE_NOT_FOUND_TEXT = "Title not found"
 
   /**
+   * Instantiate the matching objects once.
+   */
+  private final val matchQuantity = new MatchQuantity()
+  
+  /**
    * List of private methods to help with matching the several product fields.
    */
   private final def getName(string : String) : String = new MatchName(string).getMatch()
@@ -73,7 +78,7 @@ object Tesco extends VendorBase {
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
   private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
   private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = new MatchPricePerUnit(string).getMatch()
-  private final def getQuantity(string : String) : (Double, Units) = new MatchQuantity(string).getMatch()
+  private final def getQuantity(string : String) : (Double, Units) = matchQuantity.getMatch(string)
   private final def getSmallImage(string : String) : String = new MatchSmallImage(string).getMatch()
   private final def getExtraLargeImage(string : String) : String = new MatchExtraLargeImage(string).getMatch()
 

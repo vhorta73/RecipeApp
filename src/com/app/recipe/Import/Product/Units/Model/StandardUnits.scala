@@ -31,6 +31,6 @@ object StandardUnits extends Enumeration {
     case "g"    => g
     case "mg"   => mg
     case "unit" => UNIT
-    case _      => throw new IllegalArgumentException("Unknown unit")
+    case _      => throw new IllegalArgumentException(s"Unknown unit [$unit]")
   }
 }
