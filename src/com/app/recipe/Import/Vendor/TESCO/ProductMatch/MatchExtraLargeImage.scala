@@ -18,6 +18,8 @@ class MatchExtraLargeImage(productString : String) extends RecipeLogging {
     if ( largeImage.isEmpty() ) {
       val imgLargeRegex = """(?<=productImage"><a href=")[^"]*""".r
       largeImage = imgLargeRegex.findFirstMatchIn(productString).getOrElse("").toString()
+      
+      if ( largeImage.isEmpty() ) warn(s"No extra large image found")
     }
     largeImage
   }

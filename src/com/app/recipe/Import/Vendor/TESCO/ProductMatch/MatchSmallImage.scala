@@ -14,6 +14,12 @@ class MatchSmallImage(productString : String) extends RecipeLogging {
     // regex for small source image
     // title="Click to view extra large image"><img src="https://img.tesco.com/Groceries/pi/095/8410100099095/IDShot_225x225.jpg" alt="
     val imgSmallRegex = """(?<=title="Click to view extra large image"><img src=")[^"]*""".r
-    imgSmallRegex.findFirstMatchIn(productString).getOrElse("").toString()
+    val imageSmalUrl = imgSmallRegex.findFirstMatchIn(productString).getOrElse("").toString()
+    
+    if ( imageSmalUrl.isEmpty() ) {
+      warn(s"No small large image found")
+    }
+    
+    imageSmalUrl
   }
 }
