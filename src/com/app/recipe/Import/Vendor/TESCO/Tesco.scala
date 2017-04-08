@@ -2,13 +2,11 @@ package com.app.recipe.Import.Vendor.TESCO
 
 import java.net.URL
 import java.util.Currency
-import java.util.Locale
 
 import com.app.recipe.Database.DatabaseFactory
-import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabase
-import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
+import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
@@ -16,21 +14,23 @@ import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
 import com.app.recipe.Import.Product.Nutrition.Model.NutritionInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
-import com.app.recipe.Import.Vendor.VendorBase
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchNutritionInformation
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum._
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetarians
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPricePerUnit
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetarians
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum._
+import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
+import com.app.recipe.Import.Vendor.VendorBase
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchQuantity
 
 
 object Tesco extends VendorBase {
@@ -79,6 +79,7 @@ object Tesco extends VendorBase {
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
   private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
   private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = new MatchPricePerUnit(string).getMatch()
+  private final def getQuantity(string : String) : (Double, Units) = new MatchQuantity(string).getMatch()
   private final def getSmallImage(string : String) : String = new MatchSmallImage(string).getMatch()
   private final def getExtraLargeImage(string : String) : String = new MatchExtraLargeImage(string).getMatch()
 
@@ -103,7 +104,7 @@ object Tesco extends VendorBase {
     // The price is a vector for (Double, Currency)
     val price                    = getPrice(productString)
     val pricePerUnit             = getPricePerUnit(productString)
-//    val description              = _getDescription(productString)
+    val quantity                 = getQuantity(productString)
 
     // Building up the product to be returned.
     ProductImport( 
@@ -112,8 +113,8 @@ object Tesco extends VendorBase {
       ,vendor                   = VendorEnum.TESCO                         // This vendor name.
       ,isHalal                  = getHalal(productString)                  // Halal indicator.
       ,isSuitableForVegetarians = getSuitableForVegetarians(productString) // Suitable for vegetarians indicator.
-//      ,amount = 0.0                              // Product amount.
-//      ,amountUnit = StandardUnits.cal                // Amount units.
+      ,amount                   = quantity._1                              // Product amount.
+      ,amountUnit               = quantity._2                              // Amount units.
       ,price                    = price._1                                 // Product price
       ,ccy                      = price._2                                 // Product price currency.
       ,basePrice                = pricePerUnit._1                          // Product base price.

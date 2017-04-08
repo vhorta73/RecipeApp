@@ -18,16 +18,16 @@ object StandardUnits extends Enumeration {
   // Other
   val UNIT = Value
 
-  def getUnit( unit : String ) : Units = unit match {
-    case "Kj"   => Kj
+  def getUnit( unit : String ) : Units = unit.toLowerCase() match {
+    case "kj"   => Kj
     case "j"    => j
-    case "Kcal" => Kcal
+    case "kcal" => Kcal
     case "cal"  => cal
     case "l"    => l
     case "dl"   => dl
     case "cl"   => cl
     case "ml"   => ml
-    case "Kg"   => Kg
+    case "kg"   => Kg
     case "g"    => g
     case "mg"   => mg
     case "unit" => UNIT
