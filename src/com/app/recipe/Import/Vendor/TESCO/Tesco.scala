@@ -27,6 +27,8 @@ import com.app.recipe.Import.Vendor.URL.Model.VendorEnum._
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetarians
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 
 
 object Tesco extends VendorBase {
@@ -73,6 +75,7 @@ object Tesco extends VendorBase {
   private final def getNutritionInformation(string : String) : List[NutritionInformation] = new MatchNutritionInformation(string).getMatch()
   private final def getHalal(string : String) : Boolean = new MatchHalal(string).getMatch()
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
+  private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
   private final def getSmallImage(string : String) : String = new MatchSmallImage(string).getMatch()
   private final def getExtraLargeImage(string : String) : String = new MatchExtraLargeImage(string).getMatch()
 
@@ -94,6 +97,11 @@ object Tesco extends VendorBase {
     for( line <- webProductDetailsPage ) productString += line
     var productStr = productString.replaceAll("\n", "")
 
+    // The price is a vector for (Double, Currency)
+    val price                    = getPrice(productString)
+//    val pricePerUnit             = _getPricePerUnit(productString)
+//    val description              = _getDescription(productString)
+
     // Building up the product to be returned.
     ProductImport( 
        id                       = productId                                // The vendor product Id .  
@@ -103,8 +111,8 @@ object Tesco extends VendorBase {
       ,isSuitableForVegetarians = getSuitableForVegetarians(productString) // Suitable for vegetarians indicator.
 //      ,amount = 0.0                              // Product amount.
 //      ,amountUnit = StandardUnits.cal                // Amount units.
-//      ,price = 0.0                              // Product price
-//      ,ccy = Currency.getInstance(Locale.UK)          // Product price currency.
+      ,price = price._1                                                    // Product price
+      ,ccy = price._2                                                      // Product price currency.
 //      ,basePrice = 0.0                              // Product base price.
 //      ,baseCcy = Currency.getInstance(Locale.UK)          // Product base price currency.
 //      ,baseValue = 0.0                              // Product base value amount for base price.
@@ -114,10 +122,6 @@ object Tesco extends VendorBase {
       ,smallImgUrl = getSmallImage(productString)                          // Product small image representation.
       ,largeImgUrl = getExtraLargeImage(productString)                     // Extra large image representation.
     )
-//    val price                    = _getPrice(productString)
-//    val pricePerUnit             = _getPricePerUnit(productString)
-//    val description              = _getDescription(productString)
-
   }
 
   /**
@@ -226,19 +230,6 @@ dbObj.asInstanceOf[RecipeDatabaseVendorImport].importProducts(List(productDetail
 
     // This should never happen, and is here just in case.
     throw new IllegalStateException("Too many products to search")
-  }
-  
-  private final def _getPrice(productString : String) : (Double, Currency) = {
-    // regex for retrieving the ingredient price
-    // <span class="linePrice">Â£6.99</span>
-    val priceRegex = """(?<=<span class="linePrice">\Â)[^<]*""".r
-    val unitValueRegex = """([0-9.]+)[^a-z-A-Z]*""".r
-    val unitNameRegex = """[a-z-A-Z]+""".r
-
-    val price = priceRegex.findFirstMatchIn(productString).getOrElse("").toString()
-    var priceValue : Double = price.substring(1,price.length()-1).toDouble
-    var priceCcy   : Currency = Currency.getInstance(Locale.UK)
-    ( priceValue, priceCcy )
   }
   
   private final def _getPricePerUnit(productString : String) : (Double, Currency, Double, Units) = {
