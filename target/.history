@@ -1,0 +1,16 @@
+package
+run
+last compile:run
+run Startup
+exit
+clean
+compile
+run
+package
+run Startup
+exit
+clean
+compile
+run Startup
+run 
+exit

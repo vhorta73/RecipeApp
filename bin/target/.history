@@ -1,0 +1,9 @@
+run Startup
+clean
+compile
+package
+run
+run com.app.recipe.Startup
+cd com
+equt
+exit
