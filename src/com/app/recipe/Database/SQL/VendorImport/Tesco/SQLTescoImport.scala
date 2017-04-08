@@ -43,9 +43,9 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
     // Prepare the statement with placeholder to complete per loop.
     val statement = SQLDatabase.getSQLHandle().prepareStatement("UPDATE " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() +
-        " SET title = ?,    halal = ?,           vegetarian = ?,  amount = ?,          amount_unit = ?,    " + 
-        "    price = ?,     ccy = ?,             base_price = ?,  base_ccy = ?,        base_value = ?,     " + 
-        "    base_unit = ?, nutrition_class = ?, product_url = ?, image_small_url = ?, image_large_url = ? " +
+        " SET title = ?,    halal = ?,    vegetarian = ?,  amount = ?,          amount_unit = ?,    " + 
+        "    price = ?,     ccy = ?,      base_price = ?,  base_ccy = ?,        base_value = ?,     " + 
+        "    base_unit = ?, details = ?,  product_url = ?, image_small_url = ?, image_large_url = ? " +
         "WHERE product_id = ? AND imported_date = DATE(?) " 
     )
 
@@ -78,7 +78,7 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() + " ( " +
         "`product_id`,`title`,`halal`,`vegetarian`,`amount`,`amount_unit`, " + 
         "`price`,`ccy`,`base_price`,`base_ccy`,`base_value`,`base_unit`, " + 
-        "`nutrition_class`,`product_url`,`image_small_url`,`image_large_url`,`imported_date` " + 
+        "`details`,`product_url`,`image_small_url`,`image_large_url`,`imported_date` " + 
         " ) "+
       " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )"
     )

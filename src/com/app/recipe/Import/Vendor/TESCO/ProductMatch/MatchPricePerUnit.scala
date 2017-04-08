@@ -2,8 +2,9 @@ package com.app.recipe.Import.Vendor.TESCO.ProductMatch
 
 import com.app.recipe.Log.RecipeLogging
 import java.util.Currency
-import com.app.recipe.Import.Product.Units.Model.StandardUnits
+import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import java.util.Locale
+import com.app.recipe.Import.Product.Units.Model.StandardUnits
 
 /**
  * Class to find the url for the product small image.
@@ -27,11 +28,19 @@ class MatchPricePerUnit(productString : String) extends RecipeLogging {
     val price   = priceList(0).replaceAll("[^0-9,.]", "") 
     var priceValue : Double = price.toDouble
     var priceCcy   : Currency = Currency.getInstance(Locale.UK)
-
+    var unitValue  : Double = 0.0
+    var unitName   : StandardUnits.Units = UNIT
+    
     // This is the per unit or per value units.
     val perUnit = priceList(1) 
-    var unitValue  : Double = unitValueRegex.findFirstMatchIn(perUnit).get.toString.toDouble
-    var unitName   : StandardUnits.Units = StandardUnits.getUnit(unitNameRegex.findFirstMatchIn(perUnit).get.toString())
+    val priceFound = unitValueRegex.findFirstMatchIn(perUnit)
+    if ( priceFound.isEmpty ) {
+      warn(s"No Price found for product: [$productString]")
+    }
+    else {
+      unitValue = priceFound.get.toString.toDouble
+      unitName  = StandardUnits.getUnit(unitNameRegex.findFirstMatchIn(perUnit).get.toString())
+    }
 
     ( priceValue, priceCcy, unitValue, unitName )
   }

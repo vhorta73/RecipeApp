@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Currency
 import java.util.Locale
 
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 
@@ -26,19 +25,15 @@ case class ProductImport (
     ,val vendor                   : VendorEnum.VendorName
     ,val isHalal                  : Boolean = false
     ,val isSuitableForVegetarians : Boolean = false
-    // (Double,Units)
     ,val amount                   : Double  = 0.0
     ,val amountUnit               : StandardUnits.Units = StandardUnits.UNIT
-    // (Double,CCY)
     ,val price                    : Double = 0.0
     ,val ccy                      : Currency = Currency.getInstance(Locale.UK)
-    // (Double,CCY)
     ,val basePrice                : Double = 0.0
     ,val baseCcy                  : Currency = Currency.getInstance(Locale.UK)
-    // (Double,Units)
     ,val baseValue                : Double = 0.0
     ,val baseUnit                 : StandardUnits.Units = StandardUnits.UNIT
-    ,val details                  : List[ProductInformation] = Nil
+    ,val details                  : List[ProductDetails] = Nil
     ,val productUrl               : String = ""
     ,val smallImgUrl              : String = ""
     ,val largeImgUrl              : String = ""

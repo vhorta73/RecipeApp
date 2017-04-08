@@ -21,7 +21,7 @@ abstract trait SQLRecipeDatabaseVendorImport extends RecipeDatabaseVendorImport 
    * each vendor which will add their personalised name as prefix to
    * this base name to make up the final table name.
    */
-  def getVendorImportProductTableBaseName() : String = "product_import"
+  def getVendorImportProductTableBaseName() : String = "product"
 
 
   /**

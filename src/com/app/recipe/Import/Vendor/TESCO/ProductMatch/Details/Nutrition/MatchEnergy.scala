@@ -1,30 +1,27 @@
-package com.app.recipe.Import.Vendor.TESCO.ProductMatch.Nutrition
+package com.app.recipe.Import.Vendor.TESCO.ProductMatch.Details.Nutrition
 
 import scala.util.matching.Regex.Match
-
-import com.app.recipe.Import.Product.Nutrition.Model.Energy
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
+import com.app.recipe.Import.Product.Model.Energy
+import com.app.recipe.Import.Product.Model.ProductNutrition
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kcal
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kj
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Log.RecipeLogging
-import com.typesafe.scalalogging.LazyLogging
 
 /**
  * Class to find match the energy values from a given line to parse.
  * The line may contain more than one energy levels, which in case will
  * return more than one element.
  */
-class MatchEnergy(productString : String) extends RecipeLogging {
+class MatchEnergy() extends RecipeLogging {
 
   /**
    * Returns the Energy case class with the detailed values as displaying on the web page.
    */
-  def getMatch() : List[ProductInformation] = {
+  def getMatch(productString : String) : List[ProductNutrition] = {
 
     // Adding all elements to this list which is to be returned last.
-    var finalList : List[ProductInformation] = Nil
+    var finalList : List[ProductNutrition] = Nil
 
     // Interested only in finding the first match.
     val valuesMatch = getFirstMatch(productString)
@@ -100,7 +97,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
   /**
    * Returns the parsed composite element as a NutritionInformation object.
    */
-  private final def getCompositeElement(givenString : String) : ProductInformation = {
+  private final def getCompositeElement(givenString : String) : ProductNutrition = {
 
     // Allowing string to be cleaned without changing original value.
     var string = givenString
@@ -114,7 +111,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
 
     // If not two elements, we give up at this point.
     if ( splitValuesAndUnits.size != 2 ) 
-      throw new IllegalStateException("Unable to split value from units: ["+string+"] from ["+productString+"]")
+      throw new IllegalStateException("Unable to split value from units: ["+string+"]")
 
     var units : Units = null
     if ( isKcal(splitValuesAndUnits(1)) ) units = Kcal
@@ -127,7 +124,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
    * Matching criteria for energy on a given line. It must match only line that
    * are certain of containing the energy values. By default returns false.
    */
-  def isEnergy() : Boolean = {
+  def isEnergy(productString : String) : Boolean = {
     productString match {
       case x if x.contains("Energy")           => true
       case x if isKcal(x)                      => true
@@ -139,7 +136,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
   /**
    * Getting the first match for processing from the first regex.
    */
-  private final def getFirstMatch(string : String) : Option[Match] = {
+  private final def getFirstMatch(productString : String) : Option[Match] = {
     // <th scope="row">Energy kJ</th><td>1797</td><td>899</td><td>-</td><td>-</td></tr>
     // Matching: [1797]
     // <th scope="row">Energy</th><td>1633 kJ</td><td>116 kJ</td><td>278 kJ</td><td>8400 kJ</td><td>-</td></tr>
@@ -161,7 +158,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
     valueMatched = valuesRegex.findFirstMatchIn(productString)
     if ( valueMatched.isDefined ) return valueMatched
     
-    throw new IllegalStateException("Cannot parse value and unit from string: ["+string+"] in line ["+productString+"]")
+    throw new IllegalStateException(s"Cannot parse value and unit from string: [$productString]")
   }
 
 
@@ -228,7 +225,7 @@ class MatchEnergy(productString : String) extends RecipeLogging {
   /**
    * From a string that is meant to have one unit, return it converted to Units enum.
    */
-  private final def getUnitsFromString(string : String) : Units = {
+  private final def getUnitsFromString(productString : String) : Units = {
     // Find out which units to use.
     var energyUnits : Units = null
     if ( isKcal(productString) ) energyUnits = Kcal

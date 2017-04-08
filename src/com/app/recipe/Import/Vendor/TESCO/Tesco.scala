@@ -3,34 +3,28 @@ package com.app.recipe.Import.Vendor.TESCO
 import java.net.URL
 import java.util.Currency
 
+import scala.io.Codec.string2codec
+
 import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabase
 import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductImport
-import com.app.recipe.Import.Product.Model.ProductImport
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
-import com.app.recipe.Import.Product.Nutrition.Model.ProductInformation
-import com.app.recipe.Import.Product.Units.Model.StandardUnits._
-import com.app.recipe.Import.Product.Units.Model.StandardUnits
+import com.app.recipe.Import.Product.Model.ProductDetails
+import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchNutritionInformation
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPricePerUnit
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchProductDetails
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchQuantity
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetarians
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum._
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum.TESCO
 import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
 import com.app.recipe.Import.Vendor.VendorBase
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchQuantity
 
 
 object Tesco extends VendorBase {
@@ -74,7 +68,7 @@ object Tesco extends VendorBase {
    * List of private methods to help with matching the several product fields.
    */
   private final def getName(string : String) : String = new MatchName(string).getMatch()
-  private final def getProductInformation(string : String) : List[ProductInformation] = new MatchNutritionInformation(string).getMatch()
+  private final def getProductDetails(string : String) : List[ProductDetails] = new MatchProductDetails(string).getMatch()
   private final def getHalal(string : String) : Boolean = new MatchHalal(string).getMatch()
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
   private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
@@ -87,7 +81,7 @@ object Tesco extends VendorBase {
    * Given a product ID, gets the respective product details page, and parse it to 
    * return a completed product details object.
    */
-  override def getProductDetails(productId: String) : ProductImport = {
+  override def getProductImport(productId: String) : ProductImport = {
     val tescoUrlObj           = URLBuilderFactory.get(TESCO)
     val productUrl            = tescoUrlObj.getURLForProductID(productId)
     val webProductDetailsPage = scala.io.Source.fromURL(productUrl)("UTF-8")
@@ -121,7 +115,7 @@ object Tesco extends VendorBase {
       ,baseCcy                  = pricePerUnit._2                          // Product base price currency.
       ,baseValue                = pricePerUnit._3                          // Product base value amount for base price.
       ,baseUnit                 = pricePerUnit._4                          // Product base value units.
-      ,details                  = getProductInformation(productString)     // Product details
+      ,details                  = getProductDetails(productString)         // Product details
       ,productUrl               = productUrl + ""                          // Product details url.
       ,smallImgUrl              = getSmallImage(productString)             // Product small image representation.
       ,largeImgUrl              = getExtraLargeImage(productString)        // Extra large image representation.
@@ -153,9 +147,9 @@ val dbObj : RecipeDatabase = DatabaseFactory.getInstance(DatabaseMode.TESCO_IMPO
       productIds.foreach { product_id => {
         info("Parsing ["+product_id+"]: "+finalProductList.size+" of "+productIds.size+" products")
 
-        val productDetails = getProductDetails(product_id)
+        val productDetails = getProductImport(product_id)
         if ( productDetails != null ) {
-          finalProductList = getProductDetails(product_id) :: finalProductList 
+          finalProductList = getProductImport(product_id) :: finalProductList 
 dbObj.asInstanceOf[RecipeDatabaseVendorImport].importProducts(List(productDetails))
         }
         else {
