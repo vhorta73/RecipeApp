@@ -19,8 +19,18 @@ class MatchQuantity() extends RecipeLogging {
    * The regex required for matching quantity, unit and multiple option operations.
    */
   private final val TITLE_REGEX = """(?<=<div class="desc"><h1><span data-title="true">)[^<]*""".r
-  private final val END_QUANTITY_REGEX = "[0-9]+[a-zA-Z]+$".r
-  private final val TIMES_END_QUANTITY_REGEX = "[0-9]+[a-zA-Z]+[0-9]+[a-zA-Z]+$".r
+  // Matching: [...###UUU]
+  private final val END_QUANTITY_REGEX = "([0-9]+)([a-zA-Z]+)$".r.unanchored
+  // Matching: [...###UUU..]
+  private final val UNSPACED_QUANTITY_REGEX = "([0-9]+)([a-zA-Z]+)".r.unanchored
+  // Matching: [...### UUU..]
+  private final val SPACED_QUANTITY_REGEX = "([0-9]+) ([a-zA-Z]+)".r.unanchored
+  // Matching: [...##X###UUU..]
+  private final val UNSPACED_QUANTITY_TIMES_REGEX = "([0-9]+)[X|x]([0-9]+)([a-zA-Z]+)".r.unanchored
+  // Matching: [...## X ### UUU..]
+  private final val SPACED_QUANTITY_TIMES_REGEX = "([0-9]+) [X|x] ([0-9]+) ([a-zA-Z]+)".r.unanchored
+  // Matching: [...##X### UUU..]
+  private final val LAST_SPACED_QUANTITY_TIMES_REGEX = "([0-9]+)[X|x]([0-9]+) ([a-zA-Z]+)".r.unanchored
 
   /**
    * Returns the quantity and units found in given string.
@@ -33,44 +43,75 @@ class MatchQuantity() extends RecipeLogging {
     val nameMatch = TITLE_REGEX.findFirstMatchIn(productString)
     
     // Announce that the default values will be used instead.
-    // TODO: Use Optional Some
     if ( nameMatch.isEmpty ) warn(s"No match found for quantity from [$productString]")
 
     // Setting the default values
-    var quantity : Double = 0.0
-    var units    : StandardUnits.Units = StandardUnits.UNIT
-    
-    // On most cases, the quantity is at the end like: 180ml, 
-    // but in some cases the quantity can be: 4X180ml
-    var qty = END_QUANTITY_REGEX.findFirstMatchIn(nameMatch.get.toString())
-    if ( ! qty.isEmpty ) {
-      // We should now have a simple number + unit to split and assign
-      quantity = qty.get.toString().toQuantity
-      units = qty.get.toString().toStandardUnits
-      
-      var complexMatchedQty = TIMES_END_QUANTITY_REGEX.findFirstMatchIn(nameMatch.get.toString())
-      // If we have a composed number, decompose it to calculate and update final value.
-      if ( ! complexMatchedQty.isEmpty ) {
-        
-        val multiplierRegex = "[0-9]+[ xX]".r
-        var multiplierValue = multiplierRegex.findFirstMatchIn(nameMatch.get.toString())
-        
-        if ( ! multiplierValue.isEmpty ) {
-          // Ensure we only get numbers to multiply
-          var multiplier = multiplierValue.get.toString().replaceAll("[^0-9]", "")
-          if ( ! multiplier.isEmpty() ) {
-            val multiply = multiplier.toDouble
-            info(s"Quantity [${complexMatchedQty.get.toString()}] was calculated as: $quantity * $multiply = ${quantity * multiply} $units")
-            quantity = quantity * multiply
-          }
-          else {
-            warn(s"Found what looks list a complex quantity but could not find the multiplier: $productString]")
-          }
-        }
+    var quantity : Double = 1
+    var units    : StandardUnits.Units = StandardUnits.Units
+
+    // Take all the complexity down to matching regex patterns.
+    nameMatch.get.toString() match {
+      case LAST_SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+        quantity = qty.toDouble; 
+        var times : Double = factor.toDouble
+          try {
+            units = StandardUnits.getUnit(unit)
+            quantity = times * quantity
+          } catch { case _ : Throwable => {
+            warn(s"Last spaced quantity times, ($qty, $factor, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
       }
-    }
-    else {
-      warn(s"Got NO quantity match for string: [$productString]")
+      case SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+        quantity = qty.toDouble; 
+        var times : Double = factor.toDouble
+          try {
+            units = StandardUnits.getUnit(unit)
+            quantity = times * quantity
+          } catch { case _ : Throwable => {
+            warn(s"Spaced quantity times, ($qty, $factor, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
+      }
+      case UNSPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+        quantity = qty.toDouble; 
+        var times : Double = factor.toDouble
+          try {
+            units = StandardUnits.getUnit(unit)
+            quantity = times * quantity
+          } catch { case _ : Throwable => {
+            warn(s"Unspaced quantity times, ($qty, $factor, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
+      }
+      case END_QUANTITY_REGEX(qty, unit)      => { 
+        quantity = qty.toDouble; 
+          try {
+            units = StandardUnits.getUnit(unit)
+          } catch { case _ : Throwable => {
+            warn(s"End quantity, ($qty, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
+      }
+      case UNSPACED_QUANTITY_REGEX(qty, unit) => { 
+        quantity = qty.toDouble; 
+          try {
+            units = StandardUnits.getUnit(unit)
+          } catch { case _ : Throwable => {
+            warn(s"Unspaced quantity, ($qty, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
+      }
+      case SPACED_QUANTITY_REGEX(qty, unit)   => { 
+        quantity = qty.toDouble; 
+          try {
+            units = StandardUnits.getUnit(unit)
+          } catch { case _ : Throwable => {
+            warn(s"Spaced quantity, ($qty, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+            units = StandardUnits.Units 
+          } }
+        }
+      case _ => warn(s"Do not know how to parse a quantity from [${nameMatch.get.toString()}]")
     }
 
     ( quantity, units )

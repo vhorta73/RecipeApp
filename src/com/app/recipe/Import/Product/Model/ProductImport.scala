@@ -25,14 +25,16 @@ case class ProductImport (
     ,val vendor                   : VendorEnum.VendorName
     ,val isHalal                  : Boolean = false
     ,val isSuitableForVegetarians : Boolean = false
+    ,val isOnOffer                : Boolean = false
+    ,val isAvailable              : Boolean = true
     ,val amount                   : Double  = 0.0
-    ,val amountUnit               : StandardUnits.Units = StandardUnits.UNIT
+    ,val amountUnit               : StandardUnits.Units = StandardUnits.Units
     ,val price                    : Double = 0.0
     ,val ccy                      : Currency = Currency.getInstance(Locale.UK)
     ,val basePrice                : Double = 0.0
     ,val baseCcy                  : Currency = Currency.getInstance(Locale.UK)
     ,val baseValue                : Double = 0.0
-    ,val baseUnit                 : StandardUnits.Units = StandardUnits.UNIT
+    ,val baseUnit                 : StandardUnits.Units = StandardUnits.Units
     ,val details                  : List[ProductDetails] = Nil
     ,val productUrl               : String = ""
     ,val smallImgUrl              : String = ""
@@ -49,6 +51,8 @@ case class ProductImport (
    s"\nVendor                   \t: $vendor" + 
    s"\nHalal                    \t: $isHalal" + 
    s"\nSuitable for Vegeratians \t: $isSuitableForVegetarians" + 
+   s"\nOn Offer                 \t: $isOnOffer" + 
+   s"\nAvailable                \t: $isAvailable" + 
    s"\nAmount                   \t: $amount" + 
    s"\nAmount Units             \t: $amountUnit" + 
    f"\nPrice                    \t: $price%.2f" + 

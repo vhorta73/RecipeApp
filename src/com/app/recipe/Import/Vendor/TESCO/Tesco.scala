@@ -25,6 +25,10 @@ import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum.TESCO
 import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
 import com.app.recipe.Import.Vendor.VendorBase
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsOnOffer
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
 
 
 object Tesco extends VendorBase {
@@ -76,6 +80,8 @@ object Tesco extends VendorBase {
   private final def getProductDetails(string : String) : List[ProductDetails] = new MatchProductDetails(string).getMatch()
   private final def getHalal(string : String) : Boolean = new MatchHalal(string).getMatch()
   private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
+  private final def getIsOnOffer(string : String) : Boolean = new MatchIsOnOffer(string).getMatch()
+  private final def getIsAvailable(string : String) : Boolean = new MatchIsAvailable(string).getMatch()
   private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
   private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = new MatchPricePerUnit(string).getMatch()
   private final def getQuantity(string : String) : (Double, Units) = matchQuantity.getMatch(string)
@@ -112,6 +118,8 @@ object Tesco extends VendorBase {
       ,vendor                   = VendorEnum.TESCO                         // This vendor name.
       ,isHalal                  = getHalal(productString)                  // Halal indicator.
       ,isSuitableForVegetarians = getSuitableForVegetarians(productString) // Suitable for vegetarians indicator.
+      ,isOnOffer                = getIsOnOffer(productString)              // Check if the product is on offer.
+      ,isAvailable              = getIsAvailable(productString)            // Check if the product is available.
       ,amount                   = quantity._1                              // Product amount.
       ,amountUnit               = quantity._2                              // Amount units.
       ,price                    = price._1                                 // Product price

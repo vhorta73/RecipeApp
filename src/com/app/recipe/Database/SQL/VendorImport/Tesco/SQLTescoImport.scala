@@ -43,29 +43,32 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
     // Prepare the statement with placeholder to complete per loop.
     val statement = SQLDatabase.getSQLHandle().prepareStatement("UPDATE " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() +
-        " SET title = ?,    halal = ?,    vegetarian = ?,  amount = ?,          amount_unit = ?,    " + 
-        "    price = ?,     ccy = ?,      base_price = ?,  base_ccy = ?,        base_value = ?,     " + 
-        "    base_unit = ?, details = ?,  product_url = ?, image_small_url = ?, image_large_url = ? " +
+        " SET title = ?,          halal = ?,          vegetarian = ?,  offer = ?,   available = ?,   " +
+        "    amount = ?,          amount_unit = ?,    price = ?,       ccy = ?,     base_price = ?,  " +
+        "    base_ccy = ?,        base_value = ?,     base_unit = ?,   details = ?, product_url = ?, " + 
+        "    image_small_url = ?, image_large_url = ? " +
         "WHERE product_id = ? AND imported_date = DATE(?) " 
     )
 
     statement.setString(1, product.title)
     statement.setString(2, if ( product.isHalal ) "Y" else "N" )
     statement.setString(3, if ( product.isSuitableForVegetarians ) "Y" else "N" )
-    statement.setDouble(4, product.amount)
-    statement.setString(5, product.amountUnit.toString())
-    statement.setDouble(6, product.price)
-    statement.setString(7, product.ccy.toString())
-    statement.setDouble(8, product.basePrice)
-    statement.setString(9, product.baseCcy.toString())
-    statement.setDouble(10, product.baseValue)
-    statement.setString(11, product.baseUnit.toString())
-    statement.setString(12, product.details.toList.toString())
-    statement.setString(13, product.productUrl)
-    statement.setString(14, product.smallImgUrl)
-    statement.setString(15, product.largeImgUrl)
-    statement.setString(16, product.id)
-    statement.setString(17, product.importedDate.toString())
+    statement.setString(4, if ( product.isOnOffer ) "Y" else "N" )
+    statement.setString(5, if ( product.isAvailable ) "Y" else "N" )
+    statement.setDouble(6, product.amount)
+    statement.setString(7, product.amountUnit.toString())
+    statement.setDouble(8, product.price)
+    statement.setString(9, product.ccy.toString())
+    statement.setDouble(10, product.basePrice)
+    statement.setString(11, product.baseCcy.toString())
+    statement.setDouble(12, product.baseValue)
+    statement.setString(13, product.baseUnit.toString())
+    statement.setString(14, product.details.toList.toString())
+    statement.setString(15, product.productUrl)
+    statement.setString(16, product.smallImgUrl)
+    statement.setString(17, product.largeImgUrl)
+    statement.setString(18, product.id)
+    statement.setString(19, product.importedDate.toString())
     statement.execute()
   }
 
@@ -76,30 +79,32 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
     // Prepare the statement with placeholder to complete per loop.
     val statement = SQLDatabase.getSQLHandle().prepareStatement("INSERT INTO " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() + " ( " +
-        "`product_id`,`title`,`halal`,`vegetarian`,`amount`,`amount_unit`, " + 
+        "`product_id`,`title`,`halal`,`vegetarian`,`offer`,`available`,`amount`,`amount_unit`, " + 
         "`price`,`ccy`,`base_price`,`base_ccy`,`base_value`,`base_unit`, " + 
         "`details`,`product_url`,`image_small_url`,`image_large_url`,`imported_date` " + 
         " ) "+
-      " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )"
+      " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )"
     )
 
     statement.setString(1, product.id)
     statement.setString(2, product.title)
     statement.setString(3, if ( product.isHalal ) "Y" else "N" )
     statement.setString(4, if ( product.isSuitableForVegetarians ) "Y" else "N" )
-    statement.setDouble(5, product.amount)
-    statement.setString(6, product.amountUnit.toString())
-    statement.setDouble(7, product.price)
-    statement.setString(8, product.ccy.toString())
-    statement.setDouble(9, product.basePrice)
-    statement.setString(10, product.baseCcy.toString())
-    statement.setDouble(11, product.baseValue)
-    statement.setString(12, product.baseUnit.toString())
-    statement.setString(13, product.details.toList.toString())
-    statement.setString(14, product.productUrl)
-    statement.setString(15, product.smallImgUrl)
-    statement.setString(16, product.largeImgUrl)
-    statement.setString(17, product.importedDate.toString())
+    statement.setString(5, if ( product.isOnOffer ) "Y" else "N" )
+    statement.setString(6, if ( product.isAvailable ) "Y" else "N" )
+    statement.setDouble(7, product.amount)
+    statement.setString(8, product.amountUnit.toString())
+    statement.setDouble(9, product.price)
+    statement.setString(10, product.ccy.toString())
+    statement.setDouble(11, product.basePrice)
+    statement.setString(12, product.baseCcy.toString())
+    statement.setDouble(13, product.baseValue)
+    statement.setString(14, product.baseUnit.toString())
+    statement.setString(15, product.details.toList.toString())
+    statement.setString(16, product.productUrl)
+    statement.setString(17, product.smallImgUrl)
+    statement.setString(18, product.largeImgUrl)
+    statement.setString(19, product.importedDate.toString())
     statement.execute()
   }
 

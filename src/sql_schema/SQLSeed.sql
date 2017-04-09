@@ -18,6 +18,8 @@ CREATE TABLE `tesco_product` (
 	`title`           VARCHAR(255) NOT NULL DEFAULT '',
 	`halal`           CHAR(1)      NOT NULL DEFAULT 'N',
 	`vegetarian`      CHAR(1)      NOT NULL DEFAULT 'N',
+	`offer`           CHAR(1)      NOT NULL DEFAULT 'N',
+	`available`       CHAR(1)      NOT NULL DEFAULT 'Y',
 	`amount`          DOUBLE(10,3) NOT NULL DEFAULT 0.0,
 	`amount_unit`     VARCHAR(25)  NOT NULL DEFAULT '',
 	`price`           DOUBLE(10,2) NOT NULL DEFAULT 0.0,
