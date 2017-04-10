@@ -51,7 +51,7 @@ class MatchQuantity() extends RecipeLogging {
 
     // Take all the complexity down to matching regex patterns.
     nameMatch.get.toString() match {
-      case LAST_SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+      case LAST_SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit) => { 
         quantity = qty.toDouble; 
         var times : Double = factor.toDouble
           try {
@@ -62,7 +62,7 @@ class MatchQuantity() extends RecipeLogging {
             units = StandardUnits.Units 
           } }
       }
-      case SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+      case SPACED_QUANTITY_TIMES_REGEX(factor, qty, unit) => { 
         quantity = qty.toDouble; 
         var times : Double = factor.toDouble
           try {
@@ -73,7 +73,7 @@ class MatchQuantity() extends RecipeLogging {
             units = StandardUnits.Units 
           } }
       }
-      case UNSPACED_QUANTITY_TIMES_REGEX(factor, qty, unit)      => { 
+      case UNSPACED_QUANTITY_TIMES_REGEX(factor, qty, unit) => { 
         quantity = qty.toDouble; 
         var times : Double = factor.toDouble
           try {
@@ -84,7 +84,7 @@ class MatchQuantity() extends RecipeLogging {
             units = StandardUnits.Units 
           } }
       }
-      case END_QUANTITY_REGEX(qty, unit)      => { 
+      case END_QUANTITY_REGEX(qty, unit) => { 
         quantity = qty.toDouble; 
           try {
             units = StandardUnits.getUnit(unit)
@@ -102,13 +102,20 @@ class MatchQuantity() extends RecipeLogging {
             units = StandardUnits.Units 
           } }
       }
-      case SPACED_QUANTITY_REGEX(qty, unit)   => { 
+      case SPACED_QUANTITY_REGEX(qty, unit) => { 
         quantity = qty.toDouble; 
           try {
             units = StandardUnits.getUnit(unit)
           } catch { case _ : Throwable => {
-            warn(s"Spaced quantity, ($qty, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
-            units = StandardUnits.Units 
+            val matchedUnits = StandardUnits.values.filter{ unit => nameMatch.get.toString().toLowerCase().contains(unit.toString().toLowerCase()) }.toArray
+            if ( ! matchedUnits.isEmpty ) {
+              units = matchedUnits(0)
+              warn(s"Spaced quantity, ($qty, $units) could not find initially units for: [${nameMatch.get.toString()}] but assumed $units"); 
+            }
+            else {
+              warn(s"Spaced quantity, ($qty, $unit) could not find units for: [${nameMatch.get.toString()}] Defaulting to Units"); 
+              units = StandardUnits.Units 
+            }
           } }
         }
       case _ => warn(s"Do not know how to parse a quantity from [${nameMatch.get.toString()}]")

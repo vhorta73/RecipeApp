@@ -9,7 +9,7 @@ import com.app.recipe.Import.Product.Units.Model.StandardUnits
 /**
  * Class to find if the product is on offer by looking at the offer icon url image.
  */
-class MatchIsOnOffer(productString : String) extends RecipeLogging {
+class MatchIsOnOffer() extends RecipeLogging {
 
   /**
    * Checking if the product is on offer.
@@ -19,7 +19,7 @@ class MatchIsOnOffer(productString : String) extends RecipeLogging {
   /**
    * Returns true if the product is on offer and false otherwise.
    */
-  def getMatch() : Boolean = {
+  def getMatch(productString : String) : Boolean = {
     var isOnOffer : Boolean = false
     if ( ON_OFFER_REGEX.findFirstMatchIn(productString).isDefined ) 
       isOnOffer = true

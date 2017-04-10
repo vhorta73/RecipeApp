@@ -9,7 +9,7 @@ import com.app.recipe.Import.Product.Units.Model.StandardUnits
 /**
  * Class to find the url for the product small image.
  */
-class MatchIsAvailable(productString : String) extends RecipeLogging {
+class MatchIsAvailable() extends RecipeLogging {
 
   /**
    * Checking if the product is not available.
@@ -19,7 +19,7 @@ class MatchIsAvailable(productString : String) extends RecipeLogging {
   /**
    * Returns true if the product is available and false otherwise.
    */
-  def getMatch() : Boolean = {
+  def getMatch(productString : String) : Boolean = {
 
     var isAvailable : Boolean = true
     

@@ -8,28 +8,41 @@ import com.app.recipe.Log.RecipeLogging
 /**
  * Class to find the url for the product small image.
  */
-class MatchPrice(productString : String) extends RecipeLogging {
+class MatchPrice() extends RecipeLogging {
+
+  /**
+   * Find the price.
+   * E.g.: <span class="linePrice">£6.99</span>
+   */
+  private final val PRICE_REGEX = """(?<=<span class="linePrice">)[^<]*""".r.unanchored
+
+  /**
+   * Stripping out the price from found string.
+   * Match: [�0.90] returns 0.90
+   */
+  private final val MATCH_VALUE_REGEX = "([0-9.]+)$".r.unanchored
 
   /**
    * Returns the url for the small image or empty string if nothing.
    */
-  def getMatch() : (Double, Currency ) = {
-    // regex for retrieving the ingredient price
-    // <span class="linePrice">£6.99</span>
-    val priceRegex = """(?<=<span class="linePrice">)[^<]*""".r
-    val unitValueRegex = """([0-9.]+)[^a-z-A-Z]*""".r
-    val unitNameRegex = """[a-z-A-Z]+""".r
+  def getMatch(productString : String) : (Double, Currency ) = {
 
-    val price = priceRegex.findFirstMatchIn(productString)
+    val priceMatch = PRICE_REGEX.findFirstMatchIn(productString)
     var priceCcy   : Currency = Currency.getInstance(Locale.UK)
     var priceValue : Double = 0.0
-    
-    if ( price.isEmpty ) {
-      error(s"No price found in:[$productString]")
+
+    if ( ! priceMatch.isEmpty ) {
+      priceMatch.get.toString() match {
+        case MATCH_VALUE_REGEX(price) => {
+          priceValue = price.toDouble
+        }
+        case _ => {
+          warn(s"No price found for given string: [${priceMatch.get.toString()}]")
+        }
+      }
     }
     else {
-      // Prices only contain numbers, '.' and ','. Anything else, is removed.
-      priceValue = price.get.toString().replaceAll("[^0-9,.]", "").toDouble
+      warn(s"No price found.")
     }
 
     ( priceValue, priceCcy )

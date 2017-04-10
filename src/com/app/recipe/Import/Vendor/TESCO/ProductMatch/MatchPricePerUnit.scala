@@ -9,7 +9,7 @@ import com.app.recipe.Import.Product.Units.Model.StandardUnits
 /**
  * Class to find the url for the product small image.
  */
-class MatchPricePerUnit(productString : String) extends RecipeLogging {
+class MatchPricePerUnit() extends RecipeLogging {
 
   /**
    * Retrieving from the product details web site page the price per unit string.
@@ -31,7 +31,7 @@ class MatchPricePerUnit(productString : String) extends RecipeLogging {
   /**
    * Returns the url for the small image or empty string if nothing.
    */
-  def getMatch() : (Double, Currency, Double, StandardUnits.Units) = {
+  def getMatch(productString : String) : (Double, Currency, Double, StandardUnits.Units) = {
 
     // Tesco always display the price in GBP
     var priceCcy   : Currency = Currency.getInstance(Locale.UK)

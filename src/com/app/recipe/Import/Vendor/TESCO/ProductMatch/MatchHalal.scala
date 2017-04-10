@@ -5,14 +5,14 @@ import com.app.recipe.Log.RecipeLogging
 /**
  * Class to find match the Halal values from a given line to parse.
  */
-class MatchHalal(productString : String) extends RecipeLogging {
+class MatchHalal() extends RecipeLogging {
 
   /**
    * Returns true if Halal is found in on the given string and false otherwise.
    */
-  def getMatch() : Boolean = {
+  def getMatch(productString : String) : Boolean = {
     // regex for halal string
-    val halalRegex = """(Halal)""".r
+    val halalRegex = """(Halal)""".r.unanchored
 
     var isHalal : Boolean = false
     

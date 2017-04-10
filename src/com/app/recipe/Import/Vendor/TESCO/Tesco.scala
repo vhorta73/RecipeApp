@@ -14,9 +14,18 @@ import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsOnOffer
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPricePerUnit
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchProductDetails
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchProductDetails
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchQuantity
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
@@ -25,10 +34,7 @@ import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum.TESCO
 import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
 import com.app.recipe.Import.Vendor.VendorBase
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsOnOffer
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
+import com.app.recipe.Import.Vendor.VendorBase
 
 
 object Tesco extends VendorBase {
@@ -72,21 +78,31 @@ object Tesco extends VendorBase {
    * Instantiate the matching objects once.
    */
   private final val matchQuantity = new MatchQuantity()
+  private final val matchName = new MatchName()
+  private final val matchPrice = new MatchPrice()
+  private final val matchProductDetails = new MatchProductDetails()
+  private final val matchHalal = new MatchHalal()
+  private final val matchSuitableForVegetarians = new MatchSuitableForVegetarians()
+  private final val matchIsOnOffer = new MatchIsOnOffer()
+  private final val matchIsAvailable = new MatchIsAvailable()
+  private final val matchPricePerUnit = new MatchPricePerUnit()
+  private final val matchSmallImage = new MatchSmallImage()
+  private final val matchExtraLargeImage = new MatchExtraLargeImage()
   
   /**
    * List of private methods to help with matching the several product fields.
    */
-  private final def getName(string : String) : String = new MatchName(string).getMatch()
-  private final def getProductDetails(string : String) : List[ProductDetails] = new MatchProductDetails(string).getMatch()
-  private final def getHalal(string : String) : Boolean = new MatchHalal(string).getMatch()
-  private final def getSuitableForVegetarians(string : String) : Boolean = new MatchSuitableForVegetarians(string).getMatch()
-  private final def getIsOnOffer(string : String) : Boolean = new MatchIsOnOffer(string).getMatch()
-  private final def getIsAvailable(string : String) : Boolean = new MatchIsAvailable(string).getMatch()
-  private final def getPrice(string : String) : (Double, Currency) = new MatchPrice(string).getMatch()
-  private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = new MatchPricePerUnit(string).getMatch()
+  private final def getName(string : String) : String = matchName.getMatch(string)
+  private final def getProductDetails(string : String) : List[ProductDetails] = matchProductDetails.getMatch(string)
+  private final def getHalal(string : String) : Boolean = matchHalal.getMatch(string)
+  private final def getSuitableForVegetarians(string : String) : Boolean = matchSuitableForVegetarians.getMatch(string)
+  private final def getIsOnOffer(string : String) : Boolean = matchIsOnOffer.getMatch(string)
+  private final def getIsAvailable(string : String) : Boolean = matchIsAvailable.getMatch(string)
+  private final def getPrice(string : String) : (Double, Currency) = matchPrice.getMatch(string)
+  private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = matchPricePerUnit.getMatch(string)
   private final def getQuantity(string : String) : (Double, Units) = matchQuantity.getMatch(string)
-  private final def getSmallImage(string : String) : String = new MatchSmallImage(string).getMatch()
-  private final def getExtraLargeImage(string : String) : String = new MatchExtraLargeImage(string).getMatch()
+  private final def getSmallImage(string : String) : String = matchSmallImage.getMatch(string)
+  private final def getExtraLargeImage(string : String) : String = matchExtraLargeImage.getMatch(string)
 
   /**
    * Given a product ID, gets the respective product details page, and parse it to 

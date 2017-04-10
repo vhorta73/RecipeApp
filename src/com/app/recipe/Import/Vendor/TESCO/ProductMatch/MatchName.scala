@@ -5,11 +5,11 @@ import com.app.recipe.Log.RecipeLogging
 /**
  * Class to find the name for the product from the supplied product string.
  */
-class MatchName(productString : String) extends RecipeLogging {
+class MatchName() extends RecipeLogging {
   /**
    * Returns the name of the product as displaying on the web page.
    */
-  def getMatch() : String = {
+  def getMatch(productString : String) : String = {
     if ( productString.length() == 0 ) {
       info("No string supplied to parse a name from")
       return ""
