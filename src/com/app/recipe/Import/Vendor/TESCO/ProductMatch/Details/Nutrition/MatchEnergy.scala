@@ -7,6 +7,7 @@ import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kcal
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Kj
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Import.Product.Units.Model.StandardUnits
 
 /**
  * Class to find match the energy values from a given line to parse.
@@ -16,220 +17,156 @@ import com.app.recipe.Log.RecipeLogging
 class MatchEnergy() extends RecipeLogging {
 
   /**
+   * The strings to be used on defining if supplied string contains energy 
+   * information or not.
+   */
+  private final val INTAKE_STRING : String = "ence intake "
+  private final val ENERGY_STRING : String = "energy"
+  private final val KCAL_STRING   : String = "kal"
+  private final val KJ_STRING     : String = "kj"
+
+  /**
+   * The regex constants to extract the energy values from supplied string.
+   */
+  // Matching: <th scope="row">Energy kJ</th><td>1667.4</td>
+  private final val KJ_01_REGEX = """<th scope="row">Energy kJ</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matchig: <th scope="row">Energy (kJ)</th><td>1365</td>
+  private final val KJ_02_REGEX = """<th scope="row">Energy \(kJ\)</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>2143kJ</td>
+  private final val KJ_03_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ</td>""".r.unanchored
+  // Matching: <th scope="row">Energy:</th><td>57kJ/</td>
+  private final val KJ_04_REGEX = """<th scope="row">Energy:</th><td>([0-9.]+)kJ/</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>201 kJ</td>
+  private final val KJ_05_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ</td>""".r.unanchored
+  // Matching: <th scope="row">Energy (kJ/kcal)</th><td>1531kJ/</td>
+  private final val KJ_06_REGEX = """<th scope="row">Energy (kJ/kcal)</th><td>([0-9.]+)kJ/</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>201 kJ/</td><td>1006 kJ/</td></tr>
+  private final val KJ_07_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ/</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>96kJoules</td>
+  private final val KJ_08_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJoules</td>""".r.unanchored
+  // Matching: <th scope="row">Energy kJ</th><td>1,387</td>
+  private final val KJ_09_COMMA_REGEX = """<th scope="row">Energy kJ</th><td>([0-9.,]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy (kJ/kcal)</th><td>1531kJ/</td>
+  private final val KJ_10_REGEX = """<th scope="row">Energy \(kJ/kcal\)</th><td>([0-9.]+)kJ/</td>""".r.unanchored
+  // Matching: <th scope="row">Energy:</th><td>77kJ</td>
+  private final val KJ_11_REGEX = """<th scope="row">Energy:</th><td>([0-9.]+)kJ</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>641 KJ</td>
+  private final val KJ_12_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) KJ</td>""".r.unanchored
+
+  // Matching: <th scope="row">Energy kCal</th><td>400.0</td>
+  private final val KCAL_01_REGEX = """<th scope="row">Energy kCal</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy (kcal)</th><td>323</td>
+  private final val KCAL_02_REGEX = """<th scope="row">Energy \(kcal\)</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>364kcal</td>
+  private final val KCAL_03_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy (kcals)</th><td>366</td>
+  private final val KCAL_04_REGEX = """<th scope="row">Energy \(kcals\)</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy kcal</th><td>357</td>
+  private final val KCAL_05_REGEX = """<th scope="row">Energy kcal</th><td>([0-9.]+)</td>""".r.unanchored
+  
+  // Matching: <th scope="row">Energy</th><td>3kJ/1kcal</td>
+  private final val KJ_KCAL_01_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ/([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy (kJ/kcal)</th><td>1523/364</td>
+  private final val KJ_KCAL_02_REGEX = """<th scope="row">Energy \(kJ/kcal\)</th><td>([0-9.]+)/([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>1510kJ (359kcal)</td></tr>
+  private final val KJ_KCAL_03_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ \(([0-9.]+)kcal\)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy:</th><td>137 kJ/33 Kcal</td></tr>
+  private final val KJ_KCAL_04_REGEX = """<th scope="row">Energy:</th><td>([0-9.]+) kJ/([0-9.]+) Kcal</td></tr>""".r.unanchored
+  // Matching : <th scope="row">Energy, kJ/kcal</th><td>117/28</td>
+  private final val KJ_KCAL_05_REGEX = """<th scope="row">Energy, kJ/kcal</th><td>([0-9.]+)/([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>1471 kJ (351 kcal)</td>
+  private final val KJ_KCAL_06_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ \(([0-9.]+) kcal\)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>93 kJ / 22 kcal</td></tr>
+  private final val KJ_KCAL_07_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ / ([0-9.]+) kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>119kJ / 28kcal</td><td>595kJ / 140kcal</td>
+  private final val KJ_KCAL_08_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ / ([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>150kj & 36 kcal</td>
+  private final val KJ_KCAL_09_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kj & ([0-9.]+) kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>891 kJ/214 kcal</td>
+  private final val KJ_KCAL_10_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ/([0-9.]+) kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>97 kJ 23 kcal</td>
+  private final val KJ_KCAL_11_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ ([0-9.]+) kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>1738kj/415kcal</td>
+  private final val KJ_KCAL_12_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kj/([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy:</th><td>1 621 kJ/381 kcal</td>
+  private final val KJ_KCAL_13_SPACE_REGEX = """<th scope="row">Energy:</th><td>([0-9. ]+)kJ/([0-9.]+) kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>2016kJ 481kcal</td>
+  private final val KJ_KCAL_14_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ ([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy Value (kJ/kcal)</th><td>1523/364</td>
+  private final val KJ_KCAL_15_REGEX = """<th scope="row">Energy Value \(kJ/kcal\)</th><td>([0-9.]+)/([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>3kJ (<1kcal)</td>
+  private final val KJ_KCAL_16_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)kJ \(<([0-9.]+)kcal\)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy:</th><td>1046kJ/251kcal</td>
+  private final val KJ_KCAL_17_REGEX = """<th scope="row">Energy:</th><td>([0-9.]+)kJ/([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy</th><td>105 kJ/ 25 kcal</td>
+  private final val KJ_KCAL_18_REGEX = """<th scope="row">Energy</th><td>([0-9.]+) kJ/ ([0-9.]+) kcal</td>""".r.unanchored
+
+  /**
    * Returns the Energy case class with the detailed values as displaying on the web page.
    */
   def getMatch(productString : String) : List[ProductNutrition] = {
 
     // Adding all elements to this list which is to be returned last.
     var finalList : List[ProductNutrition] = Nil
+    
+    productString match {
+      // Matching on Kj 
+      case KJ_01_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_02_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_03_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_04_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_05_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_06_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_07_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_08_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_09_COMMA_REGEX(kjDouble)           => finalList = finalList ::: List(Energy(kjDouble.replace(",", "").toDouble,Kj))
+      case KJ_10_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_11_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
+      case KJ_12_REGEX(kjDouble)                 => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj))
 
-    // Interested only in finding the first match.
-    val valuesMatch = getFirstMatch(productString)
+      // Matching on Kcal
+      case KCAL_01_REGEX(kcalDouble)             => finalList = finalList ::: List(Energy(kcalDouble.toDouble,Kcal))
+      case KCAL_02_REGEX(kcalDouble)             => finalList = finalList ::: List(Energy(kcalDouble.toDouble,Kcal))
+      case KCAL_03_REGEX(kcalDouble)             => finalList = finalList ::: List(Energy(kcalDouble.toDouble,Kcal))
+      case KCAL_04_REGEX(kcalDouble)             => finalList = finalList ::: List(Energy(kcalDouble.toDouble,Kcal))
+      case KCAL_05_REGEX(kcalDouble)             => finalList = finalList ::: List(Energy(kcalDouble.toDouble,Kcal))
 
-    // Find out which units to use.
-    var energyUnits : Units = null
-    if ( isKcal(productString) ) energyUnits = Kcal
-    if ( isKj(productString) )   energyUnits = Kj
-
-    // If we have two units, then this is a composite string.
-    if ( isKjAndKcal(productString) ) {
-      val finalValues = valuesMatch.get.toString()
-      var energyValue = 0.0
-
-      // If we still have some units in the value, it means more diligence to parse it.
-      if ( isKcal(finalValues) || isKj(finalValues) ) {
-        var splitValuesAndUnits = finalValues.split(" ")
-        splitValuesAndUnits = (finalValues.replaceAll(" ", "")).split(" ")
-
-        if ( splitValuesAndUnits.size == 1 ) {
-          // This is pair composite value separated by / .e.g: 22Kj/22Kcal
-          splitValuesAndUnits(0) match {
-            case x if x.contains("/") => {
-              var splitValues = splitValuesAndUnits(0).split("/")
-              splitValues.foreach { value => { finalList = getCompositeElement(value)::finalList } }
-            }
-            case x if x.contains(",") => {
-              var splitValues = splitValuesAndUnits(0).split(",")
-              splitValues.foreach { value => { finalList = getCompositeElement(value)::finalList } }
-            }
-            case x if """\d+|\D+""".r.findAllIn(x).size == 4 => {
-              // 1054kJ (253kcal)
-              var newX = x.replaceAll("[()]", "")
-              var list = """\d+|\D+""".r.findAllIn(newX).toList
-              var first = (list(0) + list(1)) 
-              finalList = getCompositeElement(first) :: finalList
-              var second = list(2) + list(3)
-              finalList = getCompositeElement(second) :: finalList
-            }
-            case _ => finalList = getCompositeElement(finalValues) :: finalList
-          }
-        }
-        // More than two elements if bad omen
-        else if ( splitValuesAndUnits.size > 2 ) {
-          throw new IllegalStateException("Cannot process composite value with more than two elements: ["+productString+"]")
-        }
-        else {
-          // If the value contains the K letter for either Kcal or Kj, then it is all composite
-          if ( splitValuesAndUnits(0).contains("k") || splitValuesAndUnits(0).contains("K") ) {
-            splitValuesAndUnits.foreach { string => finalList = getCompositeElement(string) :: finalList }
-          }
-          else {
-            val value = splitValuesAndUnits(0).toString().toDouble
-            val units = splitValuesAndUnits(1).toString()
-            finalList.+:(Energy(value,getUnitsFromString(units)))
-          }
-        }
-      }
-    }
-    else {
-      if ( valuesMatch.isEmpty ) throw new IllegalStateException("No values found")
-      if ( valuesMatch.get.toString().contains("k") ) {
-        finalList = getCompositeElement(valuesMatch.get.toString()) :: finalList
-      }
-      else {
-        finalList = Energy(valuesMatch.get.toString().toDouble,energyUnits) :: finalList
-      }
+      // Matching on Kj Kcal
+      case KJ_KCAL_01_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_02_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_03_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_04_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_05_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_06_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_07_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_08_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_09_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_10_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_11_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_12_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_13_SPACE_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.replaceAll(" ", "").toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_14_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_15_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_16_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_17_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case KJ_KCAL_18_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+      case _ => warn(s"No Energy Matched $productString")
     }
 
     return finalList
   }
 
   /**
-   * Returns the parsed composite element as a NutritionInformation object.
-   */
-  private final def getCompositeElement(givenString : String) : ProductNutrition = {
-
-    // Allowing string to be cleaned without changing original value.
-    var string = givenString
-    string = string.replaceAll(" ", "")
-    
-    // Special cases where a deeper cleanup is required.
-    if ( string.contains("(") ) string = """(?<=\()[^\)]*""".r.findFirstIn(givenString).get.toString()
-
-    // In the case that the value and the unit comes together, we do this extra process
-    val splitValuesAndUnits = """\d+|\D+""".r.findAllIn(string).toArray[String]
-
-    // If not two elements, we give up at this point.
-    if ( splitValuesAndUnits.size != 2 ) 
-      throw new IllegalStateException("Unable to split value from units: ["+string+"]")
-
-    var units : Units = null
-    if ( isKcal(splitValuesAndUnits(1)) ) units = Kcal
-    if ( isKj(splitValuesAndUnits(1)) )   units = Kj
-
-    Energy(splitValuesAndUnits(0).toString().toDouble,units)
-  }
-  
-  /**
    * Matching criteria for energy on a given line. It must match only line that
    * are certain of containing the energy values. By default returns false.
    */
   def isEnergy(productString : String) : Boolean = {
     productString match {
-      case x if x.contains("Energy")           => true
-      case x if isKcal(x)                      => true
-      case x if isKj(x)                        => true
+      case line if line.toLowerCase().contains(INTAKE_STRING) => false
+      case line if line.toLowerCase().contains(ENERGY_STRING) => true
+      case line if line.toLowerCase().contains(KCAL_STRING)   => true
+      case line if line.toLowerCase().contains(KJ_STRING)     => true
       case _ => false
     }
-  }
-  
-  /**
-   * Getting the first match for processing from the first regex.
-   */
-  private final def getFirstMatch(productString : String) : Option[Match] = {
-    // <th scope="row">Energy kJ</th><td>1797</td><td>899</td><td>-</td><td>-</td></tr>
-    // Matching: [1797]
-    // <th scope="row">Energy</th><td>1633 kJ</td><td>116 kJ</td><td>278 kJ</td><td>8400 kJ</td><td>-</td></tr>
-    // Matching: [1633 kJ]
-    var valuesRegex = """(?<=td>)(\d+)[^</td]*""".r
-    var valueMatched = valuesRegex.findFirstMatchIn(productString)
-    if ( valueMatched.isDefined ) return valueMatched
-
-    // <th scope="row">*Reference Intake of an average adult (8400kJ/2000kcal)</th><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    // Matching: [8400kJ/2000kcal]
-    // Matching: [8400 kJ / 2000 kcal]
-    valuesRegex = """(?<= \()([0-9a-zA-Z \/]+)[^\)</]*""".r
-    valueMatched = valuesRegex.findFirstMatchIn(productString)
-    if ( valueMatched.isDefined ) return valueMatched
-    
-    // <th scope="row">*Reference Intake of an average adult 8400kJ / 2000kcal</th><td>-</td><td>-</td><td>-</td></tr></tbody></table
-    // Matching: [8400kJ / 2000kcal]
-    valuesRegex = """(?<=adult )([0-9a-zA-Z \/]*)[^</th]*""".r
-    valueMatched = valuesRegex.findFirstMatchIn(productString)
-    if ( valueMatched.isDefined ) return valueMatched
-    
-    throw new IllegalStateException(s"Cannot parse value and unit from string: [$productString]")
-  }
-
-
-    
-  /**
-   * Check if the units to use is Kcal from the supplied line.
-   */
-  private final def isKcal(string : String) : Boolean = {
-    string match {
-      case x if x.contains("kcal") => true
-      case x if x.contains("Kcal") => true
-      case _ => false
-    }
-  }
-
-  /**
-   * Check if the units to use is Kj from the supplied line.
-   */
-  private final def isKj(string : String) : Boolean = {
-    // <th scope="row">Energy</th><td>1633 kJ</td><td>116 kJ</td><td>278 kJ</td><td>8400 kJ</td><td>-</td></tr>
-    string match {
-      case x if x.contains("kj")   => true
-      case x if x.contains("kJ")   => true
-      case x if x.contains("KJ")   => true
-      case x if x.contains("Kj")   => true
-      case _ => false
-    }
-  }
-
-  /**
-   * Check if the units to use are Kj and Kcal together. 
-   */
-  private final def isKjAndKcal(string : String) : Boolean = {
-    if ( isKcal(string) && isKj(string) ) true
-    else false
-  }
-  
-  /**
-   * When Kj and Kcal come combined, 
-   * this method aims to return the value of the Kj only.
-   */
-  private final def getKj(string : String) : String = {
-    // <th scope="row">Energy</th><td>256kJ (61kcal)</td><td>256kJ (61kcal)</td></tr>
-    val valueRegex = """(?<=td>)(\d+)[^kJ]*""".r
-    var temp = valueRegex.findFirstMatchIn(string)
-    if ( temp.isDefined ) return temp.get.toString()
-
-    null
-  }
-  
-  /**
-   * When Kj and Kcal come combined, 
-   * this method aims to return the value of the Kcal only.
-   */
-  private final def getKcal(string : String) : String = {
-    // <th scope="row">Energy</th><td>256kJ (61kcal)</td><td>256kJ (61kcal)</td></tr>
-    val valueRegex = """(?<=\()(\d+)[^kc]*""".r
-    var temp = valueRegex.findFirstMatchIn(string)
-    if ( temp.isDefined ) return temp.get.toString()
-
-    null
-  }
-
-  /**
-   * From a string that is meant to have one unit, return it converted to Units enum.
-   */
-  private final def getUnitsFromString(productString : String) : Units = {
-    // Find out which units to use.
-    var energyUnits : Units = null
-    if ( isKcal(productString) ) energyUnits = Kcal
-    if ( isKj(productString) )   energyUnits = Kj
-    energyUnits
   }
 }
