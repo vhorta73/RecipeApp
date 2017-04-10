@@ -12,6 +12,8 @@ trait ProductNutrition extends ProductDetails
 case class Energy          ( val energyPer100g       : Double, val units       : Units)   extends ProductNutrition { require(units != null       && energyPer100g       >= 0 )}
 case class Fat             ( val fatPer100g          : Double, val units       : Units)   extends ProductNutrition { require(units != null       && fatPer100g          >= 0 )}
 case class Saturates       ( val saturatePer100g     : Double, val units       : Units)   extends ProductNutrition { require(units != null       && saturatePer100g     >= 0 )}
+case class MonoSaturates   ( val saturatePer100g     : Double, val units       : Units)   extends ProductNutrition { require(units != null       && saturatePer100g     >= 0 )}
+case class PoliSaturates   ( val saturatePer100g     : Double, val units       : Units)   extends ProductNutrition { require(units != null       && saturatePer100g     >= 0 )}
 case class Carbohydrate    ( val carbohydratePer100g : Double, val units       : Units)   extends ProductNutrition { require(units != null       && carbohydratePer100g >= 0 )}
 case class Sugars          ( val sugarsPer100g       : Double, val units       : Units)   extends ProductNutrition { require(units != null       && sugarsPer100g       >= 0 )}
 case class Salt            ( val saltPer100g         : Double, val units       : Units)   extends ProductNutrition { require(units != null       && saltPer100g         >= 0 )}
