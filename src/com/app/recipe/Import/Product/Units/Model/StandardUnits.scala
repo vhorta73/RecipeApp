@@ -39,6 +39,7 @@ object StandardUnits extends Enumeration {
     case "mg"       => mg
     case "unit"     => Units
     case "pack"     => Packages
+    case "pk"       => Packages
     case "tablets"  => Tablets
     case "s"        => Tablets
     case _          => throw new IllegalArgumentException(s"Unknown unit [$unit]")
