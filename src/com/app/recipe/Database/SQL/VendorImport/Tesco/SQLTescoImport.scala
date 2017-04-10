@@ -43,10 +43,10 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
     // Prepare the statement with placeholder to complete per loop.
     val statement = SQLDatabase.getSQLHandle().prepareStatement("UPDATE " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() +
-        " SET title = ?,          halal = ?,          vegetarian = ?,  offer = ?,   available = ?,   " +
-        "    amount = ?,          amount_unit = ?,    price = ?,       ccy = ?,     base_price = ?,  " +
-        "    base_ccy = ?,        base_value = ?,     base_unit = ?,   details = ?, product_url = ?, " + 
-        "    image_small_url = ?, image_large_url = ? " +
+        " SET title = ?,          halal = ?,           vegetarian = ?,  offer = ?,   available = ?,   " +
+        "    amount = ?,          amount_unit = ?,     price = ?,       ccy = ?,     base_price = ?,  " +
+        "    base_ccy = ?,        base_value = ?,      base_unit = ?,   details = ?, product_url = ?, " + 
+        "    image_small_url = ?, image_large_url = ?, last_updated = NOW()" +
         "WHERE product_id = ? AND imported_date = DATE(?) " 
     )
 
