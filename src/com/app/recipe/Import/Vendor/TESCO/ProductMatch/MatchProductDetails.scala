@@ -4,21 +4,27 @@ import com.app.recipe.Import.Product.Model.ProductDetails
 import com.app.recipe.Import.Product.Model.ProductNutrition
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Details.MatchProductNutrition
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Details.MatchProductNutrition
 
 /**
  * Class to find the product nutrition information from the supplied product string.
  */
-class MatchProductDetails(productString : String) extends RecipeLogging {
+class MatchProductDetails() extends RecipeLogging {
 
+  /**
+   * Initialising all classes for each part of the product details.
+   */
+  private final val matchProductNutrition = new MatchProductNutrition()
+  
   /**
    * The ProductNutrion matching process.
    */
-  private final def getProductNutrition( string : String ) : List[ProductNutrition] = new MatchProductNutrition(string).getMatch()
+  private final def getProductNutrition( string : String ) : List[ProductNutrition] = matchProductNutrition.getMatch(string)
   
   /**
    * Returns the list of product details objects from the supplied web page string.
    */
-  def getMatch() : List[ProductDetails] = {
+  def getMatch(productString : String) : List[ProductDetails] = {
 
     // The product details are composed of many different sub-types.
     // Please see Import.Product.ProductDetails for more information.

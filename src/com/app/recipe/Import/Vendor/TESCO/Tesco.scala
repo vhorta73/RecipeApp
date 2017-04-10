@@ -72,7 +72,7 @@ object Tesco extends VendorBase {
   /**
    * Text used on a product for which the title was not found.
    */
-  private final val TITLE_NOT_FOUND_TEXT = "Title not found"
+  private final val TITLE_NOT_FOUND_TEXT : String = "Title not found"
 
   /**
    * Instantiate the matching objects once.
@@ -92,17 +92,17 @@ object Tesco extends VendorBase {
   /**
    * List of private methods to help with matching the several product fields.
    */
-  private final def getName(string : String) : String = matchName.getMatch(string)
-  private final def getProductDetails(string : String) : List[ProductDetails] = matchProductDetails.getMatch(string)
-  private final def getHalal(string : String) : Boolean = matchHalal.getMatch(string)
+  private final def getName(string : String)                   : String = matchName.getMatch(string)
+  private final def getProductDetails(string : String)         : List[ProductDetails] = matchProductDetails.getMatch(string)
+  private final def getHalal(string : String)                  : Boolean = matchHalal.getMatch(string)
   private final def getSuitableForVegetarians(string : String) : Boolean = matchSuitableForVegetarians.getMatch(string)
-  private final def getIsOnOffer(string : String) : Boolean = matchIsOnOffer.getMatch(string)
-  private final def getIsAvailable(string : String) : Boolean = matchIsAvailable.getMatch(string)
-  private final def getPrice(string : String) : (Double, Currency) = matchPrice.getMatch(string)
-  private final def getPricePerUnit(string : String) : (Double, Currency, Double, Units) = matchPricePerUnit.getMatch(string)
-  private final def getQuantity(string : String) : (Double, Units) = matchQuantity.getMatch(string)
-  private final def getSmallImage(string : String) : String = matchSmallImage.getMatch(string)
-  private final def getExtraLargeImage(string : String) : String = matchExtraLargeImage.getMatch(string)
+  private final def getIsOnOffer(string : String)              : Boolean = matchIsOnOffer.getMatch(string)
+  private final def getIsAvailable(string : String)            : Boolean = matchIsAvailable.getMatch(string)
+  private final def getPrice(string : String)                  :(Double, Currency) = matchPrice.getMatch(string)
+  private final def getPricePerUnit(string : String)           :(Double, Currency, Double, Units) = matchPricePerUnit.getMatch(string)
+  private final def getQuantity(string : String)               :(Double, Units) = matchQuantity.getMatch(string)
+  private final def getSmallImage(string : String)             : String = matchSmallImage.getMatch(string)
+  private final def getExtraLargeImage(string : String)        : String = matchExtraLargeImage.getMatch(string)
 
   /**
    * Given a product ID, gets the respective product details page, and parse it to 
@@ -114,8 +114,8 @@ object Tesco extends VendorBase {
     val webProductDetailsPage = scala.io.Source.fromURL(productUrl)("UTF-8")
 
     if ( webProductDetailsPage.isEmpty ) {
-      info("Product Details page for product ID: " + productId + " returned empty.")
-      return null
+      warn("Product Details page for product ID: " + productId + " returned empty.")
+      return ProductImport(id = productId, title = TITLE_NOT_FOUND_TEXT, vendor = VendorEnum.TESCO)
     }
 
     var productString = ""

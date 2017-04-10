@@ -13,7 +13,7 @@ import com.app.recipe.Log.RecipeLogging
  * The line may contain more than one saturation levels, which in case will
  * return more than one element.
  */
-class MatchProductNutrition(productString : String) extends RecipeLogging {
+class MatchProductNutrition() extends RecipeLogging {
 
   /**
    * All matchers get statically instantiated once.
@@ -39,7 +39,7 @@ class MatchProductNutrition(productString : String) extends RecipeLogging {
   /**
    * Returns the Fat case class with the detailed values as displaying on the web page.
    */
-  def getMatch() : List[ProductNutrition] = {
+  def getMatch(productString : String) : List[ProductNutrition] = {
 
     // Initialise the final list to be returned.
     var finalList : List[ProductNutrition] = List()
