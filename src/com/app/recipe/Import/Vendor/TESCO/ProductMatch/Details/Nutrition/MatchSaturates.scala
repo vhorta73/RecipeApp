@@ -133,8 +133,10 @@ class MatchSaturates() extends RecipeLogging {
   // Matching: <th scope="row">of which saturates (g)</th><td><0.1</td>
   private final val SAT_G_52_TRACE_REGEX = """(?i)<th scope="row">of which saturates \(g\)</th><td><([0-9.]+)</td>""".r.unanchored
   // Matching: <th scope="row">of which Saturates</th><td>0.3 g (1%*)</td>
-//             <th scope="row">of which saturates</th><td>0.3 g (2%*)</td>
+  // Matching: <th scope="row">of which saturates</th><td>0.3 g (2%*)</td>
   private final val SAT_G_53_REGEX = """(?i)<th scope="row">of which Saturates</th><td>([0-9.]+) g \([0-9%*]+\)</td>""".r.unanchored
+  // Matching: <th scope="row">of which, saturates</th><td>0.6g</td>
+  private final val SAT_G_54_REGEX = """(?i)<th scope="row">of which, saturates</th><td>([0-9.]+)g</td>""".r.unanchored
 
   // Matching: <th scope="row">mono-unsaturates</th><td><0.5 g</td>
   private final val MONO_SAT_G_01_REGEX = """(?i)<th scope="row">mono-unsaturates</th><td><([0-9.]+) g</td>""".r.unanchored
@@ -218,6 +220,7 @@ class MatchSaturates() extends RecipeLogging {
       case SAT_G_51_TRACE_REGEX(trace)        => finalList = finalList ::: List(Saturates(0,StandardUnits.g))
       case SAT_G_52_TRACE_REGEX(trace)        => finalList = finalList ::: List(Saturates(0,StandardUnits.g))
       case SAT_G_53_REGEX(sat)                => finalList = finalList ::: List(Saturates(sat.toDouble,StandardUnits.g))
+      case SAT_G_54_REGEX(sat)                => finalList = finalList ::: List(Saturates(sat.toDouble,StandardUnits.g))
 
       case MONO_SAT_G_01_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
       case MONO_SAT_G_02_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
