@@ -8,7 +8,7 @@ import scala.io.Codec.string2codec
 import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabase
-import com.app.recipe.Database.SQL.VendorImport.RecipeDatabaseVendorImport
+import com.app.recipe.Database.RecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductDetails
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units

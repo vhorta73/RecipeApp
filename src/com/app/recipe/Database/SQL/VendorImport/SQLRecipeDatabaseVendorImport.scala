@@ -1,48 +1,16 @@
 package com.app.recipe.Database.SQL.VendorImport
 
+import com.app.recipe.Database.RecipeDatabaseVendorImport
+import com.app.recipe.Database.SQL.VendorImport.Tesco.SQLTescoImport
 import com.app.recipe.Import.Product.Model.ProductBase
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Database.SQL.VendorImport.Tesco.SQLTescoImport
 
 /**
- * The interface describing all the methods that must be implemented for each
- * respective database system.
+ * The abstract interface implementing all the common method implementations that
+ * are shared between all vendors.
  */
 abstract trait SQLRecipeDatabaseVendorImport extends RecipeDatabaseVendorImport {
-
-  /**
-   * The recipe database name for all imports.
-   */
-  def getImportRecipeDatabaseName() : String = "recipe"
-  
-  /**
-   * The recipe database table base name for all product imports for 
-   * each vendor which will add their personalised name as prefix to
-   * this base name to make up the final table name.
-   */
-  def getVendorImportProductTableBaseName() : String = "product"
-
-
-  /**
-   * The ingredients that are due to be updated.
-   */
-//  def getProductsToUpdate() : List[ProductBase] 
-//{
-//    val statement = SQLDatabase.getSQLHandle().createStatement()
-//    val resultSet = statement.executeQuery("SELECT * FROM recipe.ingredient")
-//      while ( resultSet.next() ) {
-//        val id = resultSet.getString("id")
-//        val name = resultSet.getString("name")
-//        val vendor = resultSet.getString("vendor")
-//        val user = resultSet.getString("user")
-//        println("id = " + id )
-//        println("name = " + name   )
-//        println("vendor = " + vendor )
-//      }
-//    Nil
-//  }
-  
 
   /**
    * Imports a given product list to the database. If any of the given products 

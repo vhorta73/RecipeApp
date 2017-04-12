@@ -7,7 +7,14 @@ package com.app.recipe.Database.Model
  */
 object DatabaseMode extends Enumeration {
   type Mode = Value
-  
+
+  // The Vendor database access
   val TESCO_IMPORT = Value
-  
+
+  // Admin database access
+  val ADMIN = Value
+
+  // Core database access
+  val CORE = Value
+
 }
