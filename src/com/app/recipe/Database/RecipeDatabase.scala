@@ -7,6 +7,4 @@ package com.app.recipe.Database
  * This is the parent of all types, and any new methods added here, must
  * also be implemented here, and will be seen by all inheriting classes.
  */
-abstract trait RecipeDatabase {
-  
-}
+abstract trait RecipeDatabase {}
