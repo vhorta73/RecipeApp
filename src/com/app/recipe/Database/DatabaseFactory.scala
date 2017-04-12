@@ -1,8 +1,9 @@
 package com.app.recipe.Database
 
 import com.app.recipe.Database.Model.DatabaseMode
-import com.typesafe.config.ConfigFactory
+import com.app.recipe.Database.SQL.Core.SQLCore
 import com.app.recipe.Database.SQL.VendorImport.Tesco.SQLTescoImport
+import com.typesafe.config.ConfigFactory
 
 /**
  * The Database Factory will return the handler for the respective required 
@@ -10,7 +11,8 @@ import com.app.recipe.Database.SQL.VendorImport.Tesco.SQLTescoImport
  * available.
  */
 object DatabaseFactory {
-    /**
+
+  /**
    * The main application config required to setup the various details, required
    * to get the application working.
    */
@@ -21,7 +23,16 @@ object DatabaseFactory {
   def getInstance(mode : DatabaseMode.Mode) : RecipeDatabase = config.getString(STORAGE) match {
     case "SQL" => {
       mode match {
+        // Admin database
+        case DatabaseMode.ADMIN => throw new IllegalStateException("Not yet implemented")
+
+        // Core database
+        case DatabaseMode.CORE => SQLCore
+
+        // Vendor databases
         case DatabaseMode.TESCO_IMPORT => SQLTescoImport
+        
+        // For the unknown database modes.
         case _ => throw new IllegalStateException("Unknown Mode")
       }
     }

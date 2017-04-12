@@ -9,11 +9,19 @@ import com.app.recipe.Import.Vendor.TESCO.ProductMatch.Details.Nutrition.MatchSa
 import com.app.recipe.Log.RecipeLogging
 
 /**
- * Class to find match the saturation values from a given line to parse.
- * The line may contain more than one saturation levels, which in case will
- * return more than one element.
+ * ProductNutrition lives under ProductDetails, and looks to match on as many
+ * case classes as possible of ProductNutrition type, based on the main product
+ * details string passed in. These details live under a specific table that is
+ * here parsed into different line rows and match upon to respective classes. 
+ * 
+ * The case classes returned are based on the standard per 100g.
  */
 class MatchProductNutrition() extends RecipeLogging {
+
+  /**
+   * Reduce the string length to the Nutrition table.
+   */
+  private final val NUTRITION_TABLE_REGEX = """table>(.*)</table""".r
 
   /**
    * All matchers get statically instantiated once.
@@ -37,6 +45,11 @@ class MatchProductNutrition() extends RecipeLogging {
   private final def getSaturates(string : String) : List[ProductNutrition] = matchSaturates.getMatch(string)
 
   /**
+   * The regex to set which lines to skip.
+   */
+  private final val IGNORE_REGEX = """eference intake""".r.unanchored
+  
+  /**
    * Returns the Fat case class with the detailed values as displaying on the web page.
    */
   def getMatch(productString : String) : List[ProductNutrition] = {
@@ -44,21 +57,20 @@ class MatchProductNutrition() extends RecipeLogging {
     // Initialise the final list to be returned.
     var finalList : List[ProductNutrition] = List()
 
-    // Reduce the string length to the Nutrition table.
-    val nutritionTableRegex = """table>(.*)</table""".r
-    val nutritionTable = nutritionTableRegex.findFirstIn(productString)
+    val nutritionTable = NUTRITION_TABLE_REGEX.findFirstIn(productString)
 
     if ( ! nutritionTable.isEmpty ) {
-      // Split the table by the rows.
+
+      // Split the table into rows.
       val table = nutritionTable.get.split("<tr>")
 
       // List of regex to get each of the known fields from the table.
-      val valuesRegex = """(?<=td>)(\d+)[^</td]*""".r
       for( line <- table ) {
         line match {
-          case x if isEnergy(x)      => finalList = getEnergy(line)    ::: finalList
-//          case x if isFat(x)         => finalList = getFat(line)       ::: finalList
-//          case x if isSaturates(x)   => finalList = getSaturates(line) ::: finalList
+          case IGNORE_REGEX(line)      => Nil
+          case str if isEnergy(str)    => finalList = getEnergy(str)    ::: finalList
+          case str if isFat(str)       => finalList = getFat(str)       ::: finalList
+          case str if isSaturates(str) => finalList = getSaturates(str) ::: finalList
           // TODO: Match the rest and uncomment ingredient fields for next matches e.g. price
 //          case x if x.contains("Carbohydrate")           => finalList = Carbohydrate(valuesRegex.findFirstMatchIn(line).get.toString().toDouble,g) :: finalList
 //          case x if x.contains("sugars")                 => finalList = Sugars(valuesRegex.findFirstMatchIn(line).get.toString().toDouble,g) :: finalList
@@ -82,17 +94,17 @@ class MatchProductNutrition() extends RecipeLogging {
 //          case x if x.contains("Zinc (mg)")              => finalList = Zinc(valuesRegex.findFirstMatchIn(line).get.toString().toDouble, mg) :: finalList
 //          case x if x.contains("Iodine ")                => finalList = Iodine(valuesRegex.findFirstMatchIn(line).get.toString().toDouble, ug) :: finalList
 
-          // Known cases to ignore
-          case x if x.contains("table>")                 => Nil
-          case x if x.contains(">Typical Values")        => Nil
-          case x if x.contains(" water")                 => Nil
-          case x if x.contains("Labelling Reference ")   => Nil
+//          // Known cases to ignore
+//          case x if x.contains("table>")                 => Nil
+//          case x if x.contains(">Typical Values")        => Nil
+//          case x if x.contains(" water")                 => Nil
+//          case x if x.contains("Labelling Reference ")   => Nil
           case _ => Nil//throw new IllegalStateException("Do not know about this nutrition type: ["+line+"] in table:\n{ "+table.foreach { p => println(p) } +"}" )
         }
       }
     }
     else {
-//      warn(s"Product details page seems to not have any Nutrition details... [$productString]")
+      warn(s"No nutrition details found.")
     }
     
     finalList

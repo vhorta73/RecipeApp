@@ -76,6 +76,9 @@ class MatchFat() {
   // Matching: negligible
   private final val FAT_G_27_NEGLIGIBLE_REGEX = """(?i)(negligible)""".r.unanchored
 
+  // Matching: <th scope="row">†Long Chain Polyunsaturated fatty acids</th><td>-</td><td>-</td>
+  private final val IGNORE_LINE = """(?i)Long Chain (Polyunsaturated fatty acids)""".r.unanchored
+
   /**
    * Returns the Fat case class with the detailed values as displaying on the web page.
    */
@@ -112,6 +115,8 @@ class MatchFat() {
       case FAT_G_25_REGEX(fat)                   => finalList = finalList ::: List(Fat(fat.toDouble,StandardUnits.g))
       case FAT_G_26_REGEX(fat)                   => finalList = finalList ::: List(Fat(fat.toDouble,StandardUnits.g))
       case FAT_G_27_NEGLIGIBLE_REGEX(negligible) => finalList = finalList ::: List(Fat(0,StandardUnits.g))
+
+      case IGNORE_LINE(str)                      => Nil
       case _ => warn(s"No Fat Matched $productString")
     }
     return finalList

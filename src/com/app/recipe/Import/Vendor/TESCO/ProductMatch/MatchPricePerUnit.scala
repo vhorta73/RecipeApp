@@ -1,10 +1,11 @@
 package com.app.recipe.Import.Vendor.TESCO.ProductMatch
 
-import com.app.recipe.Log.RecipeLogging
 import java.util.Currency
-import com.app.recipe.Import.Product.Units.Model.StandardUnits._
 import java.util.Locale
+
 import com.app.recipe.Import.Product.Units.Model.StandardUnits
+import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
+import com.app.recipe.Log.RecipeLogging
 
 /**
  * Class to find the url for the product small image.
@@ -44,40 +45,39 @@ class MatchPricePerUnit() extends RecipeLogging {
       var notAvailable = NOT_AVAILABLE.findFirstMatchIn(productString)
       if ( notAvailable.isDefined ) {
         warn(s"Product is not available")
-        return ( priceValue, priceCcy, unitValue, unitName )
       }
     }
-
-    pricePerUnit.get.toString() match {
-      case POUND_VALUE_BAR_EACH_REGEX(price) => {
-        priceValue = price.toDouble
-        unitValue = 1
-        unitName   = StandardUnits.getUnit("unit")
-      }
-      case POUND_VALUE_BAR_UNIT_REGEX(v,u) => {
-        priceValue = v.toDouble
-        try {
-          unitName   = StandardUnits.getUnit(u)
-        } catch {
-          case _ : Throwable => {
-            warn(s"[value/unit] Not able to match [${pricePerUnit.get.toString()}]. Will set: ($priceValue $priceCcy per $unitValue, $unitName)")
+    else {
+      pricePerUnit.get.toString() match {
+        case POUND_VALUE_BAR_EACH_REGEX(price) => {
+          priceValue = price.toDouble
+          unitValue = 1
+          unitName   = StandardUnits.getUnit("unit")
+        }
+        case POUND_VALUE_BAR_UNIT_REGEX(v,u) => {
+          priceValue = v.toDouble
+          try {
+            unitName   = StandardUnits.getUnit(u)
+          } catch {
+            case _ : Throwable => {
+              warn(s"[value/unit] Not able to match [${pricePerUnit.get.toString()}]. Will set: ($priceValue $priceCcy per $unitValue, $unitName)")
+            }
           }
         }
-      }
-      case POUND_VALUE_BAR_VALUE_UNIT_REGEX(price,value,u) => {
-        priceValue = price.toDouble
-        unitValue = value.toDouble
-        try {
-          unitName   = StandardUnits.getUnit(u)
-        } catch {
-          case _ : Throwable => {
-            warn(s"[value/value unit] Not able to match [${pricePerUnit.get.toString()}]. Will set: ($priceValue $priceCcy per $unitValue, $unitName)")
+        case POUND_VALUE_BAR_VALUE_UNIT_REGEX(price,value,u) => {
+          priceValue = price.toDouble
+          unitValue = value.toDouble
+          try {
+            unitName   = StandardUnits.getUnit(u)
+          } catch {
+            case _ : Throwable => {
+              warn(s"[value/value unit] Not able to match [${pricePerUnit.get.toString()}]. Will set: ($priceValue $priceCcy per $unitValue, $unitName)")
+            }
           }
         }
+        case _ => warn(s"Do not know how to parse the price par unit for: [${pricePerUnit.get.toString()}]")
       }
-      case _ => warn(s"Do not know how to parse the price par unit for: [${pricePerUnit.get.toString()}]")
     }
-
     ( priceValue, priceCcy, unitValue, unitName )
   }
 }

@@ -22,6 +22,9 @@ class MatchSaturates() extends RecipeLogging {
    */
   private final val SATURATES_STRING : String = "saturates"
   
+  /**
+   * String fragment that will indicate a line to ignore.
+   */
   private final val IGNORE_STRING : String = "ence intake";
 
   /**
@@ -86,7 +89,8 @@ class MatchSaturates() extends RecipeLogging {
   // Matching: <th scope="row">- of which saturates</th><td>0.5g</td>
   private final val SAT_G_29_REGEX = """(?i)<th scope="row">- of which saturates</th><td>([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">of which saturates g</th><td>3,5</td>
-  private final val SAT_G_30_COMMA_REGEX = """(?i)<th scope="row">of which saturates g</th><td>([0-9.,]+)</td>""".r.unanchored
+  // Matching: <th scope="row">of which saturates:</th><td>1,7g</td>
+  private final val SAT_G_30_COMMA_REGEX = """(?i)<th scope="row">of which saturates[ g:]+</th><td>([0-9.,]+)[g]+</td>""".r.unanchored
   // Matching: <th scope="row">Of which saturates</th><td><0.1g</td>
   private final val SAT_G_31_REGEX = """(?i)<th scope="row">Of which saturates</th><td><([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">(of which saturates</th><td>4.2g)</td>
@@ -104,7 +108,9 @@ class MatchSaturates() extends RecipeLogging {
   // Matching: <th scope="row">-of which saturates</th><td>0.1g</td>
   private final val SAT_G_38_REGEX = """(?i)<th scope="row">-of which saturates</th><td>([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">of which saturates</th><td>12,0 g</td>
-  private final val SAT_G_39_COMMA_REGEX = """(?i)<th scope="row">of which saturates</th><td>([0-9.,]+) g</td>""".r.unanchored
+  // Matching: <th scope="row">- Saturates</th><td>1,2 g</td>
+  // Matching: <th scope="row">saturates</th><td>0,3 g</td>
+  private final val SAT_G_39_COMMA_REGEX = """(?i)<th scope="row">[of whichs-]+aturates</th><td>([0-9.,]+) g</td>""".r.unanchored
   // Matching: <th scope="row">of which Saturates</th><td>Trace</td>
   private final val SAT_G_40_TRACE_REGEX = """(?i)<th scope="row">of which Saturates</th><td>(Trace)</td>""".r.unanchored
   // Matching: <th scope="row">- of which saturates:</th><td>1.29g</td>
@@ -137,6 +143,8 @@ class MatchSaturates() extends RecipeLogging {
   private final val SAT_G_53_REGEX = """(?i)<th scope="row">of which Saturates</th><td>([0-9.]+) g \([0-9%*]+\)</td>""".r.unanchored
   // Matching: <th scope="row">of which, saturates</th><td>0.6g</td>
   private final val SAT_G_54_REGEX = """(?i)<th scope="row">of which, saturates</th><td>([0-9.]+)g</td>""".r.unanchored
+  // Matching: <th scope="row">(of which saturates)</th><td><0.1g</td><td>0.2g</td><td>20g</td></tr>
+  private final val SAT_G_55_REGEX = """(?i)<th scope="row">\(of which saturates\)</th><td>[<]+([0-9.]+)[g]+</td>""".r.unanchored
 
   // Matching: <th scope="row">mono-unsaturates</th><td><0.5 g</td>
   private final val MONO_SAT_G_01_REGEX = """(?i)<th scope="row">mono-unsaturates</th><td><([0-9.]+) g</td>""".r.unanchored
@@ -148,13 +156,16 @@ class MatchSaturates() extends RecipeLogging {
   private final val MONO_SAT_G_04_REGEX = """(?i)<th scope="row">of which Mono-unsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">Mono-Unsaturates</th><td>26.5g</td>
   private final val MONO_SAT_G_05_REGEX = """(?i)<th scope="row">Mono-Unsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
+  // Matching: <th scope="row">of which, unsaturates</th><td>2.0g</td>
+  private final val MONO_SAT_G_06_REGEX = """<th scope="row">of which[, un]+saturates</th><td>([0-9.]+)[ ]+g</td>""".r.unanchored
 
   // Matching: <th scope="row">polyunsaturates</th><td>1.0 g</td>
   private final val POLI_SAT_G_01_REGEX = """(?i)<th scope="row">polyunsaturates</th><td>([0-9.]+) g</td>""".r.unanchored
   // Matching: <th scope="row">polyunsaturates</th><td>1.1g</td>
   private final val POLI_SAT_G_02_REGEX = """(?i)<th scope="row">polyunsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">of which Polyunsaturates</th><td>1.3g</td>
-  private final val POLI_SAT_G_03_REGEX = """(?i)<th scope="row">of which Polyunsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
+  // Matching: <th scope="row">of which: polyunsaturates</th><td>0.7g</td></tr>
+  private final val POLI_SAT_G_03_REGEX = """(?i)<th scope="row">of which[: ]+Polyunsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
   // Matching: <th scope="row">Polyunsaturates</th><td>2.3g</td>
   private final val POLI_SAT_G_04_REGEX = """(?i)<th scope="row">Polyunsaturates</th><td>([0-9.]+)g</td>""".r.unanchored
 
@@ -221,12 +232,14 @@ class MatchSaturates() extends RecipeLogging {
       case SAT_G_52_TRACE_REGEX(trace)        => finalList = finalList ::: List(Saturates(0,StandardUnits.g))
       case SAT_G_53_REGEX(sat)                => finalList = finalList ::: List(Saturates(sat.toDouble,StandardUnits.g))
       case SAT_G_54_REGEX(sat)                => finalList = finalList ::: List(Saturates(sat.toDouble,StandardUnits.g))
+      case SAT_G_55_REGEX(sat)                => finalList = finalList ::: List(Saturates(sat.toDouble,StandardUnits.g))
 
       case MONO_SAT_G_01_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
       case MONO_SAT_G_02_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
       case MONO_SAT_G_03_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
       case MONO_SAT_G_04_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
       case MONO_SAT_G_05_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
+      case MONO_SAT_G_06_REGEX(sat)           => finalList = finalList ::: List(MonoSaturates(sat.toDouble,StandardUnits.g))
 
       case POLI_SAT_G_01_REGEX(sat)           => finalList = finalList ::: List(PoliSaturates(sat.toDouble,StandardUnits.g))
       case POLI_SAT_G_02_REGEX(sat)           => finalList = finalList ::: List(PoliSaturates(sat.toDouble,StandardUnits.g))

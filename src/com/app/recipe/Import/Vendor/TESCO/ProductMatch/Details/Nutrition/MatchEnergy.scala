@@ -30,7 +30,8 @@ class MatchEnergy() extends RecipeLogging {
    * The regex constants to extract the energy values from supplied string.
    */
   // Matching: <th scope="row">Energy kJ</th><td>1667.4</td>
-  private final val KJ_01_REGEX = """(?i)<th scope="row">Energy kJ</th><td>([0-9.]+)</td>""".r.unanchored
+  // Matching: <th scope="row">Energy - kJ</th><td>4kJ</td><td>352kJ</td></tr>
+  private final val KJ_01_REGEX = """(?i)<th scope="row">Energy[- ]+kJ</th><td>([0-9.]+)[kKjJ]+</td>""".r.unanchored
   // Matchig: <th scope="row">Energy (kJ)</th><td>1365</td>
   private final val KJ_02_REGEX = """(?i)<th scope="row">Energy \(kJ\)</th><td>([0-9.]+)</td>""".r.unanchored
   // Matching: <th scope="row">Energy</th><td>2143kJ</td>
@@ -126,7 +127,8 @@ class MatchEnergy() extends RecipeLogging {
   // Matching: <th scope="row">Energy</th><td>239KJ/57Kcal</td>
   private final val KJ_KCAL_21_REGEX = """(?i)<th scope="row">Energy</th><td>([0-9.]+)KJ/([0-9.]+)Kcal</td>""".r.unanchored
   // Matching: <th scope="row">Energy kJ/kcal</th><td>93kJ/22kcal</td>
-  private final val KJ_KCAL_22_REGEX = """(?i)<th scope="row">Energy kJ/kcal</th><td>([0-9.]+)kJ/([0-9.]+)kcal</td>""".r.unanchored
+  // Matching: <th scope="row">Energy kJ / kcal</th><td>101kJ 24kcal</td><td>202kJ 48kcal</td>
+  private final val KJ_KCAL_22_REGEX = """(?i)<th scope="row">Energy[ kj]+/[ ]+kcal</th><td>([0-9.]+)kJ[ /]+([0-9.]+)kcal</td>""".r.unanchored
   // Matching: <th scope="row">Energy:</th><td>325 kcal - 1360 kJ</td>
   private final val KJ_KCAL_23_REGEX = """(?i)<th scope="row">Energy:</th><td>([0-9.]+) kcal - ([0-9.]+) kJ</td>""".r.unanchored
   // Matching: <th scope="row">Energy, kJ/kcal</th><td>423 / 100</td>
@@ -153,6 +155,9 @@ class MatchEnergy() extends RecipeLogging {
   private final val KJ_KCAL_34_REGEX = """(?i)<th scope="row">Energy value kJ/\(kcal\)</th><td>([0-9.]+)/\(([0-9.]+)\)</td>""".r.unanchored
   // Matching: <th scope="row">Energy</th><td>8.4 kJ/ 2.0kcal</td>
   private final val KJ_KCAL_35_REGEX = """(?i)<th scope="row">Energy</th><td>([0-9.]+) [a-zA-Z]+/ ([0-9.]+)[a-zA-Z]+</td>""".r.unanchored
+
+  // Matching: <th scope="row">Energy</th><td>53 kcal / 223 kJ</td></tr>
+  private final val KCAL_KJ_01_REGEX = """<th scope="row">Energy</th><td>([0-9.]+)[ KCALkcal ]+/[ ]+([0-9.]+)[ kKjJ]+</td></tr>""".r.unanchored
 
   /**
    * Returns the Energy case class with the detailed values as displaying on the web page.
@@ -228,6 +233,9 @@ class MatchEnergy() extends RecipeLogging {
       case KJ_KCAL_33_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
       case KJ_KCAL_34_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
       case KJ_KCAL_35_REGEX(kjDouble,kcalDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+
+      case KCAL_KJ_01_REGEX(kcalDouble,kjDouble) => finalList = finalList ::: List(Energy(kjDouble.toDouble,Kj),Energy(kcalDouble.toDouble,Kcal))
+
       case _ => warn(s"No Energy Matched $productString")
     }
 
