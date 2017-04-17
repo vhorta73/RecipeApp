@@ -20,17 +20,23 @@ object DatabaseFactory {
   private final val MAIN_CONFIG_FILE = "configuration/application.conf"
   private final val STORAGE = "storage"
 
-  def getInstance(mode : DatabaseMode.Mode) : RecipeDatabase = config.getString(STORAGE) match {
+  /**
+   * The instance for the database mode requested, which will return the 
+   * respective object that will supply the expected operations proper 
+   * for the mode.
+   */
+  def getInstance[A](mode : DatabaseMode.Mode) : A = config.getString(STORAGE) match {
+    // SQL mode returns objects that connect to the MySQL database.
     case "SQL" => {
       mode match {
         // Admin database
         case DatabaseMode.ADMIN => throw new IllegalStateException("Not yet implemented")
 
         // Core database
-        case DatabaseMode.CORE => SQLCore
+        case DatabaseMode.CORE => SQLCore.asInstanceOf[A]
 
         // Vendor databases
-        case DatabaseMode.TESCO_IMPORT => SQLTescoImport
+        case DatabaseMode.TESCO_IMPORT => SQLTescoImport.asInstanceOf[A]
         
         // For the unknown database modes.
         case _ => throw new IllegalStateException("Unknown Mode")

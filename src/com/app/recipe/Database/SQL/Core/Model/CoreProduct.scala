@@ -5,7 +5,7 @@ import com.app.recipe.Database.Model.DatabaseGlobalVariables
 
 trait CoreProduct
 
-case class Ingredient(
+case class CoreIngredient (
      id : Int
     ,name : String
     ,created_date : LocalDateTime = LocalDateTime.now()
@@ -14,7 +14,7 @@ case class Ingredient(
     ,updated_by : String = DatabaseGlobalVariables.getDeaultSystemUsername()
 ) extends CoreProduct
 
-case class Attribute(
+case class CoreAttribute (
     id : Int
     ,name : String
     ,created_date : LocalDateTime = LocalDateTime.now()
@@ -23,7 +23,7 @@ case class Attribute(
     ,updated_by : String
 ) extends CoreProduct
 
-case class Source(
+case class CoreSource (
     id : Int
     ,name : String
     ,created_date : LocalDateTime = LocalDateTime.now()
@@ -32,7 +32,7 @@ case class Source(
     ,updated_by : String
 ) extends CoreProduct
 
-case class IngredientAttribute(
+case class CoreIngredientAttribute (
     id : Int
     ,ingredient_id : Int
     ,attribute_id : Int
@@ -42,7 +42,7 @@ case class IngredientAttribute(
     ,updated_by : String
 ) extends CoreProduct
 
-case class IngredientSource(
+case class CoreIngredientSource (
     id : Int
     ,ingredient_id : Int
     ,source_id : Int
