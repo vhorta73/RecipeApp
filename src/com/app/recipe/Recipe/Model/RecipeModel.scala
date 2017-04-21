@@ -24,3 +24,5 @@ case class Recipe(
   , tags             : Option[List[String]]          = None
   , stages           : Option[List[String]]          = None
 )
+
+case class Stage( stepId : Int, stepName : String, stepDescription : String )

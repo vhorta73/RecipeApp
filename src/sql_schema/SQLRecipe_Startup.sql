@@ -120,7 +120,7 @@ CREATE TABLE `recipe_author` (
 CREATE TABLE `recipe_rating` (
    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
    `recipe_id` INT(11) UNSIGNED NOT NULL,
-   `rating` VARCHAR(255) NOT NULL,
+   `rating` INT(3) NOT NULL,
    `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
@@ -133,7 +133,7 @@ CREATE TABLE `recipe_rating` (
 CREATE TABLE `recipe_difficulty` (
    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
    `recipe_id` INT(11) UNSIGNED NOT NULL,
-   `difficulty` VARCHAR(255) NOT NULL,
+   `difficulty` INT(3) NOT NULL,
    `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
    `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
