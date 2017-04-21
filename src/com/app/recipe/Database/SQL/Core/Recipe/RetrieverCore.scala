@@ -5,8 +5,8 @@ import java.sql.Timestamp
 import scala.collection.immutable.HashMap
 
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeNameRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueObject
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueObject
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeMainIngredientRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeAuthorRow
@@ -19,19 +19,19 @@ abstract class RetrieverCore {
   /**
    * Method to get one row by id that must be implemented by child classes.
    */
-  def getRowId( id : Int ) : Option[TableValueObject]
+  def getRowId( id : Int ) : Option[TableValueClass]
   
   /**
    * Method to get one or more rows by recipe id.
    */
-  def getRecipeId( id : Int ) : Option[List[TableValueObject]]
+  def getRecipeId( id : Int ) : Option[List[TableValueClass]]
   
   /**
    * Generic DB SQL query for given SQL and column names.
    * TODO: Add a session to this to restrict access.
    */
   protected def getHashMapFromSQL( sql : String, columns : Array[String] ) : List[Map[ String, String ]] = {
-    val resultSet = SQLDatabaseHandle.getMultiThreadedSQLHandle().createStatement().executeQuery(sql)
+    val resultSet = SQLDatabaseHandle.getSQLHandle().createStatement().executeQuery(sql)
     var finalList : List[Map[ String, String ]] = List()
     var hashMap : HashMap[ String , String ] = HashMap()
     while ( resultSet.next() ) {
@@ -48,7 +48,7 @@ abstract class RetrieverCore {
   /**
    * Returning the respective object depending on the table and data supplied.
    */
-  protected def getObject( data : Map[String,String], table : String ) : TableValueObject = table match {
+  protected def getObject( data : Map[String,String], table : String ) : TableValueClass = table match {
     case "recipe" => {
       val created_date      : Timestamp = Timestamp.valueOf(data("created_date").toString())
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())

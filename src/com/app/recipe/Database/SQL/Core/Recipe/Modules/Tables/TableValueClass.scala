@@ -8,7 +8,7 @@ import com.app.recipe.Database.Model.DatabaseGlobalVariables
 /**
  * The main interface for all table objects.
  */
-trait TableValueObject
+trait TableValueClass
 
 /**
  * The recipe table row.
@@ -21,7 +21,7 @@ case class RecipeNameRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueObject
+) extends TableValueClass
 
 /**
  * The recipe main ingredient table row.
@@ -34,7 +34,7 @@ case class RecipeMainIngredientRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueObject
+) extends TableValueClass
 
 /**
  * The recipe author table row.
@@ -47,7 +47,7 @@ case class RecipeAuthorRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueObject
+) extends TableValueClass
 
 
 

@@ -5,12 +5,12 @@ import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeMainIngre
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeMainIngredient
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeNameRetriever
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeNameRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueObject
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueObject
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
 import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Recipe.Model.Recipe
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeMainIngredientRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueObject
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeAuthor
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeAuthorRow
 
@@ -62,7 +62,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    */
   def getRecipeAggregatedById( id : Int ) : Option[Recipe] = {
     // The single row results
-    val recipeName           : Option[TableValueObject] = recipeRetrieverClassMap(RECIPE_NAME_COLUMNS).getRowId(id)
+    val recipeName           : Option[TableValueClass] = recipeRetrieverClassMap(RECIPE_NAME_COLUMNS).getRowId(id)
 
     // Recipe Name is the core information for any recipe. Not having a row, 
     // means no data for this recipe.
@@ -73,12 +73,12 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
     val recipeDifficulty     = recipeClassMap(RECIPE_DIFFICULTY_COLUMNS).getRecipeById(id)
 
     // The multiple row results
-    val recipeMainIngredient : Option[List[TableValueObject]] = recipeRetrieverClassMap(RECIPE_MAIN_INGREDIENT_COLUMNS).getRecipeId(id)
+    val recipeMainIngredient : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_MAIN_INGREDIENT_COLUMNS).getRecipeId(id)
     val recipeType           = recipeClassMap(RECIPE_TYPE_COLUMNS).getRecipeById(id)
     val recipeStyle          = recipeClassMap(RECIPE_STYLE_COLUMNS).getRecipeById(id)
     val recipeCourse         = recipeClassMap(RECIPE_COURSE_COLUMNS).getRecipeById(id)
     val recipeSource         = recipeClassMap(RECIPE_SOURCE_COLUMNS).getRecipeById(id)
-    val recipeAuthor         : Option[List[TableValueObject]] = recipeRetrieverClassMap(RECIPE_AUTHOR_COLUMNS).getRecipeId(id)
+    val recipeAuthor         : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_AUTHOR_COLUMNS).getRecipeId(id)
     val recipeDuration       = recipeClassMap(RECIPE_DURATION_COLUMNS).getRecipeById(id)
     val recipeTags           = recipeClassMap(RECIPE_TAGS_COLUMNS).getRecipeById(id)
     val recipeStage          = recipeClassMap(RECIPE_STAGE_COLUMNS).getRecipeById(id)
