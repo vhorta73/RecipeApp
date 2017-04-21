@@ -20,13 +20,14 @@ object SQLDatabaseAccess {
   private final val PASSWORD_CONF          = "sql.password"
   private final val DRIVER_CONF            = "sql.driver"
   private final val URL_CONF               = "sql.url"
+  private final val THREAD_COUNT           = "sql.threads"
 
   /**
    * The database handle which gives access to the DB.
    */
   def getHandle(db : RecipeDatabase) : Connection = {
 
-    if ( db == null || ! db.getClass.equals(SQLDatabase.getClass) )
+    if ( db == null || ! db.getClass.equals(SQLDatabaseHandle.getClass) )
       throw new IllegalArgumentException("Cannot access SQL database")
     
     // Capture any errors and define what to show.
@@ -42,4 +43,9 @@ object SQLDatabaseAccess {
     // Never display user details.
     throw new IllegalStateException("Cannot access SQL database")
   }
+  
+  /**
+   * The configured set thread count.
+   */
+  def getThreadCount() : Int = config.getString(THREAD_COUNT).toInt
 }

@@ -1,4 +1,4 @@
--/**
+/**
  * ========================== WARNING ============================
  *   THIS SCRIPT WILL ERASE ALL DATA FROM recipe_core DATABASE     
  *       AND WILL RESTORE DATABASE TO DEFAULT STARTUP STATE       

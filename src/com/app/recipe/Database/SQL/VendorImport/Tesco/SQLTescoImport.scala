@@ -1,6 +1,6 @@
 package com.app.recipe.Database.SQL.VendorImport.Tesco
 
-import com.app.recipe.Database.SQL.SQLDatabase
+import com.app.recipe.Database.SQL.SQLDatabaseHandle
 import com.app.recipe.Database.SQL.VendorImport.SQLRecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Log.RecipeLogging
@@ -41,7 +41,7 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
    */
   final def updateProduct( product : ProductImport ) : Unit = {
     // Prepare the statement with placeholder to complete per loop.
-    val statement = SQLDatabase.getSQLHandle().prepareStatement("UPDATE " + 
+    val statement = SQLDatabaseHandle.getSQLHandle().prepareStatement("UPDATE " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() +
         " SET title = ?,          halal = ?,           vegetarian = ?,  offer = ?,   available = ?,   " +
         "    amount = ?,          amount_unit = ?,     price = ?,       ccy = ?,     base_price = ?,  " +
@@ -77,7 +77,7 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
    */
   final def insertProduct( product : ProductImport ) : Unit = {
     // Prepare the statement with placeholder to complete per loop.
-    val statement = SQLDatabase.getSQLHandle().prepareStatement("INSERT INTO " + 
+    val statement = SQLDatabaseHandle.getSQLHandle().prepareStatement("INSERT INTO " + 
         getImportRecipeDatabaseName() + "." + getVendorImportProductTableBaseName() + " ( " +
         "`product_id`,`title`,`halal`,`vegetarian`,`offer`,`available`,`amount`,`amount_unit`, " + 
         "`price`,`ccy`,`base_price`,`base_ccy`,`base_value`,`base_unit`, " + 
@@ -115,7 +115,7 @@ object SQLTescoImport extends SQLRecipeDatabaseVendorImport with RecipeLogging {
   private final def hasProduct(product : ProductImport) : Boolean = {
     val product_id = product.id
     val importDate = product.importedDate
-    val getSavedProductStatement = SQLDatabase.getSQLHandle().createStatement()
+    val getSavedProductStatement = SQLDatabaseHandle.getSQLHandle().createStatement()
 
     val resultSet = getSavedProductStatement.executeQuery(
         "SELECT product_id, imported_date " + 

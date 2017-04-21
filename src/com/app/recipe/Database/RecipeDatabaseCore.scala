@@ -42,7 +42,13 @@ abstract trait RecipeDatabaseCore extends RecipeDatabase {
    * The element Recipe search by id.
    */
   def getRecipeById( id : Int ) : Option[Recipe]
-  
+
+  /**
+   * Get a new recipe Id after passing a name and version number.
+   * If the name and version already exists, it will return the existing one.
+   */
+  def getNewRecipeId( name : String, version : Int ) : Int
+
 //  /**
 //   * The element Recipe search by name.
 //   */

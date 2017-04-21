@@ -26,6 +26,7 @@ class MatchQuantity() extends RecipeLogging {
   // Matching: [...### UUU..]
   private final val SPACED_QUANTITY_REGEX = "([0-9]+) ([a-zA-Z]+)".r.unanchored
   // Matching: [...##X###UUU..]
+  // TODO: Also matches: [J2o Orange And Passion Fruit 275Ml 10 Pack] :)
   private final val UNSPACED_QUANTITY_TIMES_REGEX = "([0-9]+)[X|x]([0-9]+)([a-zA-Z]+)".r.unanchored
   // Matching: [...## X ### UUU..]
   private final val SPACED_QUANTITY_TIMES_REGEX = "([0-9]+) [X|x] ([0-9]+) ([a-zA-Z]+)".r.unanchored
