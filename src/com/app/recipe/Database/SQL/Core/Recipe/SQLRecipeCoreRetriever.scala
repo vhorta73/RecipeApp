@@ -17,6 +17,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeAuthorRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeCourseRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDescriptionRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDifficultyRow
+import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDurationRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeMainIngredientRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeNameRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeRatingRow
@@ -27,6 +28,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTagRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTypeRow
 import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Recipe.Model.Duration
 import com.app.recipe.Recipe.Model.Recipe
 import com.app.recipe.Recipe.Model.Stage
 
@@ -82,16 +84,8 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
     val recipeTag            : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_TAGS_COLUMNS).getRecipeId(id)
     val recipeStage          : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_STAGE_COLUMNS).getRecipeId(id)
 
-    // TODO: Get data from methods where we set the correct return value and do required operations.
-//    val mainDurationType     : Option[String] = if ( recipeDuration.isEmpty ) None else Some(recipeDuration(0)(RECIPE_DURATION_COLUMNS(2)))
-//    val mainDuration         : Option[String] = if ( recipeDuration.isEmpty ) None else Some(recipeDuration(0)(RECIPE_DURATION_COLUMNS(3)))
-//    val mainStageStepId      : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(2)))
-//    val mainStageStepName    : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(3)))
-//    val mainStageDescription : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(4)))
-
     // Each column comes from one or many rows from different tables.
-    // Methods are called to aggregate each parameter to the expected
-    // value and type.
+    // Methods are called to aggregate each parameter to the expected value and type.
     Some(Recipe(
         id               = getRecipeId( recipeName )
       , name             = getName( recipeName )
@@ -106,12 +100,14 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
       , author           = getAuthor( recipeAuthor )
 //      , ingredientList   = None
       , rating           = getRating( recipeRating )
-      , difficulty       = getDifficulty( recipeDifficulty)
+      , difficulty       = getDifficulty( recipeDifficulty )
+      , duration         = getDuration( recipeDuration )
       , tags             = getTag( recipeTag ) 
       , stages           = getStage( recipeStage )
     ))
   }
 
+  
   /**
    * A list of results is converted to String.
    */
@@ -278,15 +274,25 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
               .toString) ::: finalStage
         }
       }
-
       Some(finalStage)
   }
 
-        //    val mainDurationType     : Option[String] = if ( recipeDuration.isEmpty ) None else Some(recipeDuration(0)(RECIPE_DURATION_COLUMNS(2)))
-//    val mainDuration         : Option[String] = if ( recipeDuration.isEmpty ) None else Some(recipeDuration(0)(RECIPE_DURATION_COLUMNS(3)))
-//    val mainStageStepId      : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(2)))
-//    val mainStageStepName    : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(3)))
-//    val mainStageDescription : Option[String] = if ( recipeStage.isEmpty ) None else Some(recipeStage(RECIPE_STAGE_COLUMNS(4)))
-
-
+  /**
+   * The recipe duration.
+   * 
+   * @param recipeDuration : Option[List[TableValueClass]]
+   * @returns Option[List[String]]
+   */
+  private final def getDuration( recipeDuration : Option[List[TableValueClass]] ) : Option[List[String]] = {
+      var finalDuration : List[String] = List()
+      recipeDuration.get.toList.foreach { 
+        row => {
+          finalDuration = List(Duration(
+              row.asInstanceOf[RecipeDurationRow].Type,
+              row.asInstanceOf[RecipeDurationRow].duration)
+              .toString) ::: finalDuration
+        }
+      }
+      Some(finalDuration)
+  }
 }
