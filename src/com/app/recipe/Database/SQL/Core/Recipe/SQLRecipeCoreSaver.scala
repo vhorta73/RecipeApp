@@ -1,7 +1,7 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Recipe.Model.Recipe
+import com.app.recipe.Model.Recipe
 
 /**
  * The Recipe Core Saver implementing required methods set by RecipeDatabaseCore 

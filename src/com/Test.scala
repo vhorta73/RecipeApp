@@ -1,4 +1,6 @@
-package com.app.recipe.Database.SQL.Core
+
+
+package com
 
 sealed trait List[+A]
 case object Nil extends List[Nothing]

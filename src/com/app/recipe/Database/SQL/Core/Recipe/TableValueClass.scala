@@ -1,8 +1,6 @@
-package com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables
+package com.app.recipe.Database.SQL.Core.Recipe
 
-import java.sql.Date
 import java.sql.Timestamp
-
 import com.app.recipe.Database.Model.DatabaseGlobalVariables
 import java.sql.Time
 

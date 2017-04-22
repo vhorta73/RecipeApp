@@ -1,37 +1,22 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeAuthor
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeCourse
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeDescription
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeDifficulty
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeDuration
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeMainIngredient
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeNameRetriever
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeNameRetriever
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeRating
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeSource
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeStage
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeStyle
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeTag
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever.RecipeType
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeAuthorRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeCourseRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDescriptionRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDifficultyRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDurationRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeMainIngredientRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeNameRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeRatingRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeSourceRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeStageRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeStyleRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTagRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTypeRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeAuthor
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeCourse
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDescription
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDifficulty
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDuration
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeMainIngredient
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeNameRetriever
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeRating
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeSource
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeStage
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeStyle
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeTag
+import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeType
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Recipe.Model.Duration
-import com.app.recipe.Recipe.Model.Recipe
-import com.app.recipe.Recipe.Model.Stage
+import com.app.recipe.Model.Duration
+import com.app.recipe.Model.Recipe
+import com.app.recipe.Model.Stage
 
 /**
  * The Recipe Core implementing public methods required by RecipeDatabase 

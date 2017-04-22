@@ -1,13 +1,13 @@
-package com.app.recipe.Database.SQL.Core.Recipe.Modules
+package com.app.recipe.Database.SQL.Core.Recipe
 
-import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
+import com.app.recipe.Log.RecipeLogging
 
 /**
  * The generic class to save supplied information to respective database and
  * table, setting given columns with data supplied .
  */
-class RecipeCoreSavingQuery( database: String, table: String ) extends RecipeLogging {
+class RecipeCoreSavingQuer( database: String, table: String ) extends RecipeLogging {
 
   /**
    * Create a new recipe row with given name and version. If another recipe 

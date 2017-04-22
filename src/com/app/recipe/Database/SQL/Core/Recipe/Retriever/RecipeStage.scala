@@ -1,6 +1,6 @@
-package com.app.recipe.Database.SQL.Core.Recipe.Modules.Retriever
+package com.app.recipe.Database.SQL.Core.Recipe.Retriever
 
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeStageRow
+import com.app.recipe.Database.SQL.Core.Recipe.RecipeStageRow
 import com.app.recipe.Database.SQL.Core.Recipe.RetrieverCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
 

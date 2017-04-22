@@ -1,6 +1,5 @@
-package com.app.recipe.Recipe.Model
+package com.app.recipe.Model
 
-import com.app.recipe.Recipe.Model._
 import java.sql.Time
 
 /**

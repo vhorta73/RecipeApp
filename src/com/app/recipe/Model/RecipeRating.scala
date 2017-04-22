@@ -1,4 +1,4 @@
-package com.app.recipe.Recipe.Model
+package com.app.recipe.Model
 
 object RecipeRating extends Enumeration {
   type rate = Value

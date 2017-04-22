@@ -5,20 +5,6 @@ import java.sql.Timestamp
 
 import scala.collection.immutable.HashMap
 
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeAuthorRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeCourseRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDescriptionRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDifficultyRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeDurationRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeMainIngredientRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeNameRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeRatingRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeSourceRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeStageRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeStyleRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTagRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.RecipeTypeRow
-import com.app.recipe.Database.SQL.Core.Recipe.Modules.Tables.TableValueClass
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
 
 /**

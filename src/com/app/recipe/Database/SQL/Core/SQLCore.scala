@@ -2,8 +2,9 @@ package com.app.recipe.Database.SQL.Core
 
 import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreRetriever
+import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreSaver
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Recipe.Model.Recipe
+import com.app.recipe.Model._
 
 /**
  * The Core object pointing each method call to the respective object that 
@@ -21,9 +22,13 @@ object SQLCore extends RecipeDatabaseCore with RecipeLogging {
   def getRecipeById( id : Int ) : Option[Recipe] = SQLRecipeCoreRetriever.getRecipeAggregatedById(id)
 
   /**
-   * Creates a new Recipe from a Map and returns the created recipe_id.
-   * If another recipe already exists with same name and version, will 
-   * return that id instead.
+   * Get a new recipe Id after passing a name and version number.
+   * If the name and version already exists, it will return the 
+   * existing one.
+   * 
+   * @param name : String
+   * @param version : Int
+   * @returns recipe_id : Int
    */
-//  def getNewRecipeId( name : String, version : Int ) : Int = SQLRecipeCoreSaver.getNewRecipeId(name, version)
+  def getNewRecipeId( name : String, version : Int ) : Int = SQLRecipeCoreSaver.getNewRecipeId(name, version)
 }
