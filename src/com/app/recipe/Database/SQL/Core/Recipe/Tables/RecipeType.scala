@@ -1,6 +1,6 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.RetrieverCore
+import com.app.recipe.Database.SQL.Core.Recipe.SQLCoreTableAccess
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
 
 /**
@@ -8,7 +8,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
  * table structure. It is a flexible way to query the database and 
  * should not be used directly by the front end.
  */
-class RecipeType() extends RetrieverCore with SQLRecipeCore {
+class RecipeType() extends SQLCoreTableAccess with SQLRecipeCore {
 
   /**
    * The row by id.

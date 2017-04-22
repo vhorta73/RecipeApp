@@ -1,14 +1,14 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.RetrieverCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
+import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
 
 /**
  * This class knows all there is to know about the recipe style
  * table structure. It is a flexible way to query the database and 
  * should not be used directly by the front end.
  */
-class RecipeStyle() extends RetrieverCore with SQLRecipeCore {
+class RecipeStyle() extends SQLRecipeTableAccess {
 
   /**
    * The row by id.

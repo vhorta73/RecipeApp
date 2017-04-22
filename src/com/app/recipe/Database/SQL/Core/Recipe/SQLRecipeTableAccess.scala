@@ -22,39 +22,17 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.TableRow
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
 
 /**
- * Shared logic amongst all retriever classes and objects.
+ * Setting the methods that all children must implement and sharing logic 
+ * amongst all of them.
  */
-abstract class RetrieverCore {
+abstract class SQLRecipeTableAccess extends SQLTableAccess {
 
   /**
-   * Method to get one row by id that must be implemented by child classes.
-   */
-  def getRowId( id : Int ) : Option[TableRow]
-  
-  /**
    * Method to get one or more rows by recipe id.
+   * //TODO: This method will cause issues if core will have tables without recipe id...
    */
   def getRecipeId( id : Int ) : Option[List[TableRow]]
   
-  /**
-   * Generic DB SQL query for given SQL and column names.
-   * TODO: Add a session to this to restrict access.
-   */
-  protected def getHashMapFromSQL( sql : String, columns : Array[String] ) : List[Map[ String, String ]] = {
-    val resultSet = SQLDatabaseHandle.getSQLHandle().createStatement().executeQuery(sql)
-    var finalList : List[Map[ String, String ]] = List()
-    var hashMap : HashMap[ String , String ] = HashMap()
-    while ( resultSet.next() ) {
-      var index : Int = 1
-      for( column <- columns ) {
-        hashMap = hashMap + (column -> resultSet.getString(index))
-        index = index + 1
-      }
-      finalList = finalList ::: List(hashMap)
-    }
-    finalList
-  }
-
   /**
    * Returning the respective object depending on the table and data supplied.
    */
