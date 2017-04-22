@@ -1,4 +1,4 @@
-package com.app.recipe.Database.SQL.Core.Recipe.Retriever
+package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
 import com.app.recipe.Database.SQL.Core.Recipe.RecipeTypeRow
 import com.app.recipe.Database.SQL.Core.Recipe.RetrieverCore

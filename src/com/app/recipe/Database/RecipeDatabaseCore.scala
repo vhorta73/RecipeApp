@@ -56,7 +56,7 @@ abstract trait RecipeDatabaseCore extends RecipeDatabase {
    * @param version : Int
    * @returns recipe_id : Int
    */
-  def getNewRecipeId( name : String, version : Int ) : Int
+  def getNewRecipeId( name : String, version : Int ) : Option[Int]
 
 //  /**
 //   * The element Recipe search by name.

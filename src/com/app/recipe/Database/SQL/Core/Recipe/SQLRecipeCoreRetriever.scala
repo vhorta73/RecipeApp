@@ -1,22 +1,23 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeAuthor
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeCourse
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDescription
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDifficulty
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeDuration
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeMainIngredient
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeNameRetriever
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeRating
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeSource
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeStage
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeStyle
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeTag
-import com.app.recipe.Database.SQL.Core.Recipe.Retriever.RecipeType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeNameRetriever
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficulty
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Model.Duration
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthor
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSource
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredient
 import com.app.recipe.Model.Recipe
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStage
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescription
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRating
+import com.app.recipe.Model.Duration
 import com.app.recipe.Model.Stage
+
 
 /**
  * The Recipe Core implementing public methods required by RecipeDatabase 

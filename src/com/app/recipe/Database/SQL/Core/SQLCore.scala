@@ -18,6 +18,9 @@ object SQLCore extends RecipeDatabaseCore with RecipeLogging {
 
   /**
    * Retrieving the complete recipe structure from the database by recipe id.
+   * 
+   * @param id : Int
+   * @returns Option[Recipe]
    */
   def getRecipeById( id : Int ) : Option[Recipe] = SQLRecipeCoreRetriever.getRecipeAggregatedById(id)
 
@@ -28,7 +31,16 @@ object SQLCore extends RecipeDatabaseCore with RecipeLogging {
    * 
    * @param name : String
    * @param version : Int
-   * @returns recipe_id : Int
+   * @returns Option[Int]
    */
-  def getNewRecipeId( name : String, version : Int ) : Int = SQLRecipeCoreSaver.getNewRecipeId(name, version)
+  def getNewRecipeId( name : String, version : Int ) : Option[Int] = SQLRecipeCoreSaver.getNewRecipeId(name, version)
+
+  /**
+   * Updates the supplied recipe to the database, inserting if new.
+   * 
+   * @param recipe : Recipe
+   * @returns Option[Recipe]
+   */
+  def update( recipe : Recipe ) : Option[Recipe] = SQLRecipeCoreSaver.update( recipe )
+
 }
