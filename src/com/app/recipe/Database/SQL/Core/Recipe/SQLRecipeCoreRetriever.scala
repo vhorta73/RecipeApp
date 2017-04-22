@@ -67,25 +67,25 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    */
   def getRecipeAggregatedById( id : Int ) : Option[Recipe] = {
     // The single row results
-    val recipeName           : Option[TableValueClass] = recipeRetrieverClassMap(RECIPE_NAME).getRowId(id)
+    val recipeName           : Option[TableRow] = recipeRetrieverClassMap(RECIPE_NAME).getRowId(id)
 
     // Recipe Name is the core information for any recipe. Not having a row, means no data for this recipe.
     if ( recipeName.isEmpty ) return None 
     
-    val recipeDescription    : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_DESCRIPTION).getRecipeId(id)
-    val recipeRating         : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_RATING).getRecipeId(id)
-    val recipeDifficulty     : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_DIFFICULTY).getRecipeId(id)
+    val recipeDescription    : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_DESCRIPTION).getRecipeId(id)
+    val recipeRating         : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_RATING).getRecipeId(id)
+    val recipeDifficulty     : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_DIFFICULTY).getRecipeId(id)
 
     // The multiple row results
-    val recipeMainIngredient : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_MAIN_INGREDIENT).getRecipeId(id)
-    val recipeType           : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_TYPE).getRecipeId(id)
-    val recipeStyle          : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_STYLE).getRecipeId(id)
-    val recipeCourse         : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_COURSE).getRecipeId(id)
-    val recipeSource         : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_SOURCE).getRecipeId(id)
-    val recipeAuthor         : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_AUTHOR).getRecipeId(id)
-    val recipeDuration       : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_DURATION).getRecipeId(id)
-    val recipeTag            : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_TAG).getRecipeId(id)
-    val recipeStage          : Option[List[TableValueClass]] = recipeRetrieverClassMap(RECIPE_STAGE).getRecipeId(id)
+    val recipeMainIngredient : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_MAIN_INGREDIENT).getRecipeId(id)
+    val recipeType           : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_TYPE).getRecipeId(id)
+    val recipeStyle          : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_STYLE).getRecipeId(id)
+    val recipeCourse         : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_COURSE).getRecipeId(id)
+    val recipeSource         : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_SOURCE).getRecipeId(id)
+    val recipeAuthor         : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_AUTHOR).getRecipeId(id)
+    val recipeDuration       : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_DURATION).getRecipeId(id)
+    val recipeTag            : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_TAG).getRecipeId(id)
+    val recipeStage          : Option[List[TableRow]] = recipeRetrieverClassMap(RECIPE_STAGE).getRecipeId(id)
 
     // Each column comes from one or many rows from different tables.
     // Methods are called to aggregate each parameter to the expected value and type.
@@ -136,7 +136,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeName : Option[TableValueClass]
    * @returns Option[Int]
    */
-  private final def getRecipeId( recipeName : Option[TableValueClass] ) : Option[Int] = 
+  private final def getRecipeId( recipeName : Option[TableRow] ) : Option[Int] = 
     if ( recipeName.isEmpty ) None else Some( recipeName.get.asInstanceOf[RecipeNameRow].id )
 
   /**
@@ -145,7 +145,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeName : Option[TableValueClass]
    * @returns Option[String]
    */
-  private final def getName( recipeName : Option[TableValueClass] ) : Option[String] = 
+  private final def getName( recipeName : Option[TableRow] ) : Option[String] = 
     if ( recipeName.isEmpty ) None else Some( recipeName.get.asInstanceOf[RecipeNameRow].name )
 
   /**
@@ -154,7 +154,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeName : Option[TableValueClass]
    * @returns Option[Int]
    */
-  private final def getVersion( recipeName : Option[TableValueClass] ) : Option[Int] =
+  private final def getVersion( recipeName : Option[TableRow] ) : Option[Int] =
     Some(recipeName.get.asInstanceOf[RecipeNameRow].version)
   
   /**
@@ -163,7 +163,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeIngredient : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getMainIngredient( mainIngredient : Option[List[TableValueClass]] ) : Option[List[String]] = 
+  private final def getMainIngredient( mainIngredient : Option[List[TableRow]] ) : Option[List[String]] = 
     if ( mainIngredient.isEmpty ) None else Some(mainIngredient.get.toList
       .map { row => row.asInstanceOf[RecipeMainIngredientRow].main_ingredient })
 
@@ -173,7 +173,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeType : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getType( recipeType : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getType( recipeType : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeType.isEmpty ) None else Some( recipeType.get.toList
       .map { row => row.asInstanceOf[RecipeTypeRow].Type })
 
@@ -183,7 +183,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeStyle : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getStyle( recipeStyle : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getStyle( recipeStyle : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeStyle.isEmpty ) None else Some( recipeStyle.get.toList
       .map { row => row.asInstanceOf[RecipeStyleRow].style })
   
@@ -193,7 +193,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeCourse : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getCourse( recipeCourse : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getCourse( recipeCourse : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeCourse.isEmpty ) None else Some( recipeCourse.get.toList
       .map { row => row.asInstanceOf[RecipeCourseRow].course })
 
@@ -203,7 +203,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeDescription : Option[List[TableValueClass]]
    * @returns Option[String]
    */
-  private final def getDescription( recipeDescription : Option[List[TableValueClass]] ) : Option[String] = {
+  private final def getDescription( recipeDescription : Option[List[TableRow]] ) : Option[String] = {
     var string : String = ""
     if ( recipeDescription.isEmpty ) None 
     else Some( recipeDescription.get.toList.foreach { row => string += row.asInstanceOf[RecipeDescriptionRow].description })
@@ -216,7 +216,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeSource : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getSource( recipeSource : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getSource( recipeSource : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeSource.isEmpty ) None else Some(recipeSource.get.toList
       .map { row => row.asInstanceOf[RecipeSourceRow].source })
 
@@ -226,7 +226,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeAuthor : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getAuthor( recipeAuthor : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getAuthor( recipeAuthor : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeAuthor.isEmpty ) None else Some(recipeAuthor.get.toList
        .map { row  => row.asInstanceOf[RecipeAuthorRow].author })
 
@@ -236,7 +236,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeRating : Option[List[TableValueClass]]
    * @returns Option[Int]
    */
-  private final def getRating( recipeRating : Option[List[TableValueClass]] ) : Option[Int] =
+  private final def getRating( recipeRating : Option[List[TableRow]] ) : Option[Int] =
     if ( recipeRating.isEmpty ) None 
     else Some( recipeRating.get(0).asInstanceOf[RecipeRatingRow].rating)
 
@@ -246,7 +246,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeDifficulty : Option[List[TableValueClass]]
    * @returns Option[Int]
    */
-  private final def getDifficulty( recipeDifficulty : Option[List[TableValueClass]] ) : Option[Int] =
+  private final def getDifficulty( recipeDifficulty : Option[List[TableRow]] ) : Option[Int] =
     if ( recipeDifficulty.isEmpty ) None else Some(recipeDifficulty.get(0).asInstanceOf[RecipeDifficultyRow].difficulty)
 
   /**
@@ -255,7 +255,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeTag : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getTag( recipeTag : Option[List[TableValueClass]] ) : Option[List[String]] =
+  private final def getTag( recipeTag : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeTag.isEmpty ) None else Some(recipeTag.get.toList
         .map{ row => row.asInstanceOf[RecipeTagRow].tag })
 
@@ -265,7 +265,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeStage : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getStage( recipeStage : Option[List[TableValueClass]] ) : Option[List[String]] = {
+  private final def getStage( recipeStage : Option[List[TableRow]] ) : Option[List[String]] = {
       var finalStage : List[String] = List()
       recipeStage.get.toList.foreach { 
         row => {
@@ -285,7 +285,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * @param recipeDuration : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getDuration( recipeDuration : Option[List[TableValueClass]] ) : Option[List[String]] = {
+  private final def getDuration( recipeDuration : Option[List[TableRow]] ) : Option[List[String]] = {
       var finalDuration : List[String] = List()
       recipeDuration.get.toList.foreach { 
         row => {

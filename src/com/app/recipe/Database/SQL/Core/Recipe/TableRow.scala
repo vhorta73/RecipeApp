@@ -1,13 +1,14 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
-import java.sql.Timestamp
-import com.app.recipe.Database.Model.DatabaseGlobalVariables
 import java.sql.Time
+import java.sql.Timestamp
+
+import com.app.recipe.Database.Model.DatabaseGlobalVariables
 
 /**
  * The main interface for all table objects.
  */
-trait TableValueClass
+trait TableRow
 
 /**
  * The recipe table row.
@@ -20,7 +21,7 @@ case class RecipeNameRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe main ingredient table row.
@@ -33,7 +34,7 @@ case class RecipeMainIngredientRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe author table row.
@@ -46,7 +47,7 @@ case class RecipeAuthorRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe source table row.
@@ -59,7 +60,7 @@ case class RecipeSourceRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe course table row.
@@ -72,7 +73,7 @@ case class RecipeCourseRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe description table row.
@@ -85,7 +86,7 @@ case class RecipeDescriptionRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe difficulty table row.
@@ -98,7 +99,7 @@ case class RecipeDifficultyRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe duration table row.
@@ -112,7 +113,7 @@ case class RecipeDurationRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe rating table row.
@@ -125,7 +126,7 @@ case class RecipeRatingRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe stage table row.
@@ -140,7 +141,7 @@ case class RecipeStageRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe style table row.
@@ -153,7 +154,7 @@ case class RecipeStyleRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe tag table row.
@@ -166,7 +167,7 @@ case class RecipeTagRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 
 /**
  * The recipe type table row.
@@ -179,5 +180,5 @@ case class RecipeTypeRow(
   , created_date      : Timestamp
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp
-) extends TableValueClass
+) extends TableRow
 

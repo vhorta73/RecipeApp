@@ -15,12 +15,12 @@ abstract class RetrieverCore {
   /**
    * Method to get one row by id that must be implemented by child classes.
    */
-  def getRowId( id : Int ) : Option[TableValueClass]
+  def getRowId( id : Int ) : Option[TableRow]
   
   /**
    * Method to get one or more rows by recipe id.
    */
-  def getRecipeId( id : Int ) : Option[List[TableValueClass]]
+  def getRecipeId( id : Int ) : Option[List[TableRow]]
   
   /**
    * Generic DB SQL query for given SQL and column names.
@@ -44,7 +44,7 @@ abstract class RetrieverCore {
   /**
    * Returning the respective object depending on the table and data supplied.
    */
-  protected def getObject( data : Map[String,String], table : String ) : TableValueClass = table match {
+  protected def getObject( data : Map[String,String], table : String ) : TableRow = table match {
     case "recipe" => {
       val created_date      : Timestamp = Timestamp.valueOf(data("created_date").toString())
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
