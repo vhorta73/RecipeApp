@@ -1,14 +1,14 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.SQLCoreTableAccess
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
+import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
 
 /**
  * This class knows all there is to know about the recipe type
  * table structure. It is a flexible way to query the database and 
  * should not be used directly by the front end.
  */
-class RecipeType() extends SQLCoreTableAccess with SQLRecipeCore {
+class RecipeType() extends SQLRecipeTableAccess {
 
   /**
    * The row by id.
