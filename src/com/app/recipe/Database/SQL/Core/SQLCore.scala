@@ -3,8 +3,7 @@ package com.app.recipe.Database.SQL.Core
 import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreRetriever
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Recipe.Model._
-import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreSaver
+import com.app.recipe.Recipe.Model.Recipe
 
 /**
  * The Core object pointing each method call to the respective object that 
@@ -26,5 +25,5 @@ object SQLCore extends RecipeDatabaseCore with RecipeLogging {
    * If another recipe already exists with same name and version, will 
    * return that id instead.
    */
-  def getNewRecipeId( name : String, version : Int ) : Int = SQLRecipeCoreSaver.getNewRecipeId(name, version)
+//  def getNewRecipeId( name : String, version : Int ) : Int = SQLRecipeCoreSaver.getNewRecipeId(name, version)
 }

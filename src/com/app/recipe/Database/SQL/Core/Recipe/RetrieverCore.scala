@@ -25,7 +25,7 @@ import com.app.recipe.Database.SQL.SQLDatabaseHandle
  * Shared logic amongst all retriever classes and objects.
  */
 abstract class RetrieverCore {
-  
+
   /**
    * Method to get one row by id that must be implemented by child classes.
    */
