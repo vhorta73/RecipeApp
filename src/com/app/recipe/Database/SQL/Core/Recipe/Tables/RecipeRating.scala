@@ -1,6 +1,5 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.RecipeRatingRow
 import com.app.recipe.Database.SQL.Core.Recipe.RetrieverCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
 

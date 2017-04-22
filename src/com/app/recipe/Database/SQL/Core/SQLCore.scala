@@ -4,7 +4,7 @@ import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreRetriever
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreSaver
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Model._
+import com.app.recipe.Model.Recipe
 
 /**
  * The Core object pointing each method call to the respective object that 

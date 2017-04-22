@@ -5,6 +5,20 @@ import java.sql.Timestamp
 
 import scala.collection.immutable.HashMap
 
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthorRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourseRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescriptionRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficultyRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDurationRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredientRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeNameRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRatingRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSourceRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStageRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyleRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTagRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTypeRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.TableRow
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
 
 /**

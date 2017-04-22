@@ -14,7 +14,7 @@ class RecipeCoreSavingQuer( database: String, table: String ) extends RecipeLogg
    * exists with same name and version, will throw a SQL INSERT DUP key 
    * exception error.
    */
-  def newRecipe( name : String, version : Int ) : Unit = {
+  def neawRecipe( name : String, version : Int ) : Unit = {
     val statement = SQLDatabaseHandle.getMultiThreadedSQLHandle().prepareStatement(raw"INSERT INTO ?.?${database}.${table} (`name`,`version`) VALUES('$name','$version')")
 //    .execute()
   }

@@ -1,7 +1,5 @@
 package com.app.recipe
 
-import scala.util.Random
-
 import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabaseCore

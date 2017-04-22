@@ -1,4 +1,4 @@
-package com.app.recipe.Database.SQL.Core.Recipe
+package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
 import java.sql.Time
 import java.sql.Timestamp
