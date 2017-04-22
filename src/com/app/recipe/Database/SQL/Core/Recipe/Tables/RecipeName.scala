@@ -9,7 +9,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
  * It is a flexible way to query the database and should not be used
  * directly by the front end.
  */
-class RecipeNameRetriever() extends RetrieverCore with SQLRecipeCore {
+class RecipeName() extends RetrieverCore with SQLRecipeCore {
 
   /**
    * The row by id.

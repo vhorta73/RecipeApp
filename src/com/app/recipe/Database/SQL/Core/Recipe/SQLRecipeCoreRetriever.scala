@@ -1,6 +1,6 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeNameRetriever
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeName
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficulty
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
@@ -48,7 +48,7 @@ object SQLRecipeCoreRetriever extends RecipeLogging {
    * out, key'd on the array of column names. 
    */
   private final val recipeRetrieverClassMap : Map[String,RetrieverCore] = Map(
-      RECIPE_NAME            -> new RecipeNameRetriever()
+      RECIPE_NAME            -> new RecipeName()
     , RECIPE_MAIN_INGREDIENT -> new RecipeMainIngredient()
     , RECIPE_TYPE            -> new RecipeType()
     , RECIPE_STYLE           -> new RecipeStyle()
