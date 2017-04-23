@@ -1,7 +1,7 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
+import com.app.recipe.Model.Recipe
 
 /**
  * This class knows all there is to know about the recipe rating
@@ -14,7 +14,9 @@ class RecipeRating() extends SQLRecipeTableAccess {
    * The row by id.
    */
   override def getRowId( id : Int ) : Option[RecipeRatingRow] = {
-    getHashMapFromSQL( raw"SELECT * FROM ${getCoreDatabaseName()}.${getRecipeRatingTableName()} WHERE id = '${id}' ", getRecipeRatingColumns() ) match {
+    val statement= getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getRecipeRatingTableName()} WHERE id = ?")
+    statement.setInt(1, id)
+    getHashMapFromSQL( statement, getRecipeRatingColumns() ) match {
       case result if result.size == 0 => None
       case result if result.size == 1 => Some(getObject(result(0), getRecipeRatingTableName()).asInstanceOf[RecipeRatingRow])
       case _ => throw new IllegalStateException(s"Multiple primary key'd rows found for id '$id'.")
@@ -24,8 +26,10 @@ class RecipeRating() extends SQLRecipeTableAccess {
   /**
    * The rows that match supplied recipe id.
    */
-  def getRecipeId( id : Int ) : Option[List[RecipeRatingRow]] = 
-    getHashMapFromSQL( raw"SELECT * FROM ${getCoreDatabaseName()}.${getRecipeRatingTableName()} WHERE recipe_id = '${id}'", getRecipeRatingColumns() ) match {
+  def getRecipeId( id : Int ) : Option[List[RecipeRatingRow]] = {
+    val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getRecipeRatingTableName()} WHERE recipe_id = ?")
+    statement.setInt(1, id)
+    getHashMapFromSQL( statement, getRecipeRatingColumns() ) match {
       case result if result.size == 0 => None
       case result => {
         var optionList : List[RecipeRatingRow] = List()
@@ -35,4 +39,15 @@ class RecipeRating() extends SQLRecipeTableAccess {
         if ( optionList.size == 0 ) None else Some(optionList)
       }
     }
+  }
+
+  /**
+   * Creates a new record with information supplied. If the record already 
+   * exists for the unique key supplied, it will apply an update instead.
+   * Returns true if created, false if update and None if no action applied.
+   * 
+   * @param recipe
+   * @return Option[TableRow] 
+   */
+  override def saveRecord( recipe : Recipe ) : Option[TableRow] = None
 }

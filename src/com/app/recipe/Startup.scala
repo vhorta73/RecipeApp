@@ -3,6 +3,7 @@ package com.app.recipe
 import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabaseCore
+import com.app.recipe.Model.Recipe
 
 
 /**
@@ -39,10 +40,18 @@ object Startup extends App {
 //    )
 //    list.foreach { t => t.start()}
 
-    
     val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
-    println(coreDB.getRecipeById(3))
-//    val newId = 2
+
+    val r = Recipe(
+        id      = Some(11),
+        name    = Some("A new recipe no version"),
+        version = Some(2)
+    )
+
+    println(coreDB.saveRecord(r))
+    
+    //.getRecipeById(3))
+    //    val newId = 2
     //coreDB.newRecipe(Map(
       //  "name" -> "My first Recipe",
         //"version" -> "3"

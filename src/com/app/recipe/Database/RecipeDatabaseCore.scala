@@ -1,7 +1,6 @@
 package com.app.recipe.Database
 
 import com.app.recipe.Model.Recipe
-import com.app.recipe.Database.SQL.Core.Recipe.SaverCore
 
 /**
  * The interface exposing all methods and variables that must be implemented 
@@ -43,20 +42,19 @@ abstract trait RecipeDatabaseCore extends RecipeDatabase {
    * The element Recipe search by id.
    * 
    * @param id : Int
-   * @returns Option[Recipe]
+   * @return Option[Recipe]
    */
   def getRecipeById( id : Int ) : Option[Recipe]
 
   /**
-   * Get a new recipe Id after passing a name and version number.
-   * If the name and version already exists, it will return the 
-   * existing one.
+   * Get a recipe from existing or create a new.
    * 
-   * @param name : String
-   * @param version : Int
-   * @returns recipe_id : Int
+   * @param name 
+   * @param version 
+   * @return Recipe
    */
-  def getNewRecipeId( name : String, version : Int ) : Option[Int]
+  def getRecipe( name : String, version : Int ) : Option[Recipe]
+  def saveRecord( recipe : Recipe ) : Option[Recipe]
 
 //  /**
 //   * The element Recipe search by name.

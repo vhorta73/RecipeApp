@@ -1,9 +1,9 @@
 package com.app.recipe.Database.SQL.Core
 
 import com.app.recipe.Database.RecipeDatabaseCore
+import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreRetriever
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreSaver
 import com.app.recipe.Log.RecipeLogging
-import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCoreRetriever
 import com.app.recipe.Model._
 
 /**
@@ -31,16 +31,18 @@ object SQLCore extends RecipeDatabaseCore with RecipeLogging {
    * 
    * @param name : String
    * @param version : Int
-   * @returns Option[Int]
+   * @returns Option[Recipe]
    */
-  def getNewRecipeId( name : String, version : Int ) : Option[Int] = SQLRecipeCoreSaver.getNewRecipeId(name, version)
+  def getRecipe( name : String, version : Int ) : Option[Recipe] = SQLRecipeCoreSaver.getRecipeByNameAndVersion(name, version)
 
   /**
-   * Updates the supplied recipe to the database, inserting if new.
+   * Saves a recipe onto the database. 
+   * If a recipe with the same unique key exists, it will update instead.
+   * Returns the Recipe option object.
    * 
    * @param recipe : Recipe
    * @returns Option[Recipe]
    */
-  def update( recipe : Recipe ) : Option[Recipe] = SQLRecipeCoreSaver.update( recipe )
+  def saveRecord( recipe : Recipe ) : Option[Recipe] = SQLRecipeCoreSaver.saveRecipe( recipe )
 
 }

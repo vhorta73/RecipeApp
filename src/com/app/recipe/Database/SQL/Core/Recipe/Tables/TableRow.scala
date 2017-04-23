@@ -4,6 +4,7 @@ import java.sql.Time
 import java.sql.Timestamp
 
 import com.app.recipe.Database.Model.DatabaseGlobalVariables
+import java.sql.Date
 
 /**
  * The main interface for all table objects.
@@ -18,9 +19,9 @@ case class RecipeNameRow(
   , name              : String
   , version           : Int
   , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()
-  , created_date      : Timestamp
+  , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
-  , last_updated_date : Timestamp
+  , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
 ) extends TableRow
 
 /**
