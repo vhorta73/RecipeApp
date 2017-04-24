@@ -13,12 +13,12 @@ import com.app.recipe.Model.RecipeManager
 object Startup extends App {
 
   override def main(args: Array[String]): Unit = {
-for ( i <- 1 to 1000) {
+//for ( i <- 1 to 1000) {
     val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
 
     val r = Recipe(
-         id    = Some(i)
-       , name    = Some("Carrot cake "+i)
+         id    = Some(1)
+       , name    = Some("Carrot cake")
        , version = Some(0)
     )
 
@@ -30,7 +30,7 @@ for ( i <- 1 to 1000) {
 coreDB.saveRecord(updatedRecipe)
 //    println(coreDB.getRecipeById(1))
 //    println(coreDB.saveRecord(updatedRecipe))
-}
+//}
     //.getRecipeById(3))
     //    val newId = 2
     //coreDB.newRecipe(Map(

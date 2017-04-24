@@ -130,7 +130,6 @@ class RecipeType() extends SQLRecipeTableAccess {
         } }
       }
     }
-    println(statement)
     statement
   }
 }

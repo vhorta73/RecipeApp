@@ -7,23 +7,23 @@ import com.app.recipe.Log.RecipeLogging
  * The Recipe case class.
  */
 case class Recipe(
-    id               : Option[Int]          = None
-  , name             : Option[String]       = None
-  , version          : Option[Int]          = None
-  , mainIngredient   : Option[List[String]] = None
-  , recipeType       : Option[List[String]] = None
-  , recipeStyle      : Option[List[String]] = None
-  , course           : Option[List[String]] = None
-  , description      : Option[String]       = None
-  , source           : Option[List[String]] = None
-  , recipeForPersons : Option[Int]          = None
-  , author           : Option[List[String]] = None
-  , ingredientList   : Option[List[String]] = None
-  , rating           : Option[Int]          = None
-  , difficulty       : Option[Int]          = None
-  , duration         : Option[List[String]] = None
-  , tags             : Option[List[String]] = None
-  , stages           : Option[List[String]] = None
+    id               : Option[Int]          = None // TODO: must create new id when required
+  , name             : Option[String]       = None // Unique with a version
+  , version          : Option[Int]          = None // Unique with a name
+  , mainIngredient   : Option[List[String]] = None // TODO
+  , recipeType       : Option[List[String]] = None // DONE
+  , recipeStyle      : Option[List[String]] = None // TODO
+  , course           : Option[List[String]] = None // TODO
+  , description      : Option[String]       = None // TODO
+  , source           : Option[List[String]] = None // TODO
+  , recipeForPersons : Option[Int]          = None // TODO
+  , author           : Option[List[String]] = None // DONE
+  , ingredientList   : Option[List[String]] = None // TODO
+  , rating           : Option[Int]          = None // TODO
+  , difficulty       : Option[Int]          = None // TODO
+  , duration         : Option[List[String]] = None // TODO
+  , tags             : Option[List[String]] = None // TODO
+  , stages           : Option[List[String]] = None // TODO
 )
 
 /**

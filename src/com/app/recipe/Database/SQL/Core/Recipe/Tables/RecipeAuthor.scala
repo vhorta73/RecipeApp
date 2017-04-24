@@ -132,7 +132,6 @@ class RecipeAuthor() extends SQLRecipeTableAccess {
         } }
       }
     }
-    println(statement)
     statement
   }
 }
