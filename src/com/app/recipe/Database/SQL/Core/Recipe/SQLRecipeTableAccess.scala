@@ -26,6 +26,8 @@ import com.app.recipe.Database.SQL.SQLDatabaseHandle
  * amongst all of them.
  */
 abstract class SQLRecipeTableAccess extends SQLTableAccess {
+  // TODO: Know who is requesting these methods...
+  protected final val last_updated_by : String = "Me"
 
   /**
    * Method to get one or more rows by recipe id.

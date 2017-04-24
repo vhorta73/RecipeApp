@@ -4,6 +4,7 @@ import com.app.recipe.Database.DatabaseFactory
 import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Model.Recipe
+import com.app.recipe.Model.RecipeManager
 
 
 /**
@@ -12,44 +13,22 @@ import com.app.recipe.Model.Recipe
 object Startup extends App {
 
   override def main(args: Array[String]): Unit = {
-//    val times = 100000
-//    val mod   =  10000
-//    val start = System.currentTimeMillis()
-//    val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE);
-//    val list = List(
-//      new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("01: "+i); }; val end = System.currentTimeMillis(); println(s"1 Start: $start, End: $end, Time: ${end - start}")  } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("02: "+i); }; val end = System.currentTimeMillis(); println(s"2 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("03: "+i); }; val end = System.currentTimeMillis(); println(s"3 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("04: "+i); }; val end = System.currentTimeMillis(); println(s"4 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("05: "+i); }; val end = System.currentTimeMillis(); println(s"5 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("06: "+i); }; val end = System.currentTimeMillis(); println(s"6 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("07: "+i); }; val end = System.currentTimeMillis(); println(s"7 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("08: "+i); }; val end = System.currentTimeMillis(); println(s"8 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("09: "+i); }; val end = System.currentTimeMillis(); println(s"9 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("10: "+i); }; val end = System.currentTimeMillis(); println(s"10 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("11: "+i); }; val end = System.currentTimeMillis(); println(s"11 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("12: "+i); }; val end = System.currentTimeMillis(); println(s"12 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("13: "+i); }; val end = System.currentTimeMillis(); println(s"13 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("14: "+i); }; val end = System.currentTimeMillis(); println(s"14 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("15: "+i); }; val end = System.currentTimeMillis(); println(s"15 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("16: "+i); }; val end = System.currentTimeMillis(); println(s"16 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("17: "+i); }; val end = System.currentTimeMillis(); println(s"17 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("18: "+i); }; val end = System.currentTimeMillis(); println(s"18 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("19: "+i); }; val end = System.currentTimeMillis(); println(s"19 Start: $start, End: $end, Time: ${end - start}") } })
-//    , new Thread( new Runnable {def run() = { for( i <- 0 to times ) { coreDB.getRecipeById(Random.nextInt()); if ( i%mod == 0 ) println("20: "+i); }; val end = System.currentTimeMillis(); println(s"20 Start: $start, End: $end, Time: ${end - start}") } })
-//    )
-//    list.foreach { t => t.start()}
-
+//for ( i <- 1 to 1000) {
     val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
 
     val r = Recipe(
-        id      = Some(11),
-        name    = Some("A new recipe no version"),
-        version = Some(2)
+         id      = Some(1)
+       , name    = Some("A new recipe no version")
+       , version = Some(2)
     )
 
-    println(coreDB.saveRecord(r))
-    
+    var updatedRecipe = RecipeManager.add(Map(
+        "author" -> List(s"test 1",s"test 2")
+    ))(Some(r)).get
+
+    println(coreDB.getRecipeById(1))
+//    println(coreDB.saveRecord(updatedRecipe))
+//}
     //.getRecipeById(3))
     //    val newId = 2
     //coreDB.newRecipe(Map(

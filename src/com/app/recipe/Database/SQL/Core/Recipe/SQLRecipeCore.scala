@@ -46,18 +46,18 @@ abstract trait SQLRecipeCore extends RecipeLogging {
    * The column names to be used to call on the found database values.
    */
   protected final def getRecipeNameColumns()           : Array[String] = Array("id","name","version","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeMainIngredientColumns() : Array[String] = Array("id","recipe_id","main_ingredient","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeTypeColumns()           : Array[String] = Array("id","recipe_id","type","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeStyleColumns()          : Array[String] = Array("id","recipe_id","style","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeCourseColumns()         : Array[String] = Array("id","recipe_id","course","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeDescriptionColumns()    : Array[String] = Array("id","recipe_id","description","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeSourceColumns()         : Array[String] = Array("id","recipe_id","source","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeAuthorColumns()         : Array[String] = Array("id","recipe_id","author","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeRatingColumns()         : Array[String] = Array("id","recipe_id","rating","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeDifficultyColumns()     : Array[String] = Array("id","recipe_id","difficulty","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeDurationColumns()       : Array[String] = Array("id","recipe_id","type","duration","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeTagColumns()            : Array[String] = Array("id","recipe_id","tag","created_by","created_date","last_updated_by","last_updated_date")
-  protected final def getRecipeStageColumns()          : Array[String] = Array("id","recipe_id","step_id","step_name","description","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeMainIngredientColumns() : Array[String] = Array("id","recipe_id","main_ingredient","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeTypeColumns()           : Array[String] = Array("id","recipe_id","type","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeStyleColumns()          : Array[String] = Array("id","recipe_id","style","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeCourseColumns()         : Array[String] = Array("id","recipe_id","course","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeDescriptionColumns()    : Array[String] = Array("id","recipe_id","description","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeSourceColumns()         : Array[String] = Array("id","recipe_id","source","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeAuthorColumns()         : Array[String] = Array("id","recipe_id","author","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeRatingColumns()         : Array[String] = Array("id","recipe_id","rating","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeDifficultyColumns()     : Array[String] = Array("id","recipe_id","difficulty","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeDurationColumns()       : Array[String] = Array("id","recipe_id","type","duration","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeTagColumns()            : Array[String] = Array("id","recipe_id","tag","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeStageColumns()          : Array[String] = Array("id","recipe_id","step_id","step_name","description","active","created_by","created_date","last_updated_by","last_updated_date")
 
   /**
    * The instantiated recipe classes for DB access on each.

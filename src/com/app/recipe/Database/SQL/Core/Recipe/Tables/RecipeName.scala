@@ -11,8 +11,6 @@ import com.app.recipe.Model.Recipe
  * directly by the front end.
  */
 class RecipeName() extends SQLRecipeTableAccess {
-  // TODO: Know who is requesting these methods...
-  val last_updated_by : String = "Me"
   
   /**
    * The row by id.
@@ -78,7 +76,7 @@ class RecipeName() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[Recipe] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[TableRow] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
     var recipeName : RecipeNameRow = RecipeNameRow(
         // If id is not supplied, allow the system to work it out.
           id      = if (recipe.id.isDefined ) recipe.id.get else 0
@@ -91,7 +89,7 @@ class RecipeName() extends SQLRecipeTableAccess {
     try { prepareRecord("insert", recipeName).execute() } 
     catch { case duplicatedKey : Throwable => prepareRecord("update",recipeName).execute() }
 
-    getRecipeByNameAndVersion(recipeName.name, recipeName.version)
+    Some(List(getRecipeByNameAndVersion(recipeName.name, recipeName.version).get))
   }
 
   /**

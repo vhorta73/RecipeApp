@@ -250,6 +250,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    */
   private final def getStage( recipeStage : Option[List[TableRow]] ) : Option[List[String]] = {
       var finalStage : List[String] = List()
+      if ( recipeStage.isEmpty ) return None
       recipeStage.get.toList.foreach { 
         row => {
           finalStage = List(Stage(
@@ -270,6 +271,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    */
   private final def getDuration( recipeDuration : Option[List[TableRow]] ) : Option[List[String]] = {
       var finalDuration : List[String] = List()
+      if ( recipeDuration.isEmpty ) return None
       recipeDuration.get.toList.foreach { 
         row => {
           finalDuration = List(Duration(

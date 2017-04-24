@@ -34,9 +34,9 @@ abstract class SQLTableAccess extends SQLRecipeCore {
    * record across the board otherwise.
    * 
    * @param recipe
-   * @return Option[TableRow] 
+   * @return Option[List[TableRow]] 
    */
-  def saveRecord( recipe : Recipe ) : Option[TableRow]
+  def saveRecord( recipe : Recipe ) : Option[List[TableRow]]
 
   /**
    * Generic DB SQL query for given SQL and column names.
@@ -47,10 +47,8 @@ abstract class SQLTableAccess extends SQLRecipeCore {
     var finalList : List[Map[ String, String ]] = List()
     var hashMap : HashMap[ String , String ] = HashMap()
     while ( resultSet.next() ) {
-      var index : Int = 1
       for( column <- columns ) {
-        hashMap = hashMap + (column -> resultSet.getString(index))
-        index = index + 1
+        hashMap = hashMap + (column -> resultSet.getString(column))
       }
       finalList = finalList ::: List(hashMap)
     }

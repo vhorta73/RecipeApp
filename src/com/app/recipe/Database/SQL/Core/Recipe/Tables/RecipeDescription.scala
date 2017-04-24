@@ -44,12 +44,11 @@ class RecipeDescription() extends SQLRecipeTableAccess {
   }
 
   /**
-   * Creates a new record with information supplied. If the record already 
-   * exists for the unique key supplied, it will apply an update instead.
-   * Returns true if created, false if update and None if no action applied.
+   * Creates a new record with information supplied or updates existing row/rows
+   * for given recipe otherwise. Returns true if inserted, false if updated.
    * 
    * @param recipe
-   * @return Option[TableRow] 
+   * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[TableRow] = None
+  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = None
 }

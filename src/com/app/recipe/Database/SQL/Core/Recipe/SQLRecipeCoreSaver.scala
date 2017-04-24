@@ -4,6 +4,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeName
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeNameRow
 import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Model.Recipe
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthor
 
 
 /**
@@ -12,14 +13,21 @@ import com.app.recipe.Model.Recipe
  */
 object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
 
-  def getRecipeByNameAndVersion( name : String, version : Int ) : Option[Recipe] = {
-    None
-  }
+  /**
+   * The aggregated version of Recipe.
+   */
+  def getRecipeByNameAndVersion( name : String, version : Int ) : Option[Recipe] = SQLRecipeCoreRetriever.getRecipeAggregatedById(version)
 
   def saveRecipe( recipe : Recipe ) : Option[Recipe] = {
     // TODO: Here we only deal with separated tables and need to aggregate them.
-    val recipeName = (new RecipeName()).saveRecord(recipe)
-    println("OK"+recipeName)
+    val recipeName   = (new RecipeName()).saveRecord(recipe)
+    val recipeAuthor = (new RecipeAuthor()).saveRecord(recipe)
+
+    println("RecipeName: "+recipeName)
+    println("RecipeAuthor: "+recipeAuthor)
+
+    SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
+    
 //    .get.getRecipeByNameAndVersion(name, version)
 //    var finalRecipe : Recipe = null
 //    if ( recipe.isEmpty ) {
