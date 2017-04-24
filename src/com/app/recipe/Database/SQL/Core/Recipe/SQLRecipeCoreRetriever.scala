@@ -158,7 +158,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    */
   private final def getType( recipeType : Option[List[TableRow]] ) : Option[List[String]] =
     if ( recipeType.isEmpty ) None else Some( recipeType.get.toList
-      .map { row => row.asInstanceOf[RecipeTypeRow].Type })
+      .map { row => row.asInstanceOf[RecipeTypeRow].recipeType })
 
   /**
    * The recipe style.

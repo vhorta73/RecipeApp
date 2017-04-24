@@ -175,7 +175,7 @@ case class RecipeTagRow(
 case class RecipeTypeRow(
     id                : Int = 0
   , recipe_id         : Int
-  , Type              : String
+  , recipeType        : String
   , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()

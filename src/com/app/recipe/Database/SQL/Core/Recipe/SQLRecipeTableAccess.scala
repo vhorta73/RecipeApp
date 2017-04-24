@@ -205,7 +205,7 @@ abstract class SQLRecipeTableAccess extends SQLTableAccess {
       RecipeTypeRow( 
           id                = data("id").toInt
         , recipe_id         = data("recipe_id").toInt 
-        , Type              = data("type")
+        , recipeType        = data("type")
         , created_by        = data("created_by")
         , created_date      = created_date
         , last_updated_by   = data("last_updated_by") 

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement
 
 import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
 import com.app.recipe.Model.Recipe
+import com.app.recipe.Model.RecipeManager
 
 /**
  * This class knows all there is to know about the recipe structure.
@@ -77,11 +78,18 @@ class RecipeName() extends SQLRecipeTableAccess {
    * @return Option[Recipe] 
    */
   override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+    var r : Option[Recipe] = Some(recipe)
+    var recipeId : Int = 0
+    if ( recipe.id.isEmpty && recipe.name.isDefined ) {
+      var recipeByName = getRecipeByName(recipe.name.get)
+      if ( recipeByName.isDefined ) recipeId = recipeByName.get(0).id
+    }
+
     var recipeName : RecipeNameRow = RecipeNameRow(
         // If id is not supplied, allow the system to work it out.
-          id      = if (recipe.id.isDefined ) recipe.id.get else 0
+          id      = if ( recipe.id.isDefined ) recipe.id.get else recipeId
         , name    = recipe.name.get
-        , version = recipe.version.get
+        , version = if ( recipe.version.isDefined) recipe.version.get else 0
         , last_updated_by = last_updated_by
     )
 

@@ -66,13 +66,6 @@ object RecipeManager extends RecipeLogging {
             case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value ::: mainIngredients
             case (field,value) if (field.equals("recipeType")) => recipeTypeList = value ::: recipeTypeList
             case (field,value) if (field.equals("author")) => authorList = value ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
-//        case authors if (authors._1.equals("authors")) => authorList = key._2 ::: authorList
         case _ => error("RecipeManager.add found a bad key: " + key.toString())
       })
 
@@ -81,7 +74,7 @@ object RecipeManager extends RecipeLogging {
         , name             = recipe.name
         , version          = recipe.version
         , mainIngredient   = recipe.mainIngredient
-        , recipeType       = recipe.recipeType
+        , recipeType       = Some(recipeTypeList)
         , recipeStyle      = recipe.recipeStyle
         , course           = recipe.course
         , description      = recipe.description
