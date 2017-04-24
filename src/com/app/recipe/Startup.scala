@@ -25,6 +25,7 @@ object Startup extends App {
     var updatedRecipe = RecipeManager.add(Map(
         "author"     -> List(s"Vasco",s"Vasco Horta",s"Horta")
       , "recipeType" -> List("Cake","Plain")
+      , "recipeStyle" -> List("w/garlic")
 //      , "version"    -> List("0")
     ))(Some(r)).get
 coreDB.saveRecord(updatedRecipe)

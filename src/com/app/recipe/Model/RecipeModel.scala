@@ -62,12 +62,14 @@ object RecipeManager extends RecipeLogging {
       var stageList           : List[String] = if ( givenRecipe.get.stages.isDefined ) givenRecipe.get.stages.get else List()
 
       updateMap.foreach( 
-          key => key match {
-            case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value ::: mainIngredients
-            case (field,value) if (field.equals("recipeType")) => recipeTypeList = value ::: recipeTypeList
-            case (field,value) if (field.equals("author")) => authorList = value ::: authorList
-        case _ => error("RecipeManager.add found a bad key: " + key.toString())
-      })
+        key => key match {
+          case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value ::: mainIngredients
+          case (field,value) if (field.equals("recipeType")) => recipeTypeList = value ::: recipeTypeList
+          case (field,value) if (field.equals("recipeStyle")) => recipeStyleList = value ::: recipeStyleList
+          case (field,value) if (field.equals("author")) => authorList = value ::: authorList
+          case _ => error("RecipeManager.add found a bad key: " + key.toString())
+        }
+      )
 
       Some(Recipe(
           id               = recipe.id
@@ -75,7 +77,7 @@ object RecipeManager extends RecipeLogging {
         , version          = recipe.version
         , mainIngredient   = recipe.mainIngredient
         , recipeType       = Some(recipeTypeList)
-        , recipeStyle      = recipe.recipeStyle
+        , recipeStyle      = Some(recipeStyleList)
         , course           = recipe.course
         , description      = recipe.description
         , source           = recipe.source

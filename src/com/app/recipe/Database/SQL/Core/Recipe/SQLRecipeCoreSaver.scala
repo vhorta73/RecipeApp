@@ -6,6 +6,7 @@ import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Model.Recipe
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthor
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
 
 
 /**
@@ -24,10 +25,12 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     val recipeName   = (new RecipeName()).saveRecord(recipe)
     val recipeAuthor = (new RecipeAuthor()).saveRecord(recipe)
     val recipeType   = (new RecipeType()).saveRecord(recipe)
+    val recipeStyle  = (new RecipeStyle()).saveRecord(recipe)
 
     println("RecipeName: "+recipeName)
     println("RecipeAuthor: "+recipeAuthor)
     println("RecipeType: "+recipeType)
+    println("RecipeStyle: "+recipeStyle)
 
     SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
     
