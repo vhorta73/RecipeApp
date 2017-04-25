@@ -246,7 +246,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    * The recipe stage.
    * 
    * @param recipeStage : Option[List[TableValueClass]]
-   * @returns Option[List[String]]
+   * @returns Option[List[Stage]]
    */
   private final def getStage( recipeStage : Option[List[TableRow]] ) : Option[List[Stage]] = {
       var finalStage : List[Stage] = List()
@@ -267,17 +267,17 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    * The recipe duration.
    * 
    * @param recipeDuration : Option[List[TableValueClass]]
-   * @returns Option[List[String]]
+   * @returns Option[List[Duration]]
    */
-  private final def getDuration( recipeDuration : Option[List[TableRow]] ) : Option[List[String]] = {
-      var finalDuration : List[String] = List()
+  private final def getDuration( recipeDuration : Option[List[TableRow]] ) : Option[List[Duration]] = {
+      var finalDuration : List[Duration] = List()
       if ( recipeDuration.isEmpty ) return None
       recipeDuration.get.toList.foreach { 
         row => {
           finalDuration = List(Duration(
               row.asInstanceOf[RecipeDurationRow].Type,
               row.asInstanceOf[RecipeDurationRow].duration)
-              .toString) ::: finalDuration
+              ) ::: finalDuration
         }
       }
       Some(finalDuration)

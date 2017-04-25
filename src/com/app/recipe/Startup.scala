@@ -6,6 +6,8 @@ import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Model.Recipe
 import com.app.recipe.Model.RecipeManager
 import com.app.recipe.Model.Stage
+import com.app.recipe.Model.Duration
+import java.sql.Time
 
 
 /**
@@ -28,7 +30,8 @@ object Startup extends App {
       , "recipeType"  -> List("Cake","Plain")
       , "recipeStyle" -> List("w/garlic")
       , "tags"        -> List("tag1","description1","tag3","description 2")
-      , "stages"       -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
+      , "stages"      -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
+      , "duration"    -> List(Duration("preparation", Time.valueOf("00:05:00")))
 //      , "version"    -> List("0")
     ))(Some(r)).get
 
