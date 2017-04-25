@@ -10,6 +10,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStage
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
 
 
 /**
@@ -32,6 +33,7 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     val recipeTags     = (new RecipeTag()).saveRecord(recipe)
     val recipeStages   = (new RecipeStage()).saveRecord(recipe)
     val recipeDuration = (new RecipeDuration()).saveRecord(recipe)
+    val recipeCourse   = (new RecipeCourse()).saveRecord(recipe)
 
     println(s"RecipeName: $recipeName")
     println(s"RecipeAuthor: $recipeAuthor")
@@ -40,6 +42,7 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     println(s"RecipeTags: $recipeTags")
     println(s"RecipeStages: $recipeStages")
     println(s"RecipeDuration: $recipeDuration")
+    println(s"RecipeCourse: $recipeCourse")
 
     SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
     

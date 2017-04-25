@@ -21,7 +21,7 @@ case class Recipe(
   , ingredientList   : Option[List[String]]   = None // TODO
   , rating           : Option[Int]            = None // TODO
   , difficulty       : Option[Int]            = None // TODO
-  , duration         : Option[List[Duration]] = None // TODO
+  , duration         : Option[List[Duration]] = None // DONE
   , tags             : Option[List[String]]   = None // DONE
   , stages           : Option[List[Stage]]    = None // DONE
 )
@@ -70,6 +70,7 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("tags")) => tagList = value.asInstanceOf[List[String]] ::: tagList
           case (field,value) if (field.equals("stages")) => stageList = value.asInstanceOf[List[Stage]] ::: stageList
           case (field,value) if (field.equals("duration")) => newDuration = value.asInstanceOf[List[Duration]] ::: newDuration
+          case (field,value) if (field.equals("course")) => courseList = value.asInstanceOf[List[String]] ::: courseList
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -81,7 +82,7 @@ object RecipeManager extends RecipeLogging {
         , mainIngredient   = recipe.mainIngredient
         , recipeType       = Some(recipeTypeList)
         , recipeStyle      = Some(recipeStyleList)
-        , course           = recipe.course
+        , course           = Some(courseList)
         , description      = recipe.description
         , source           = recipe.source
         , recipeForPersons = recipe.recipeForPersons

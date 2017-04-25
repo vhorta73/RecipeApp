@@ -32,6 +32,7 @@ object Startup extends App {
       , "tags"        -> List("tag1","description1","tag3","description 2")
       , "stages"      -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
       , "duration"    -> List(Duration("preparation", Time.valueOf("00:05:00")))
+      , "course"      -> List("main","dessert")
 //      , "version"    -> List("0")
     ))(Some(r)).get
 
