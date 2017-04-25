@@ -11,6 +11,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStage
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescription
 
 
 /**
@@ -26,14 +27,15 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
 
   def saveRecipe( recipe : Recipe ) : Option[Recipe] = {
     // TODO: Here we only deal with separated tables and need to aggregate them.
-    val recipeName     = (new RecipeName()).saveRecord(recipe)
-    val recipeAuthor   = (new RecipeAuthor()).saveRecord(recipe)
-    val recipeType     = (new RecipeType()).saveRecord(recipe)
-    val recipeStyle    = (new RecipeStyle()).saveRecord(recipe)
-    val recipeTags     = (new RecipeTag()).saveRecord(recipe)
-    val recipeStages   = (new RecipeStage()).saveRecord(recipe)
-    val recipeDuration = (new RecipeDuration()).saveRecord(recipe)
-    val recipeCourse   = (new RecipeCourse()).saveRecord(recipe)
+    val recipeName        = (new RecipeName()).saveRecord(recipe)
+    val recipeAuthor      = (new RecipeAuthor()).saveRecord(recipe)
+    val recipeType        = (new RecipeType()).saveRecord(recipe)
+    val recipeStyle       = (new RecipeStyle()).saveRecord(recipe)
+    val recipeTags        = (new RecipeTag()).saveRecord(recipe)
+    val recipeStages      = (new RecipeStage()).saveRecord(recipe)
+    val recipeDuration    = (new RecipeDuration()).saveRecord(recipe)
+    val recipeCourse      = (new RecipeCourse()).saveRecord(recipe)
+    val recipeDescription = (new RecipeDescription()).saveRecord(recipe)
 
     println(s"RecipeName: $recipeName")
     println(s"RecipeAuthor: $recipeAuthor")
@@ -43,6 +45,7 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     println(s"RecipeStages: $recipeStages")
     println(s"RecipeDuration: $recipeDuration")
     println(s"RecipeCourse: $recipeCourse")
+    println(s"RecipeDescription: $recipeDescription")
 
     SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
     

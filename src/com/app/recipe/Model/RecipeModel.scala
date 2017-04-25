@@ -35,11 +35,11 @@ object RecipeManager extends RecipeLogging {
    * Add the given map data to the supplied recipe and return the updated 
    * case class wrapped in an Option object.
    * 
-   * @param Map[String,List[String]]
+   * @param Map[String,Any]
    * @param Option[Recipe]
    * @return Option[Recipe]
    */
-  def add( updateMap : Map[String,List[Any]] )(givenRecipe : Option[Recipe]) : Option[Recipe] = {
+  def add( updateMap : Map[String,Any] )(givenRecipe : Option[Recipe]) : Option[Recipe] = {
 
     // Only making updates to valid recipes
     if ( givenRecipe.isDefined ) {
@@ -71,6 +71,7 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("stages")) => stageList = value.asInstanceOf[List[Stage]] ::: stageList
           case (field,value) if (field.equals("duration")) => newDuration = value.asInstanceOf[List[Duration]] ::: newDuration
           case (field,value) if (field.equals("course")) => courseList = value.asInstanceOf[List[String]] ::: courseList
+          case (field,value) if (field.equals("description")) => newDescription = value.toString() + newDescription
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -83,7 +84,7 @@ object RecipeManager extends RecipeLogging {
         , recipeType       = Some(recipeTypeList)
         , recipeStyle      = Some(recipeStyleList)
         , course           = Some(courseList)
-        , description      = recipe.description
+        , description      = Some(newDescription)
         , source           = recipe.source
         , recipeForPersons = recipe.recipeForPersons
         , author           = Some(authorList)
