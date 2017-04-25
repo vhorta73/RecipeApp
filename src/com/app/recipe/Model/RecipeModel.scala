@@ -23,7 +23,7 @@ case class Recipe(
   , difficulty       : Option[Int]          = None // TODO
   , duration         : Option[List[String]] = None // TODO
   , tags             : Option[List[String]] = None // TODO
-  , stages           : Option[List[String]] = None // TODO
+  , stages           : Option[List[Stage]]   = None // TODO
 )
 
 /**
@@ -39,7 +39,7 @@ object RecipeManager extends RecipeLogging {
    * @param Option[Recipe]
    * @return Option[Recipe]
    */
-  def add( updateMap : Map[String,List[String]] )(givenRecipe : Option[Recipe]) : Option[Recipe] = {
+  def add( updateMap : Map[String,List[Any]] )(givenRecipe : Option[Recipe]) : Option[Recipe] = {
 
     // Only making updates to valid recipes
     if ( givenRecipe.isDefined ) {
@@ -59,14 +59,16 @@ object RecipeManager extends RecipeLogging {
       var newDifficulty       : Int          = if ( givenRecipe.get.difficulty.isDefined ) givenRecipe.get.difficulty.get else 0
       var newDuration         : List[String] = if ( givenRecipe.get.duration.isDefined ) givenRecipe.get.duration.get else List()
       var tagList             : List[String] = if ( givenRecipe.get.tags.isDefined ) givenRecipe.get.tags.get else List()
-      var stageList           : List[String] = if ( givenRecipe.get.stages.isDefined ) givenRecipe.get.stages.get else List()
+      var stageList           : List[Stage]  = if ( givenRecipe.get.stages.isDefined ) givenRecipe.get.stages.get.asInstanceOf[List[Stage]] else List()
 
       updateMap.foreach( 
         key => key match {
-          case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value ::: mainIngredients
-          case (field,value) if (field.equals("recipeType")) => recipeTypeList = value ::: recipeTypeList
-          case (field,value) if (field.equals("recipeStyle")) => recipeStyleList = value ::: recipeStyleList
-          case (field,value) if (field.equals("author")) => authorList = value ::: authorList
+          case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value.asInstanceOf[List[String]] ::: mainIngredients
+          case (field,value) if (field.equals("recipeType")) => recipeTypeList = value.asInstanceOf[List[String]] ::: recipeTypeList
+          case (field,value) if (field.equals("recipeStyle")) => recipeStyleList = value.asInstanceOf[List[String]] ::: recipeStyleList
+          case (field,value) if (field.equals("author")) => authorList = value.asInstanceOf[List[String]] ::: authorList
+          case (field,value) if (field.equals("tags")) => tagList = value.asInstanceOf[List[String]] ::: tagList
+          case (field,value) if (field.equals("stages")) => stageList = value.asInstanceOf[List[Stage]] ::: stageList
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -87,8 +89,8 @@ object RecipeManager extends RecipeLogging {
         , rating           = recipe.rating
         , difficulty       = recipe.difficulty
         , duration         = recipe.duration
-        , tags             = recipe.tags
-        , stages           = recipe.stages
+        , tags             = Some(tagList)
+        , stages           = Some(stageList)
       ))
     }
     else givenRecipe

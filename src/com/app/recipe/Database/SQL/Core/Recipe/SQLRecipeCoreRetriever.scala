@@ -248,8 +248,8 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
    * @param recipeStage : Option[List[TableValueClass]]
    * @returns Option[List[String]]
    */
-  private final def getStage( recipeStage : Option[List[TableRow]] ) : Option[List[String]] = {
-      var finalStage : List[String] = List()
+  private final def getStage( recipeStage : Option[List[TableRow]] ) : Option[List[Stage]] = {
+      var finalStage : List[Stage] = List()
       if ( recipeStage.isEmpty ) return None
       recipeStage.get.toList.foreach { 
         row => {
@@ -257,7 +257,7 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
               row.asInstanceOf[RecipeStageRow].step_id,
               row.asInstanceOf[RecipeStageRow].step_name,
               row.asInstanceOf[RecipeStageRow].description)
-              .toString) ::: finalStage
+              ) ::: finalStage
         }
       }
       Some(finalStage)

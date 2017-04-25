@@ -5,6 +5,7 @@ import com.app.recipe.Database.Model.DatabaseMode
 import com.app.recipe.Database.RecipeDatabaseCore
 import com.app.recipe.Model.Recipe
 import com.app.recipe.Model.RecipeManager
+import com.app.recipe.Model.Stage
 
 
 /**
@@ -23,12 +24,16 @@ object Startup extends App {
     )
 
     var updatedRecipe = RecipeManager.add(Map(
-        "author"     -> List(s"Vasco",s"Vasco Horta",s"Horta")
-      , "recipeType" -> List("Cake","Plain")
+        "author"      -> List(s"Vasco",s"Vasco Horta",s"Horta")
+      , "recipeType"  -> List("Cake","Plain")
       , "recipeStyle" -> List("w/garlic")
+      , "tags"        -> List("tag1","description1","tag3","description 2")
+      , "stages"       -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
 //      , "version"    -> List("0")
     ))(Some(r)).get
-coreDB.saveRecord(updatedRecipe)
+
+    coreDB.saveRecord(updatedRecipe)
+
 //    println(coreDB.getRecipeById(1))
 //    println(coreDB.saveRecord(updatedRecipe))
 //}
