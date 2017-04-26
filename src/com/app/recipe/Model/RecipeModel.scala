@@ -13,14 +13,14 @@ case class Recipe(
   , mainIngredient   : Option[List[String]]   = None // TODO
   , recipeType       : Option[List[String]]   = None // DONE
   , recipeStyle      : Option[List[String]]   = None // DONE
-  , course           : Option[List[String]]   = None // TODO
-  , description      : Option[String]         = None // TODO
+  , course           : Option[List[String]]   = None // DONE
+  , description      : Option[String]         = None // DONE
   , source           : Option[List[String]]   = None // TODO
   , recipeForPersons : Option[Int]            = None // TODO
   , author           : Option[List[String]]   = None // DONE
   , ingredientList   : Option[List[String]]   = None // TODO
   , rating           : Option[Int]            = None // TODO
-  , difficulty       : Option[Int]            = None // TODO
+  , difficulty       : Option[Int]            = None // DONE
   , duration         : Option[List[Duration]] = None // DONE
   , tags             : Option[List[String]]   = None // DONE
   , stages           : Option[List[Stage]]    = None // DONE
@@ -55,8 +55,8 @@ object RecipeManager extends RecipeLogging {
       var newRecipeForPersons : Int            = if ( givenRecipe.get.recipeForPersons.isDefined ) givenRecipe.get.recipeForPersons.get else 0
       var authorList          : List[String]   = if ( givenRecipe.get.author.isDefined ) givenRecipe.get.author.get else List()
       var ingredients         : List[String]   = if ( givenRecipe.get.ingredientList.isDefined) givenRecipe.get.ingredientList.get else List()
-      var newRating           : Int            = if ( givenRecipe.get.rating.isDefined ) givenRecipe.get.rating.get else 0
-      var newDifficulty       : Int            = if ( givenRecipe.get.difficulty.isDefined ) givenRecipe.get.difficulty.get else 0
+      var newRating           : Int            = if ( givenRecipe.get.rating.isDefined ) givenRecipe.get.rating.get else 3
+      var newDifficulty       : Int            = if ( givenRecipe.get.difficulty.isDefined ) givenRecipe.get.difficulty.get else 3
       var newDuration         : List[Duration] = if ( givenRecipe.get.duration.isDefined ) givenRecipe.get.duration.get.asInstanceOf[List[Duration]] else List()
       var tagList             : List[String]   = if ( givenRecipe.get.tags.isDefined ) givenRecipe.get.tags.get else List()
       var stageList           : List[Stage]    = if ( givenRecipe.get.stages.isDefined ) givenRecipe.get.stages.get.asInstanceOf[List[Stage]] else List()
@@ -72,6 +72,7 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("duration")) => newDuration = value.asInstanceOf[List[Duration]] ::: newDuration
           case (field,value) if (field.equals("course")) => courseList = value.asInstanceOf[List[String]] ::: courseList
           case (field,value) if (field.equals("description")) => newDescription = value.toString() + newDescription
+          case (field,value) if (field.equals("difficulty")) => newDifficulty = value.asInstanceOf[Int] 
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -90,7 +91,7 @@ object RecipeManager extends RecipeLogging {
         , author           = Some(authorList)
         , ingredientList   = recipe.ingredientList
         , rating           = recipe.rating
-        , difficulty       = recipe.difficulty
+        , difficulty       = Some(newDifficulty)
         , duration         = Some(newDuration)
         , tags             = Some(tagList)
         , stages           = Some(stageList)

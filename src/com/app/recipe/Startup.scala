@@ -27,19 +27,20 @@ object Startup extends App {
 
     var updatedRecipe = RecipeManager.add(Map(
         "author"      -> List(s"Vasco",s"Vasco Horta",s"Horta")
-      , "recipeType"  -> List("Cake","Plain")
-      , "recipeStyle" -> List("w/garlic")
-      , "tags"        -> List("tag1","description1","tag3","description 2")
-      , "stages"      -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
-      , "duration"    -> List(Duration("preparation", Time.valueOf("00:05:00")))
-      , "course"      -> List("main","dessert")
+//      , "recipeType"  -> List("Cake","Plain")
+//      , "recipeStyle" -> List("w/garlic")
+//      , "tags"        -> List("tag1","description1","tag3","description 2")
+//      , "stages"      -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
+//      , "duration"    -> List(Duration("preparation", Time.valueOf("00:05:00")))
+//      , "course"      -> List("main","dessert")
+      , "difficulty"  -> 2
 //      , "description" -> "Recipe description 2"
 //      , "version"    -> List("0")
     ))(Some(r)).get
 
     coreDB.saveRecord(updatedRecipe)
 
-//    println(coreDB.getRecipeById(1))
+    println(coreDB.getRecipeById(1))
 //    println(coreDB.saveRecord(updatedRecipe))
 //}
     //.getRecipeById(3))
