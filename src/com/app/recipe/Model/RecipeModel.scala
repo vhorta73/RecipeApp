@@ -73,6 +73,7 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("course")) => courseList = value.asInstanceOf[List[String]] ::: courseList
           case (field,value) if (field.equals("description")) => newDescription = value.toString() + newDescription
           case (field,value) if (field.equals("difficulty")) => newDifficulty = value.asInstanceOf[Int] 
+          case (field,value) if (field.equals("rating")) => newRating = value.asInstanceOf[Int] 
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -90,7 +91,7 @@ object RecipeManager extends RecipeLogging {
         , recipeForPersons = recipe.recipeForPersons
         , author           = Some(authorList)
         , ingredientList   = recipe.ingredientList
-        , rating           = recipe.rating
+        , rating           = Some(newRating)
         , difficulty       = Some(newDifficulty)
         , duration         = Some(newDuration)
         , tags             = Some(tagList)

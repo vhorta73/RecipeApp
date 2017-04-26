@@ -36,6 +36,7 @@ object Startup extends App {
 //      , "difficulty"  -> 2
 //      , "main_ingredient"  -> List("")
 //      , "description" -> "Recipe description 2"
+      , "rating"  -> 4
 //      , "version"    -> List("0")
     ))(Some(r)).get
 
