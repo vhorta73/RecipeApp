@@ -13,6 +13,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescription
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficulty
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredient
 
 
 /**
@@ -28,29 +29,31 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
 
   def saveRecipe( recipe : Recipe ) : Option[Recipe] = {
     // TODO: Here we only deal with separated tables and need to aggregate them.
-    val recipeName        = (new RecipeName()).saveRecord(recipe)
-    val recipeAuthor      = (new RecipeAuthor()).saveRecord(recipe)
-    val recipeCourse      = (new RecipeCourse()).saveRecord(recipe)
-    val recipeDescription = (new RecipeDescription()).saveRecord(recipe)
-    val recipeDifficulty  = (new RecipeDifficulty()).saveRecord(recipe)
+    val recipeName           = (new RecipeName()).saveRecord(recipe)
+    val recipeAuthor         = (new RecipeAuthor()).saveRecord(recipe)
+    val recipeCourse         = (new RecipeCourse()).saveRecord(recipe)
+    val recipeDescription    = (new RecipeDescription()).saveRecord(recipe)
+    val recipeDifficulty     = (new RecipeDifficulty()).saveRecord(recipe)
+    val recipeDuration       = (new RecipeDuration()).saveRecord(recipe)
+    val recipeMainIngredient = (new RecipeMainIngredient()).saveRecord(recipe)
     
-    val recipeType        = (new RecipeType()).saveRecord(recipe)
-    val recipeStyle       = (new RecipeStyle()).saveRecord(recipe)
-    val recipeTags        = (new RecipeTag()).saveRecord(recipe)
-    val recipeStages      = (new RecipeStage()).saveRecord(recipe)
-    val recipeDuration    = (new RecipeDuration()).saveRecord(recipe)
+    val recipeType           = (new RecipeType()).saveRecord(recipe)
+    val recipeStyle          = (new RecipeStyle()).saveRecord(recipe)
+    val recipeTags           = (new RecipeTag()).saveRecord(recipe)
+    val recipeStages         = (new RecipeStage()).saveRecord(recipe)
 
     println(s"RecipeName: $recipeName")
 //    println(s"RecipeAuthor: $recipeAuthor")
 //    println(s"RecipeCourse: $recipeCourse")
 //    println(s"RecipeDescription: $recipeDescription")
-    println(s"RecipeDifficulty: $recipeDifficulty")
+//    println(s"RecipeDifficulty: $recipeDifficulty")
+//    println(s"RecipeDuration: $recipeDuration")
+    println(s"RecipeMainIngredient: $recipeMainIngredient")
 
 //    println(s"RecipeType: $recipeType")
 //    println(s"RecipeStyle: $recipeStyle")
 //    println(s"RecipeTags: $recipeTags")
 //    println(s"RecipeStages: $recipeStages")
-//    println(s"RecipeDuration: $recipeDuration")
 
     SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
     

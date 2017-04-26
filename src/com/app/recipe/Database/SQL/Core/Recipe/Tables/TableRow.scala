@@ -27,7 +27,7 @@ case class RecipeNameRow(
  * The recipe main ingredient table row.
  */
 case class RecipeMainIngredientRow(
-    id                : Int
+    id                : Int = 0
   , recipe_id         : Int
   , main_ingredient   : String
   , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()

@@ -33,7 +33,8 @@ object Startup extends App {
 //      , "stages"      -> List(Stage(10,"tag1","description1"),Stage(2,"tag3","description 2"))
 //      , "duration"    -> List(Duration("preparation", Time.valueOf("00:05:00")))
 //      , "course"      -> List("main","dessert")
-      , "difficulty"  -> 2
+//      , "difficulty"  -> 2
+//      , "main_ingredient"  -> List("")
 //      , "description" -> "Recipe description 2"
 //      , "version"    -> List("0")
     ))(Some(r)).get

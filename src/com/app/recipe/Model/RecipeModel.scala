@@ -10,7 +10,7 @@ case class Recipe(
     id               : Option[Int]            = None // TODO: must create new id when required
   , name             : Option[String]         = None // Unique with a version
   , version          : Option[Int]            = None // Unique with a name
-  , mainIngredient   : Option[List[String]]   = None // TODO
+  , mainIngredient   : Option[List[String]]   = None // DONE
   , recipeType       : Option[List[String]]   = None // DONE
   , recipeStyle      : Option[List[String]]   = None // DONE
   , course           : Option[List[String]]   = None // DONE
@@ -63,7 +63,7 @@ object RecipeManager extends RecipeLogging {
 
       updateMap.foreach( 
         key => key match {
-          case (field,value) if (field.equals("mainIngredient")) => mainIngredients = value.asInstanceOf[List[String]] ::: mainIngredients
+          case (field,value) if (field.equals("main_ingredient")) => mainIngredients = value.asInstanceOf[List[String]] ::: mainIngredients
           case (field,value) if (field.equals("recipeType")) => recipeTypeList = value.asInstanceOf[List[String]] ::: recipeTypeList
           case (field,value) if (field.equals("recipeStyle")) => recipeStyleList = value.asInstanceOf[List[String]] ::: recipeStyleList
           case (field,value) if (field.equals("author")) => authorList = value.asInstanceOf[List[String]] ::: authorList
@@ -81,7 +81,7 @@ object RecipeManager extends RecipeLogging {
           id               = recipe.id
         , name             = recipe.name
         , version          = recipe.version
-        , mainIngredient   = recipe.mainIngredient
+        , mainIngredient   = Some(mainIngredients)
         , recipeType       = Some(recipeTypeList)
         , recipeStyle      = Some(recipeStyleList)
         , course           = Some(courseList)
