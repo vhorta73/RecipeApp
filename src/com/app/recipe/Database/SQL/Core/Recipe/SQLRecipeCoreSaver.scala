@@ -16,6 +16,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficulty
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredient
 import com.app.recipe.Model.RecipeRating
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRating
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSource
 
 
 /**
@@ -39,11 +40,12 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     val recipeDuration       = (new RecipeDuration()).saveRecord(recipe)
     val recipeMainIngredient = (new RecipeMainIngredient()).saveRecord(recipe)
     val recipeRating         = (new RecipeRating()).saveRecord(recipe)
+    val recipeSource         = (new RecipeSource()).saveRecord(recipe)
     
+    val recipeStages         = (new RecipeStage()).saveRecord(recipe)
     val recipeType           = (new RecipeType()).saveRecord(recipe)
     val recipeStyle          = (new RecipeStyle()).saveRecord(recipe)
     val recipeTags           = (new RecipeTag()).saveRecord(recipe)
-    val recipeStages         = (new RecipeStage()).saveRecord(recipe)
 
     println(s"RecipeName: $recipeName")
 //    println(s"RecipeAuthor: $recipeAuthor")
@@ -52,7 +54,8 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
 //    println(s"RecipeDifficulty: $recipeDifficulty")
 //    println(s"RecipeDuration: $recipeDuration")
 //    println(s"RecipeMainIngredient: $recipeMainIngredient")
-    println(s"RecipeRating: $recipeRating")
+//    println(s"RecipeRating: $recipeRating")
+    println(s"RecipeSource: $recipeSource")
 
 //    println(s"RecipeType: $recipeType")
 //    println(s"RecipeStyle: $recipeStyle")
