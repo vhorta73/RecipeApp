@@ -37,6 +37,21 @@ case class RecipeMainIngredientRow(
 ) extends TableRow
 
 /**
+ * The recipe ingredient table row.
+ */
+case class RecipeIngredientRow(
+    id                : Int = 0
+  , recipe_id         : Int
+  , ingredient_id     : Int
+  , quantity          : Double
+  , unit              : String
+  , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
+  , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
+) extends TableRow
+
+/**
  * The recipe author table row.
  */
 case class RecipeAuthorRow(

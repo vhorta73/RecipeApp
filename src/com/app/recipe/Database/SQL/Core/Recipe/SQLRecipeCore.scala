@@ -17,6 +17,8 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeType
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeIngredient
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeIngredient
 
 /**
  * The SQL Recipe Core abstract with all the shared implementations across all 
@@ -30,6 +32,7 @@ abstract trait SQLRecipeCore extends RecipeLogging {
   protected final def getCoreDatabaseName()              : String = "recipe_core"
   protected final def getRecipeNameTableName()           : String = "recipe"
   protected final def getRecipeMainIngredientTableName() : String = "recipe_main_ingredient"
+  protected final def getRecipeIngredientTableName()     : String = "recipe_ingredient"
   protected final def getRecipeTypeTableName()           : String = "recipe_type"
   protected final def getRecipeStyleTableName()          : String = "recipe_style"
   protected final def getRecipeCourseTableName()         : String = "recipe_course"
@@ -47,6 +50,7 @@ abstract trait SQLRecipeCore extends RecipeLogging {
    */
   protected final def getRecipeNameColumns()           : Array[String] = Array("id","name","version","created_by","created_date","last_updated_by","last_updated_date")
   protected final def getRecipeMainIngredientColumns() : Array[String] = Array("id","recipe_id","main_ingredient","active","created_by","created_date","last_updated_by","last_updated_date")
+  protected final def getRecipeIngredientColumns()     : Array[String] = Array("id","recipe_id","ingredient_id","quantity","unit","active","created_by","created_date","last_updated_by","last_updated_date")
   protected final def getRecipeTypeColumns()           : Array[String] = Array("id","recipe_id","type","active","created_by","created_date","last_updated_by","last_updated_date")
   protected final def getRecipeStyleColumns()          : Array[String] = Array("id","recipe_id","style","active","created_by","created_date","last_updated_by","last_updated_date")
   protected final def getRecipeCourseColumns()         : Array[String] = Array("id","recipe_id","course","active","created_by","created_date","last_updated_by","last_updated_date")
@@ -72,6 +76,7 @@ abstract trait SQLRecipeCore extends RecipeLogging {
     case name if name.equals(getRecipeDifficultyTableName())     => Some(new RecipeDifficulty())
     case name if name.equals(getRecipeDurationTableName())       => Some(new RecipeDuration())
     case name if name.equals(getRecipeMainIngredientTableName()) => Some(new RecipeMainIngredient())
+    case name if name.equals(getRecipeIngredientTableName())     => Some(new RecipeIngredient())
     case name if name.equals(getRecipeNameTableName())           => Some(new RecipeName())
     case name if name.equals(getRecipeRatingTableName())         => Some(new RecipeRating())
     case name if name.equals(getRecipeSourceTableName())         => Some(new RecipeSource())

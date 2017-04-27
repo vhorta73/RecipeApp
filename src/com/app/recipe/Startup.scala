@@ -8,6 +8,7 @@ import com.app.recipe.Model.RecipeManager
 import com.app.recipe.Model.Stage
 import com.app.recipe.Model.Duration
 import java.sql.Time
+import com.app.recipe.Model.IngredientElement
 
 
 /**
@@ -37,7 +38,8 @@ object Startup extends App {
 //      , "main_ingredient"  -> List("")
 //      , "description" -> "Recipe description 2"
 //      , "rating"  -> 4
-      , "source"  -> List("Portugal","Tesco","Belgium Cow")
+//      , "source"  -> List("Portugal","Tesco","Belgium Cow")
+      , "ingredient_list"  -> List(IngredientElement(10, 13.43,"ml"),IngredientElement(12, 52.2,"kg"))
 //      , "version"    -> List("0")
     ))(Some(r)).get
 

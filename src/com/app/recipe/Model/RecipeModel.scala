@@ -2,28 +2,29 @@ package com.app.recipe.Model
 
 import java.sql.Time
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 
 /**
  * The Recipe case class.
  */
 case class Recipe(
-    id               : Option[Int]            = None // TODO: must create new id when required
-  , name             : Option[String]         = None // Unique with a version
-  , version          : Option[Int]            = None // Unique with a name
-  , mainIngredient   : Option[List[String]]   = None // DONE
-  , recipeType       : Option[List[String]]   = None // DONE
-  , recipeStyle      : Option[List[String]]   = None // DONE
-  , course           : Option[List[String]]   = None // DONE
-  , description      : Option[String]         = None // DONE
-  , source           : Option[List[String]]   = None // DOME
-  , recipeForPersons : Option[Int]            = None // TODO
-  , author           : Option[List[String]]   = None // DONE
-  , ingredientList   : Option[List[String]]   = None // TODO
-  , rating           : Option[Int]            = None // DONE
-  , difficulty       : Option[Int]            = None // DONE
-  , duration         : Option[List[Duration]] = None // DONE
-  , tags             : Option[List[String]]   = None // DONE
-  , stages           : Option[List[Stage]]    = None // DONE
+    id               : Option[Int]                     = None // TODO: must create new id when required
+  , name             : Option[String]                  = None // Unique with a version
+  , version          : Option[Int]                     = None // Unique with a name
+  , mainIngredient   : Option[List[String]]            = None // DONE
+  , recipeType       : Option[List[String]]            = None // DONE
+  , recipeStyle      : Option[List[String]]            = None // DONE
+  , course           : Option[List[String]]            = None // DONE
+  , description      : Option[String]                  = None // DONE
+  , source           : Option[List[String]]            = None // DONE
+  , recipeForPersons : Option[Int]                     = None // TODO
+  , author           : Option[List[String]]            = None // DONE
+  , ingredientList   : Option[List[IngredientElement]] = None // DONE
+  , rating           : Option[Int]                     = None // DONE
+  , difficulty       : Option[Int]                     = None // DONE
+  , duration         : Option[List[Duration]]          = None // DONE
+  , tags             : Option[List[String]]            = None // DONE
+  , stages           : Option[List[Stage]]             = None // DONE
 )
 
 /**
@@ -54,7 +55,7 @@ object RecipeManager extends RecipeLogging {
       var sourceList          : List[String]   = if ( givenRecipe.get.source.isDefined ) givenRecipe.get.source.get else List()
       var newRecipeForPersons : Int            = if ( givenRecipe.get.recipeForPersons.isDefined ) givenRecipe.get.recipeForPersons.get else 0
       var authorList          : List[String]   = if ( givenRecipe.get.author.isDefined ) givenRecipe.get.author.get else List()
-      var ingredients         : List[String]   = if ( givenRecipe.get.ingredientList.isDefined) givenRecipe.get.ingredientList.get else List()
+      var ingredients         : List[IngredientElement] = if ( givenRecipe.get.ingredientList.isDefined) givenRecipe.get.ingredientList.get else List()
       var newRating           : Int            = if ( givenRecipe.get.rating.isDefined ) givenRecipe.get.rating.get else 3
       var newDifficulty       : Int            = if ( givenRecipe.get.difficulty.isDefined ) givenRecipe.get.difficulty.get else 3
       var newDuration         : List[Duration] = if ( givenRecipe.get.duration.isDefined ) givenRecipe.get.duration.get.asInstanceOf[List[Duration]] else List()
@@ -75,6 +76,7 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("difficulty")) => newDifficulty = value.asInstanceOf[Int] 
           case (field,value) if (field.equals("rating")) => newRating = value.asInstanceOf[Int] 
           case (field,value) if (field.equals("source")) => sourceList = value.asInstanceOf[List[String]] ::: sourceList
+          case (field,value) if (field.equals("ingredient_list")) => ingredients = value.asInstanceOf[List[IngredientElement]] ::: ingredients
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -91,7 +93,7 @@ object RecipeManager extends RecipeLogging {
         , source           = Some(sourceList)
         , recipeForPersons = recipe.recipeForPersons
         , author           = Some(authorList)
-        , ingredientList   = recipe.ingredientList
+        , ingredientList   = Some(ingredients)
         , rating           = Some(newRating)
         , difficulty       = Some(newDifficulty)
         , duration         = Some(newDuration)
@@ -113,3 +115,7 @@ case class Stage( stepId : Int, stepName : String, stepDescription : String )
  */
 case class Duration( durationType : String, duration : Time )
 
+/**
+ * The Ingredient Element used on the recipe ingredient list.
+ */
+case class IngredientElement( ingredientId: Int, quantity: Double, unit: String )
