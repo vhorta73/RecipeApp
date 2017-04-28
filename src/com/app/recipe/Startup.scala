@@ -39,7 +39,9 @@ object Startup extends App {
 //      , "description" -> "Recipe description 2"
 //      , "rating"  -> 4
 //      , "source"  -> List("Portugal","Tesco","Belgium Cow")
-      , "ingredient_list"  -> List(IngredientElement(10, 13.43,"ml"),IngredientElement(12, 52.2,"kg"))
+//      , "ingredient_list"  -> List(IngredientElement(10, 13.43,"ml"),IngredientElement(12, 52.2,"kg"))
+      , "cooking_types"      -> List("cooking1","type1")
+      , "kitchen_utensils"  -> List("oven1","microwave1")
 //      , "version"    -> List("0")
     ))(Some(r)).get
 

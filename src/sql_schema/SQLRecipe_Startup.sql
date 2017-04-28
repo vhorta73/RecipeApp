@@ -212,3 +212,31 @@ CREATE TABLE `recipe_stage` (
    PRIMARY KEY (`id`),
    UNIQUE KEY (`recipe_id`,`step_id`)
 );
+
+-- The recipe cooking types.
+CREATE TABLE `recipe_cooking_type` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `recipe_id` INT(11) UNSIGNED NOT NULL,
+   `cooking_type` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`recipe_id`,`cooking_type`)
+);
+
+-- The recipe required kitchen utensils.
+CREATE TABLE `recipe_utensils` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `recipe_id` INT(11) UNSIGNED NOT NULL,
+   `kitchen_utensil` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`recipe_id`,`kitchen_utensil_id`)
+);

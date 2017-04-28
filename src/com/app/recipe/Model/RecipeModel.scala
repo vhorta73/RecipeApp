@@ -25,6 +25,8 @@ case class Recipe(
   , duration         : Option[List[Duration]]          = None // DONE
   , tags             : Option[List[String]]            = None // DONE
   , stages           : Option[List[Stage]]             = None // DONE
+  , utensils         : Option[List[String]]            = None // DONE
+  , cookingType      : Option[List[String]]            = None // DONE
 )
 
 /**
@@ -61,6 +63,8 @@ object RecipeManager extends RecipeLogging {
       var newDuration         : List[Duration] = if ( givenRecipe.get.duration.isDefined ) givenRecipe.get.duration.get.asInstanceOf[List[Duration]] else List()
       var tagList             : List[String]   = if ( givenRecipe.get.tags.isDefined ) givenRecipe.get.tags.get else List()
       var stageList           : List[Stage]    = if ( givenRecipe.get.stages.isDefined ) givenRecipe.get.stages.get.asInstanceOf[List[Stage]] else List()
+      var kitchenUtensils     : List[String]   = if ( givenRecipe.get.utensils.isDefined ) givenRecipe.get.utensils.get else List()
+      var cookingType         : List[String]   = if ( givenRecipe.get.cookingType.isDefined ) givenRecipe.get.utensils.get else List()
 
       updateMap.foreach( 
         key => key match {
@@ -77,6 +81,8 @@ object RecipeManager extends RecipeLogging {
           case (field,value) if (field.equals("rating")) => newRating = value.asInstanceOf[Int] 
           case (field,value) if (field.equals("source")) => sourceList = value.asInstanceOf[List[String]] ::: sourceList
           case (field,value) if (field.equals("ingredient_list")) => ingredients = value.asInstanceOf[List[IngredientElement]] ::: ingredients
+          case (field,value) if (field.equals("cooking_types")) => cookingType = value.asInstanceOf[List[String]] ::: cookingType
+          case (field,value) if (field.equals("kitchen_utensils")) => kitchenUtensils = value.asInstanceOf[List[String]] ::: kitchenUtensils
           case _ => error("RecipeManager.add found a bad key: " + key.toString())
         }
       )
@@ -99,6 +105,8 @@ object RecipeManager extends RecipeLogging {
         , duration         = Some(newDuration)
         , tags             = Some(tagList)
         , stages           = Some(stageList)
+        , cookingType      = Some(cookingType)
+        , utensils         = Some(kitchenUtensils)
       ))
     }
     else givenRecipe

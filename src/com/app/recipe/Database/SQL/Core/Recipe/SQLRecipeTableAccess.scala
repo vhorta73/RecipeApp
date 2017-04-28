@@ -20,6 +20,9 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTagRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTypeRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.TableRow
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensils
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensilsRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingTypeRow
 
 /**
  * Setting the methods that all children must implement and sharing logic 
@@ -206,6 +209,32 @@ abstract class SQLRecipeTableAccess extends SQLTableAccess {
           id                = data("id").toInt
         , recipe_id         = data("recipe_id").toInt 
         , recipeType        = data("type")
+        , created_by        = data("created_by")
+        , created_date      = created_date
+        , last_updated_by   = data("last_updated_by") 
+        , last_updated_date = last_updated_date
+      )
+    }
+    case "recipe_utensils" => {
+      val created_date      : Timestamp = Timestamp.valueOf(data("created_date").toString())
+      val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
+      RecipeUtensilsRow( 
+          id                = data("id").toInt
+        , recipe_id         = data("recipe_id").toInt 
+        , kitchen_utensil   = data("kitchen_utensil")
+        , created_by        = data("created_by")
+        , created_date      = created_date
+        , last_updated_by   = data("last_updated_by") 
+        , last_updated_date = last_updated_date
+      )
+    }
+    case "recipe_cooking_type" => {
+      val created_date      : Timestamp = Timestamp.valueOf(data("created_date").toString())
+      val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
+      RecipeCookingTypeRow( 
+          id                = data("id").toInt
+        , recipe_id         = data("recipe_id").toInt 
+        , cooking_type      = data("cooking_type")
         , created_by        = data("created_by")
         , created_date      = created_date
         , last_updated_by   = data("last_updated_by") 

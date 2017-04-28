@@ -31,6 +31,10 @@ import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Model.Duration
 import com.app.recipe.Model.Recipe
 import com.app.recipe.Model.Stage
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensils
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingTypeRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensilsRow
 
 
 /**
@@ -63,6 +67,8 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
     val recipeDuration       : Option[List[TableRow]] = getRecipeClass[RecipeDuration](getRecipeDurationTableName()).getRecipeId(id)
     val recipeTag            : Option[List[TableRow]] = getRecipeClass[RecipeTag](getRecipeTagTableName()).getRecipeId(id)
     val recipeStage          : Option[List[TableRow]] = getRecipeClass[RecipeStage](getRecipeStageTableName()).getRecipeId(id)
+    val recipeUtensils       : Option[List[TableRow]] = getRecipeClass[RecipeUtensils](getRecipeUtensilsTableName()).getRecipeId(id)
+    val recipeCookingTypes   : Option[List[TableRow]] = getRecipeClass[RecipeCookingType](getRecipeCookingTypeTableName()).getRecipeId(id)
 
     // Each column comes from one or many rows from different tables.
     // Methods are called to aggregate each parameter to the expected value and type.
@@ -84,6 +90,8 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
       , duration         = getDuration( recipeDuration )
       , tags             = getTag( recipeTag ) 
       , stages           = getStage( recipeStage )
+      , utensils         = getUtensils( recipeUtensils )
+      , cookingType      = getCookingType( recipeCookingTypes )
     ))
   }
   
@@ -281,5 +289,43 @@ object SQLRecipeCoreRetriever extends SQLRecipeCore with RecipeLogging {
         }
       }
       Some(finalDuration)
+  }
+
+  /**
+   * The recipe cooking type.
+   * 
+   * @param recipeCookingType : Option[List[TableValueClass]]
+   * @returns Option[List[String]]
+   */
+  private final def getCookingType( recipeCookingType : Option[List[TableRow]] ) : Option[List[String]] = {
+      var finalCookingType : List[String] = List()
+      if ( recipeCookingType.isEmpty ) return None
+      recipeCookingType.get.toList.foreach { 
+        row => {
+          finalCookingType = List(
+              row.asInstanceOf[RecipeCookingTypeRow].cooking_type
+              ) ::: finalCookingType
+        }
+      }
+      Some(finalCookingType)
+  }
+
+  /**
+   * The recipe kitchen utensils.
+   * 
+   * @param recipeUtensils : Option[List[TableValueClass]]
+   * @returns Option[List[String]]
+   */
+  private final def getUtensils( recipeUtensils : Option[List[TableRow]] ) : Option[List[String]] = {
+      var finalUtensils : List[String] = List()
+      if ( recipeUtensils.isEmpty ) return None
+      recipeUtensils.get.toList.foreach { 
+        row => {
+          finalUtensils = List(
+              row.asInstanceOf[RecipeUtensilsRow].kitchen_utensil
+              ) ::: finalUtensils
+        }
+      }
+      Some(finalUtensils)
   }
 }

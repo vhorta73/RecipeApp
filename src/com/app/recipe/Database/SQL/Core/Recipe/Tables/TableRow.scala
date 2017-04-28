@@ -65,6 +65,32 @@ case class RecipeAuthorRow(
 ) extends TableRow
 
 /**
+ * The recipe cooking type table row.
+ */
+case class RecipeCookingTypeRow(
+    id                : Int = 0
+  , recipe_id         : Int
+  , cooking_type      : String
+  , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
+  , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
+) extends TableRow
+
+/**
+ * The recipe kitchen utensil table row.
+ */
+case class RecipeUtensilsRow(
+    id                : Int = 0
+  , recipe_id         : Int
+  , kitchen_utensil   : String
+  , created_by        : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
+  , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
+  , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
+) extends TableRow
+
+/**
  * The recipe source table row.
  */
 case class RecipeSourceRow(
