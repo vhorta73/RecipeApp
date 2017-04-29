@@ -35,7 +35,7 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
   def getRecipeByNameAndVersion( name : String, version : Int ) : Option[Recipe] = SQLRecipeCoreRetriever.getRecipeAggregatedById(version)
 
   def saveRecipe( recipe : Recipe ) : Option[Recipe] = {
-    // TODO: Here we only deal with separated tables and need to aggregate them.
+    // TODO: Each table stores part of the recipe. Set Akka actors to process these in parallel.
     val recipeName           = (new RecipeName()).saveRecord(recipe)
     val recipeAuthor         = (new RecipeAuthor()).saveRecord(recipe)
     val recipeCourse         = (new RecipeCourse()).saveRecord(recipe)
@@ -53,43 +53,6 @@ object SQLRecipeCoreSaver extends SQLRecipeCore with RecipeLogging {
     val recipeUtensils       = (new RecipeUtensils()).saveRecord(recipe)
     val recipeCookingTypes   = (new RecipeCookingType()).saveRecord(recipe)
 
-    println(s"RecipeName: $recipeName")
-//    println(s"RecipeAuthor: $recipeAuthor")
-//    println(s"RecipeCourse: $recipeCourse")
-//    println(s"RecipeDescription: $recipeDescription")
-//    println(s"RecipeDifficulty: $recipeDifficulty")
-//    println(s"RecipeDuration: $recipeDuration")
-//    println(s"RecipeMainIngredient: $recipeMainIngredient")
-//    println(s"RecipeRating: $recipeRating")
-//    println(s"RecipeSource: $recipeSource")
-//    println(s"RecipeIngredient: $recipeIngredient")
-    println(s"RecipeUtensils: $recipeUtensils")
-    println(s"RecipeCookingTypes: $recipeCookingTypes")
-
-//    println(s"RecipeType: $recipeType")
-//    println(s"RecipeStyle: $recipeStyle")
-//    println(s"RecipeTags: $recipeTags")
-//    println(s"RecipeStages: $recipeStages")
-
     SQLRecipeCoreRetriever.getRecipeAggregatedById(recipe.id.get)
-    
-//    .get.getRecipeByNameAndVersion(name, version)
-//    var finalRecipe : Recipe = null
-//    if ( recipe.isEmpty ) {
-//      (new RecipeName()).saveRecord(RecipeNameRow(0,name,version))
-//      recipe = (new RecipeName()).getRecipeByNameAndVersion(name, version)
-//      finalRecipe = Recipe(
-//          id = recipe.get.id
-//      )
-//      
-//    }
-////    .saveRecord(RecipeNameRow(
-////    id                = 4
-////  , name              = "My Second Recipe"
-////  , version           = 1
-////        )
-////     )
-//     Some(recipe.get.asInstanceOf[Recipe])
-//    None
   }
 }

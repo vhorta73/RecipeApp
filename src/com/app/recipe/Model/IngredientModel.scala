@@ -1,7 +1,5 @@
 package com.app.recipe.Model
 
-import java.sql.Time
-
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Log.RecipeLogging
 
@@ -9,9 +7,9 @@ import com.app.recipe.Log.RecipeLogging
  * The Ingredient case class.
  */
 case class Ingredient( 
-    name      : Option[String]                    = None
-  , attribute : Option[List[IngredientAttribute]] = None
-  , source    : Option[List[IngredientSource]]    = None 
+    name      : Option[String]       = None
+  , attribute : Option[List[String]] = None
+  , source    : Option[List[String]] = None 
 )
 
 /**
@@ -34,12 +32,12 @@ object IngredientManager extends RecipeLogging {
     
       var recipe = givenIngredient.get
 
-      var sources    : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.get else List()
-      var attributes : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.get else List()
+      var sources    : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.asInstanceOf[List[String]] else List()
+      var attributes : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.asInstanceOf[List[String]] else List()
 
       updateMap.foreach( 
         key => key match {
-          case (field,value) if (field.equals("source")) => sources = value.asInstanceOf[List[String]] ::: sources
+          case (field,value) if (field.equals("sources")) => sources = value.asInstanceOf[List[String]] ::: sources
           case (field,value) if (field.equals("attributes")) => attributes = value.asInstanceOf[List[String]] ::: attributes
           case _ => error("IngredientManager.add found a bad key: " + key.toString())
         }
@@ -54,13 +52,3 @@ object IngredientManager extends RecipeLogging {
     else givenIngredient
   }
 }
-
-/**
- * The Ingredient Source describing the origin of the ingredient.
- */
-case class IngredientSource( name : Option[String] = None )
-
-/**
- * The Recipe duration for different types like preparation, execution, etc.
- */
-case class IngredientAttribute( name : Option[String] = None )
