@@ -1,5 +1,6 @@
 package com.app.recipe.Database
 
+import com.app.recipe.Model.Ingredient
 import com.app.recipe.Model.Recipe
 
 /**
@@ -8,15 +9,15 @@ import com.app.recipe.Model.Recipe
  */
 abstract trait RecipeDatabaseCore extends RecipeDatabase {
 
-//  /* ======================================================================= */
-//  /*                              Ingredient                                 */
-//  /* ======================================================================= */
-//
-//  /**
-//   * Retrieving the ingredient by id.
-//   */
-//  def getIngredientById( id : Int ) : Ingredient
-//  
+  /* ======================================================================= */
+  /*                              Ingredient                                 */
+  /* ======================================================================= */
+
+  /**
+   * Retrieving the ingredient by id.
+   */
+  def getIngredientById( id : Int ) : Option[Ingredient]
+  
 //  /**
 //   * Retrieving the Ingredient by name.
 //   */
@@ -32,8 +33,15 @@ abstract trait RecipeDatabaseCore extends RecipeDatabase {
 //   */
 //  def getIngredientByFilterList( fList : List[Ingredient => Boolean] ) : List[Ingredient]
 //
-//
-//
+  /**
+   * Saving an ingredient record by insert or update if existing.
+   * 
+   * @param ingredient
+   * @return Option[Ingredient]
+   */
+  def saveRecord( ingredient : Ingredient ) : Option[Ingredient]
+
+
   /* ======================================================================= */
   /*                                 Recipe                                  */
   /* ======================================================================= */

@@ -1,28 +1,28 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthor
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingType
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescription
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficulty
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeIngredient
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredient
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeName
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRating
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSource
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStage
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTag
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeType
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensils
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyle
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeName
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthor
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDuration
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSource
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourse
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeMainIngredient
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeIngredient
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingType
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStage
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensils
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescription
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRating
 
 /**
  * The SQL Recipe Core abstract with all the shared implementations across all 
- * the other SQL objects that compose all possible actions.
+ * the other SQL objects that compose all possible actions for recipe tables.
  */
-abstract trait SQLRecipeCore extends RecipeLogging {
+abstract trait SQLRecipeCore extends SQLTableAccess {
 
   /**
    * The recipe table names.

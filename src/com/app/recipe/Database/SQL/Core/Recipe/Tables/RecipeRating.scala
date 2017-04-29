@@ -49,7 +49,7 @@ class RecipeRating() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.rating.isEmpty ) return None
     val recipeRating: Int = recipe.rating.get
     var finalList : List[RecipeRatingRow] = Nil

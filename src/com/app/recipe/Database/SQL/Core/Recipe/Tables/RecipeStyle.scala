@@ -5,6 +5,7 @@ import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
 import scala.util.Random
 import com.app.recipe.Model.Recipe
 import java.sql.PreparedStatement
+import com.app.recipe.Database.SQL.Core.SQLGlobalMethods
 
 /**
  * This class knows all there is to know about the recipe style
@@ -51,7 +52,7 @@ class RecipeStyle() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.recipeStyle.isEmpty ) return None
     val recipeStyles: List[String] = recipe.recipeStyle.get
     var finalList : List[RecipeStyleRow] = Nil

@@ -51,7 +51,7 @@ class RecipeDescription() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.description.isEmpty ) return None
     val recipeDescription: String = recipe.description.get.asInstanceOf[String]
     var finalList : List[RecipeDescriptionRow] = Nil

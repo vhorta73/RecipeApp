@@ -77,7 +77,7 @@ class RecipeName() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[Recipe] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     var r : Option[Recipe] = Some(recipe)
     var recipeId : Int = 0
     if ( recipe.id.isEmpty && recipe.name.isDefined ) {

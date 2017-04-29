@@ -50,7 +50,7 @@ class RecipeAuthor() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.author.isEmpty ) return None
     val authors : List[String] = recipe.author.get
     var finalList : List[RecipeAuthorRow] = Nil

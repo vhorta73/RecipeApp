@@ -4,11 +4,12 @@ import java.sql.Time
 import java.sql.Timestamp
 
 import com.app.recipe.Database.Model.DatabaseGlobalVariables
+import com.app.recipe.Database.SQL.Core.TableRow
 
 /**
- * The main interface for all table objects.
+ * The Recipe Table Row
  */
-trait TableRow
+trait RecipeTableRow extends TableRow
 
 /**
  * The recipe table row.
@@ -21,7 +22,7 @@ case class RecipeNameRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe main ingredient table row.
@@ -34,7 +35,7 @@ case class RecipeMainIngredientRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe ingredient table row.
@@ -49,7 +50,7 @@ case class RecipeIngredientRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe author table row.
@@ -62,7 +63,7 @@ case class RecipeAuthorRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe cooking type table row.
@@ -75,7 +76,7 @@ case class RecipeCookingTypeRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe kitchen utensil table row.
@@ -88,7 +89,7 @@ case class RecipeUtensilsRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe source table row.
@@ -101,7 +102,7 @@ case class RecipeSourceRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe course table row.
@@ -114,7 +115,7 @@ case class RecipeCourseRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe description table row.
@@ -127,7 +128,7 @@ case class RecipeDescriptionRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe difficulty table row.
@@ -140,7 +141,7 @@ case class RecipeDifficultyRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe duration table row.
@@ -154,7 +155,7 @@ case class RecipeDurationRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe rating table row.
@@ -167,7 +168,7 @@ case class RecipeRatingRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe stage table row.
@@ -182,7 +183,7 @@ case class RecipeStageRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe style table row.
@@ -195,7 +196,7 @@ case class RecipeStyleRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe tag table row.
@@ -208,7 +209,7 @@ case class RecipeTagRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 
 /**
  * The recipe type table row.
@@ -221,5 +222,5 @@ case class RecipeTypeRow(
   , created_date      : Timestamp = new Timestamp(System.currentTimeMillis())
   , last_updated_by   : String = DatabaseGlobalVariables.getDeaultSystemUsername()
   , last_updated_date : Timestamp = new Timestamp(System.currentTimeMillis())
-) extends TableRow
+) extends RecipeTableRow
 

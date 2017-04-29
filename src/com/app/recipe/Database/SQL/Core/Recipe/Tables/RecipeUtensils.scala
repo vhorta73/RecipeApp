@@ -1,10 +1,9 @@
 package com.app.recipe.Database.SQL.Core.Recipe.Tables
 
-import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeCore
-import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
-import scala.util.Random
-import com.app.recipe.Model.Recipe
 import java.sql.PreparedStatement
+
+import com.app.recipe.Database.SQL.Core.Recipe.SQLRecipeTableAccess
+import com.app.recipe.Model.Recipe
 
 /**
  * This class knows all there is to know about the recipe Utensils
@@ -29,7 +28,7 @@ class RecipeUtensils() extends SQLRecipeTableAccess {
   /**
    * The rows that match supplied recipe id.
    */
-  def getRecipeId( id : Int ) : Option[List[RecipeUtensilsRow]] = {
+  override def getRecipeId( id : Int ) : Option[List[RecipeUtensilsRow]] = {
     val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getRecipeUtensilsTableName()} WHERE recipe_id = ?")
     statement.setInt(1, id)
     getHashMapFromSQL( statement, getRecipeUtensilsColumns() ) match {
@@ -51,7 +50,7 @@ class RecipeUtensils() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.utensils.isEmpty ) return None
     val recipeUtensils : List[String] = recipe.utensils.get
     var finalList : List[RecipeUtensilsRow] = Nil

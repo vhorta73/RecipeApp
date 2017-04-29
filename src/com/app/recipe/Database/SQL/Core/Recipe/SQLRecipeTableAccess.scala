@@ -3,9 +3,8 @@ package com.app.recipe.Database.SQL.Core.Recipe
 import java.sql.Time
 import java.sql.Timestamp
 
-import scala.collection.immutable.HashMap
-
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeAuthorRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingTypeRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCourseRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDescriptionRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeDifficultyRow
@@ -16,19 +15,17 @@ import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeRatingRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeSourceRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStageRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeStyleRow
+import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTableRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTagRow
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeTypeRow
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.TableRow
-import com.app.recipe.Database.SQL.SQLDatabaseHandle
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensils
 import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeUtensilsRow
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeCookingTypeRow
+import com.app.recipe.Database.SQL.Core.SQLGlobalMethods
 
 /**
  * Setting the methods that all children must implement and sharing logic 
  * amongst all of them.
  */
-abstract class SQLRecipeTableAccess extends SQLTableAccess {
+abstract class SQLRecipeTableAccess extends SQLRecipeCore with SQLGlobalMethods[com.app.recipe.Model.Recipe] {
   // TODO: Know who is requesting these methods...
   protected final val last_updated_by : String = "Me"
 
@@ -36,12 +33,12 @@ abstract class SQLRecipeTableAccess extends SQLTableAccess {
    * Method to get one or more rows by recipe id.
    * //TODO: This method will cause issues if core will have tables without recipe id...
    */
-  def getRecipeId( id : Int ) : Option[List[TableRow]]
+  def getRecipeId( id : Int ) : Option[List[RecipeTableRow]]
   
   /**
    * Returning the respective object depending on the table and data supplied.
    */
-  protected def getObject( data : Map[String,String], table : String ) : TableRow = table match {
+  protected def getObject( data : Map[String,String], table : String ) : RecipeTableRow = table match {
     case "recipe" => {
       val created_date      : Timestamp = Timestamp.valueOf(data("created_date").toString())
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())

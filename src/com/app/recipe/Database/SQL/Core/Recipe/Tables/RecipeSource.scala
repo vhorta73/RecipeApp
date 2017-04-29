@@ -55,7 +55,7 @@ class RecipeSource() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.source.isEmpty ) return None
     val recipeSources : List[String] = recipe.source.get.asInstanceOf[List[String]]
     var finalList : List[RecipeSourceRow] = Nil

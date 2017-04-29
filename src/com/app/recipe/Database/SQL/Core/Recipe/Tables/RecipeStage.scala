@@ -51,7 +51,7 @@ class RecipeStage() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.stages.isEmpty ) return None
     val recipeStages: List[Stage] = recipe.stages.get.asInstanceOf[List[Stage]]
     var finalList : List[RecipeStageRow] = Nil

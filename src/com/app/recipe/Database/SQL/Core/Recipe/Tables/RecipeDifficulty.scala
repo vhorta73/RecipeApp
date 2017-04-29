@@ -51,7 +51,7 @@ class RecipeDifficulty() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.difficulty.isEmpty ) return None
     val recipeDifficulty: Int = recipe.difficulty.get
     var finalList : List[RecipeDifficultyRow] = Nil

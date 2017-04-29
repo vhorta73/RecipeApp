@@ -1,42 +1,18 @@
 package com.app.recipe.Database.SQL.Core.Recipe
 
 import java.sql.PreparedStatement
+import java.time.LocalDateTime
 
 import scala.collection.immutable.HashMap
-
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.TableRow
-import com.app.recipe.Database.SQL.SQLDatabaseHandle
-import java.time.LocalDateTime
 import scala.util.Random
-import com.app.recipe.Model.Recipe
-import com.app.recipe.Database.SQL.Core.Recipe.Tables.RecipeNameRow
+
+import com.app.recipe.Database.SQL.SQLDatabaseHandle
+import com.app.recipe.Log.RecipeLogging
 
 /**
  * Shared logic amongst all retriever classes and objects.
  */
-abstract class SQLTableAccess extends SQLRecipeCore {
-
-  /**
-   * Method to get one row by id that must be implemented by child classes.
-   * 
-   * @param id : Int
-   * @return Option[TableRow]
-   */
-  def getRowId( id : Int ) : Option[TableRow]
-  
-  /**
-   * Creates a new record with information supplied. If the record already 
-   * exists for the unique key supplied, it will apply an update instead.
-   * Returns true if created, false if update and None if no action applied.
-   * 
-   * In the case an id is not supplied or set to zero, it will and then key
-   * on the recipe name and version, updating if existing or creating a new
-   * record across the board otherwise.
-   * 
-   * @param recipe
-   * @return Option[List[TableRow]] 
-   */
-  def saveRecord( recipe : Recipe ) : Option[List[TableRow]]
+abstract class SQLTableAccess extends RecipeLogging {
 
   /**
    * Generic DB SQL query for given SQL and column names.

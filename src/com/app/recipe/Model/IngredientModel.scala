@@ -6,8 +6,9 @@ import com.app.recipe.Log.RecipeLogging
 /**
  * The Ingredient case class.
  */
-case class Ingredient( 
-    name      : Option[String]       = None
+case class Ingredient(
+    id        : Option[Int]          = None
+  , name      : Option[String]       = None
   , attribute : Option[List[String]] = None
   , source    : Option[List[String]] = None 
 )
@@ -32,12 +33,12 @@ object IngredientManager extends RecipeLogging {
     
       var recipe = givenIngredient.get
 
-      var sources    : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.asInstanceOf[List[String]] else List()
-      var attributes : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.asInstanceOf[List[String]] else List()
+      var sources    : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.get.asInstanceOf[List[String]] else List()
+      var attributes : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.get.asInstanceOf[List[String]] else List()
 
       updateMap.foreach( 
         key => key match {
-          case (field,value) if (field.equals("sources")) => sources = value.asInstanceOf[List[String]] ::: sources
+          case (field,value) if (field.equals("sources"))    => sources = value.asInstanceOf[List[String]] ::: sources
           case (field,value) if (field.equals("attributes")) => attributes = value.asInstanceOf[List[String]] ::: attributes
           case _ => error("IngredientManager.add found a bad key: " + key.toString())
         }

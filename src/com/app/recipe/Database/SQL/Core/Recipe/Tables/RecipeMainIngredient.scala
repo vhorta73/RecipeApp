@@ -70,7 +70,7 @@ class RecipeMainIngredient() extends SQLRecipeTableAccess {
    * @param recipe
    * @return Option[List[TableRow]] 
    */
-  override def saveRecord( recipe : Recipe ) : Option[List[TableRow]] = {
+  override def saveRecord( recipe : Recipe ) : Option[List[RecipeTableRow]] = {
     if ( recipe.mainIngredient.isEmpty ) return None
     val recipeMainIngredients : List[String] = recipe.mainIngredient.get.asInstanceOf[List[String]]
     var finalList : List[RecipeMainIngredientRow] = Nil
