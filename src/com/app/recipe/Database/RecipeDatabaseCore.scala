@@ -51,9 +51,16 @@ abstract trait RecipeDatabaseCore extends RecipeDatabase {
    * 
    * @param name 
    * @param version 
-   * @return Recipe
+   * @return Option[Recipe]
    */
   def getRecipe( name : String, version : Int ) : Option[Recipe]
+
+  /**
+   * Saving a recipe record by insert or update if existing.
+   * 
+   * @param recipe
+   * @return Option[Recipe]
+   */
   def saveRecord( recipe : Recipe ) : Option[Recipe]
 
 //  /**

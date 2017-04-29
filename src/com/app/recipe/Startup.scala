@@ -45,9 +45,9 @@ object Startup extends App {
 //      , "version"    -> List("0")
     ))(Some(r)).get
 
-    coreDB.saveRecord(updatedRecipe)
+    println(coreDB.saveRecord(updatedRecipe))
 
-    println(coreDB.getRecipeById(1))
+//    println(coreDB.getRecipeById(1))
 //    println(coreDB.saveRecord(updatedRecipe))
 //}
     //.getRecipeById(3))
