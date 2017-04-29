@@ -238,5 +238,129 @@ CREATE TABLE `recipe_utensils` (
    `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
    `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`),
-   UNIQUE KEY (`recipe_id`,`kitchen_utensil_id`)
+   UNIQUE KEY (`recipe_id`,`kitchen_utensil`)
 );
+
+
+
+-- The ingredient name table.
+CREATE TABLE `ingredient_name` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `name` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`name`)
+);
+
+-- The ingredient attribute table.
+CREATE TABLE `ingredient_attribute` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `name` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`name`)
+);
+
+-- The ingredient source table.
+CREATE TABLE `ingredient_source` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `name` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`name`)
+);
+
+-- The ingredient group table.
+CREATE TABLE `ingredient_group` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `name` VARCHAR(255) NOT NULL,
+   `type` VARCHAR(255) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`name`)
+);
+
+-- The ingredient attribute group table.
+CREATE TABLE `ingredient_attribute_group` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `attribute_id` INT(11) NOT NULL,
+   `group_id` INT(11) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`attribute_id`)
+);
+
+-- The ingredient source group table.
+CREATE TABLE `ingredient_source_group` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `source_id` INT(11) NOT NULL,
+   `group_id` INT(11) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`source_id`)
+);
+
+-- The ingredient group link table.
+CREATE TABLE `ingredient_group_link` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `ingredient_id` INT(11) NOT NULL,
+   `group_id` INT(11) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`ingredient_id`)
+);
+
+-- The ingredient table.
+CREATE TABLE `ingredient` (
+   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `ingredient_id` INT(11) NOT NULL,
+   `type` VARCHAR(25) NOT NULL,
+   `type_id` INT(11) NOT NULL,
+   `active` CHAR(1) NOT NULL DEFAULT 'Y',
+   `created_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
+   `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`),
+   UNIQUE KEY (`type`,`type_id`)
+);
+
+
+
+
+
+
+
+
+
+
+
+
