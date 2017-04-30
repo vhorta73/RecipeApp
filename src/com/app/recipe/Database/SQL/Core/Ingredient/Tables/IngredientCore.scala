@@ -129,8 +129,6 @@ class IngredientCore() extends SQLIngredientTableAccess {
     // Set all ingredient attributes as deleted before inserting/updating
     setIngredientSourcesDeleted( ingredient )
 
-    println(ingredient)
-
     for ( ingredientSource <- ingredientSources ) {
       var sourceOptionRow = sourceDB.getRowByName(ingredientSource)
       // If the source is not known, ignore it.

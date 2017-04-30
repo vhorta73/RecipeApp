@@ -1,18 +1,14 @@
 package com.app.recipe.Database.SQL.Core.Ingredient
 
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
-import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Database.SQL.Core.Recipe.SQLTableAccess
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttribute
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSource
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientNameRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientTableRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttributeRow
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientNameRow
 import java.sql.Timestamp
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientTableRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientNameRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttributeRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientCoreRow
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttributeRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSourceRow
 
 /**
@@ -59,11 +55,6 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
     case name if name.equals(getIngredientNameTableName())              => Some(new IngredientName())
     case name if name.equals(getIngredientAttributeTableName())         => Some(new IngredientAttribute())
     case name if name.equals(getIngredientSourceTableName())            => Some(new IngredientSource())
-//    case name if name.equals(getIngredientGroupTableName())          => Some(new ())
-//    case name if name.equals(getIngredientGroupLinkTableName())      => Some(new ())
-//    case name if name.equals(getIngredientNameTableName())           => Some(new IngredientName())
-//    case name if name.equals(getIngredientSourceTableName())         => Some(new ())
-//    case name if name.equals(getIngredientSourceGroupTableName())    => Some(new ())
     case _ => throw new IllegalStateException(s"Not known table '$tableName'")
   }
   

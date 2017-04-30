@@ -56,13 +56,13 @@ object Startup extends App {
      , attribute = Some(List("Yellow","Big"))
     )
 
-//    var updatedIngredient = IngredientManager.add(Map(
-//        "sources"      -> List(s"Vasco")
-//      , "attributes"   -> List(s"Vasco")
-//    ))(Some(i)).get
+    var updatedIngredient = IngredientManager.add(Map(
+        "sources"      -> List(s"Vasco")
+      , "attributes"   -> List(s"Vasco")
+    ))(Some(i)).get
 //
-    println(coreDB.saveRecord(i))
-//    println(coreDB.saveRecord(updatedIngredient))
+//    println(coreDB.saveRecord(i))
+    println(coreDB.saveRecord(updatedIngredient))
 
   }
 }

@@ -107,37 +107,4 @@ object SQLIngredientCoreRetriever extends SQLIngredientCore with RecipeLogging {
     if ( ingredientSources.isEmpty ) None else Some(ingredientSources.get.toList
       .map { row => row.asInstanceOf[IngredientSourceRow].name })
 
-//  /**
-//   * The recipe description.
-//   * 
-//   * @param recipeDescription : Option[List[TableValueClass]]
-//   * @returns Option[String]
-//   */
-//  private final def getDescription( recipeDescription : Option[List[RecipeTableRow]] ) : Option[String] = {
-//    var string : String = ""
-//    if ( recipeDescription.isEmpty ) None 
-//    else Some( recipeDescription.get.toList.foreach { row => string += row.asInstanceOf[RecipeDescriptionRow].description })
-//    Some(string)
-//  }
-//
-//  /**
-//   * The recipe stage.
-//   * 
-//   * @param recipeStage : Option[List[TableValueClass]]
-//   * @returns Option[List[Stage]]
-//   */
-//  private final def getStage( recipeStage : Option[List[RecipeTableRow]] ) : Option[List[Stage]] = {
-//      var finalStage : List[Stage] = List()
-//      if ( recipeStage.isEmpty ) return None
-//      recipeStage.get.toList.foreach { 
-//        row => {
-//          finalStage = List(Stage(
-//              row.asInstanceOf[RecipeStageRow].step_id,
-//              row.asInstanceOf[RecipeStageRow].step_name,
-//              row.asInstanceOf[RecipeStageRow].description)
-//              ) ::: finalStage
-//        }
-//      }
-//      Some(finalStage)
-//  }
 }

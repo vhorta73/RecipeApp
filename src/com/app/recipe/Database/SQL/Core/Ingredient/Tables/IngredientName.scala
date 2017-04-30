@@ -16,7 +16,6 @@ class IngredientName() extends SQLIngredientTableAccess {
    * The row by id.
    */
   override def getRowId( id : Int ) : Option[IngredientNameRow] = {
-    println(id)
     val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getIngredientNameTableName()} WHERE id = ? ")
     statement.setInt(1,id)
 
@@ -26,14 +25,6 @@ class IngredientName() extends SQLIngredientTableAccess {
       case _ => throw new IllegalStateException(s"Multiple primary key'd rows found for id '$id'.")
     }
   }
-
-//  /**
-//   * Overriding the default getIngredientId that is used across all the other core tables.
-//   */
-//  override def getIngredientId( id : Int ) : Option[List[IngredientNameRow]] = getRowId(id) match {
-//    case None => None
-//    case result => Some(List(result.get))
-//  }
 
   /**
    * The Ingredient by name. One row expected.
@@ -46,10 +37,7 @@ class IngredientName() extends SQLIngredientTableAccess {
       case result if result.size == 0 => None
       case result => {
         var optionList : List[IngredientNameRow] = List()
-        for( row <- result ) {
-          println(s"ROW: $row")
-          optionList = List(getObject(row, getIngredientNameTableName()).asInstanceOf[IngredientNameRow]) ::: optionList
-        }
+        for( row <- result ) optionList = List(getObject(row, getIngredientNameTableName()).asInstanceOf[IngredientNameRow]) ::: optionList
         if ( optionList.size == 0 ) None else Some(optionList)
       }
     }
@@ -77,7 +65,6 @@ class IngredientName() extends SQLIngredientTableAccess {
         , name    = ingredient.name.get
         , last_updated_by = last_updated_by
     )
-    println(s"Ingredient Name: $ingredientName")
 
     // Insert first. Update next..
     try { prepareRecord("insert", ingredientName).execute() } 

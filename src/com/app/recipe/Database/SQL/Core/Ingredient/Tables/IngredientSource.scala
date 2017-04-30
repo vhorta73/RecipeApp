@@ -1,8 +1,9 @@
 package com.app.recipe.Database.SQL.Core.Ingredient.Tables
 
+import java.sql.PreparedStatement
+
 import com.app.recipe.Database.SQL.Core.Ingredient.SQLIngredientTableAccess
 import com.app.recipe.Model.Ingredient
-import java.sql.PreparedStatement
 
 /**
  * This class knows all there is to know about the ingredient attribute.
