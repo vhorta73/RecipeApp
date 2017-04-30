@@ -27,13 +27,13 @@ class IngredientName() extends SQLIngredientTableAccess {
     }
   }
 
-  /**
-   * Overriding the default getIngredientId that is used across all the other core tables.
-   */
-  override def getIngredientId( id : Int ) : Option[List[IngredientNameRow]] = getRowId(id) match {
-    case None => None
-    case result => Some(List(result.get))
-  }
+//  /**
+//   * Overriding the default getIngredientId that is used across all the other core tables.
+//   */
+//  override def getIngredientId( id : Int ) : Option[List[IngredientNameRow]] = getRowId(id) match {
+//    case None => None
+//    case result => Some(List(result.get))
+//  }
 
   /**
    * The Ingredient by name. One row expected.

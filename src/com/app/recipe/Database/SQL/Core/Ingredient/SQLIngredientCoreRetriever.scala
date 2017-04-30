@@ -28,18 +28,18 @@ object SQLIngredientCoreRetriever extends SQLIngredientCore with RecipeLogging {
 
     // Ingredient Name is the core information. Not having a row, means no data for this ingredient.
     if ( ingredientName.isEmpty ) return None 
-
+    
     // The multiple row results
-    val ingredientAttributes : Option[List[IngredientTableRow]] = getIngredientClass[IngredientAttribute](getIngredientAttributeTableName()).getIngredientId(id)
-    val ingredientSources    : Option[List[IngredientTableRow]] = getIngredientClass[IngredientSource](getIngredientSourceTableName()).getIngredientId(id)
+//    val ingredientAttributes : Option[List[IngredientTableRow]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getAttributeByIngredientId(id)
+//    val ingredientSources    : Option[List[IngredientTableRow]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getSourceByIngredientId(id)
 
     // Each column comes from one or many rows from different tables.
     // Methods are called to aggregate each parameter to the expected value and type.
     Some(Ingredient(
         id                  = getIngredientId( ingredientName )
       , name                = getName( ingredientName )
-      , attribute           = getAttributes( ingredientAttributes )
-      , source              = getSources( ingredientSources )
+//      , attribute           = getAttributes( ingredientAttributes )
+//      , source              = getSources( ingredientSources )
     ))
   }
   

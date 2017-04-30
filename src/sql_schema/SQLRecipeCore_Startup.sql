@@ -350,7 +350,7 @@ CREATE TABLE `ingredient` (
    `last_updated_by` VARCHAR(25) NOT NULL DEFAULT 'system',
    `last_updated_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY (`id`),
-   UNIQUE KEY (`type`,`type_id`)
+   UNIQUE KEY (`ingredient_id`,`type`,`type_id`)
 );
 
 

@@ -25,19 +25,11 @@ class IngredientAttribute() extends SQLIngredientTableAccess {
   }
 
   /**
-   * Must override interface, but table is not ingredient id based.
+   * The row that match supplied name.
    */
-  override def getIngredientId( id : Int ) : Option[List[IngredientAttributeRow]] = {
-    error(s"Attempting to get an ingredient Id from attributes.")
-    None
-  }
-
-  /**
-   * The rows that match supplied ingredient id.
-   */
-  def getAttributeId( id : Int ) : Option[List[IngredientAttributeRow]] = {
-    val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getIngredientAttributeTableName()} WHERE id = ?")
-    statement.setInt(1, id)
+  def getRowByName( name : String ) : Option[List[IngredientAttributeRow]] = {
+    val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getIngredientAttributeTableName()} WHERE name = ?")
+    statement.setString(1, name)
     getHashMapFromSQL( statement, getIngredientAttributeColumns() ) match {
       case result if result.size == 0 => None
       case result => {

@@ -31,21 +31,24 @@ object IngredientManager extends RecipeLogging {
     // Only making updates to valid ingredients
     if ( givenIngredient.isDefined ) {
     
-      var recipe = givenIngredient.get
+      var ingredient = givenIngredient.get
 
-      var sources    : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.get.asInstanceOf[List[String]] else List()
-      var attributes : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.get.asInstanceOf[List[String]] else List()
+      var ingredientId : Int = if ( ingredient.id.isDefined ) ingredient.id.get else 0
+      var sources      : List[String] = if ( givenIngredient.get.source.isDefined ) givenIngredient.get.source.get.asInstanceOf[List[String]] else List()
+      var attributes   : List[String] = if ( givenIngredient.get.attribute.isDefined ) givenIngredient.get.attribute.get.asInstanceOf[List[String]] else List()
 
       updateMap.foreach( 
         key => key match {
           case (field,value) if (field.equals("sources"))    => sources = value.asInstanceOf[List[String]] ::: sources
           case (field,value) if (field.equals("attributes")) => attributes = value.asInstanceOf[List[String]] ::: attributes
+          case (field,value) if (field.equals("id")) => ingredientId = value.asInstanceOf[Int]
           case _ => error("IngredientManager.add found a bad key: " + key.toString())
         }
       )
 
       Some(Ingredient(
-          name        = givenIngredient.get.name
+          id          = if ( ingredientId > 0 ) Some(ingredientId) else ingredient.id
+        , name        = givenIngredient.get.name
         , source      = Some(sources)
         , attribute   = Some(attributes)
       ))
