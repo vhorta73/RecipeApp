@@ -51,15 +51,14 @@ object Startup extends App {
 
     
     val i = Ingredient(
-       id        = Some(1) 
-     , name      = Some("banana")
-     , source    = Some(List("Jamaica"))
-     , attribute = Some(List("Yellow","Big"))
+   //    id        = Some(10) 
+      name      = Some("cheese")
+     , source    = Some(List("Tesco"))
+     , attribute = Some(List("Large"))
     )
 
     var updatedIngredient = IngredientManager.add(Map(
-        "sources"      -> List(s"Vasco")
-      , "attributes"   -> List(s"Vasco")
+       "attributes"   -> List(s"Organic")
     ))(Some(i)).get
 
 //    println(coreDB.saveRecord(i))

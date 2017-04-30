@@ -22,30 +22,29 @@ object SQLIngredientCoreSaver extends SQLIngredientCore {
    * @return Option[Ingredient]
    */
   def saveIngredient( ingredient : Ingredient ) : Option[Ingredient] = {
-    
+
+    // If no ingredient name, then there is nothing to do.
+    if ( ingredient.name.isEmpty ) {
+      error(s"Ingredient has no name: $ingredient")
+      return None
+    }
+
+    // Look for the ingredient id by its name.
+    val ingredientName = (new IngredientName()).getIngredientByName(ingredient.name.get)
+
     // To save any ingredient, an id must be supplied.
-    if ( ingredient.id.isEmpty ) {
-      info(s"No ingredient.id supplied for ingredient $ingredient")
-      return None
-    }
-
-    // Look for the ingredient name.
-    val ingredientName           = (new IngredientName()).saveRecord(ingredient)
-
-    // If no ingredient name, then there is nothing linked to it.
     if ( ingredientName.isEmpty ) {
-      info(s"Ingredient name was not found for ingredient $ingredient")
+      info(s"No ingredient matched name: '${ingredient.name.get}'")
       return None
     }
 
-    // Given we have saved/updated the ingredient name, we can now check which id we have.
-    val ingredientByName = (new IngredientName).getIngredientByName(ingredient.name.get)
+    var updatedIngredient = IngredientManager.add(Map("id"->ingredientName.get(0).id))(Some(ingredient)).get
 
     // Saving attributes and sources from the ingredient onto respective tables.
-    val ingredientAttributes     = (new IngredientAttribute()).saveRecord(ingredient)
-    val ingredientSources        = (new IngredientSource()).saveRecord(ingredient)
-    val ingredientCore           = (new IngredientCore()).saveRecord(ingredient)
+    val ingredientAttributes     = (new IngredientAttribute()).saveRecord(updatedIngredient)
+    val ingredientSources        = (new IngredientSource()).saveRecord(updatedIngredient)
+    val ingredientCore           = (new IngredientCore()).saveRecord(updatedIngredient)
 
-    SQLIngredientCoreRetriever.getIngredientAggregatedById(ingredient.id.get)
+    SQLIngredientCoreRetriever.getIngredientAggregatedById(updatedIngredient.id.get)
   }
 }

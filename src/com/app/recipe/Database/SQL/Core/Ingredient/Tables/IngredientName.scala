@@ -37,7 +37,9 @@ class IngredientName() extends SQLIngredientTableAccess {
       case result if result.size == 0 => None
       case result => {
         var optionList : List[IngredientNameRow] = List()
-        for( row <- result ) optionList = List(getObject(row, getIngredientNameTableName()).asInstanceOf[IngredientNameRow]) ::: optionList
+        for( row <- result ) {
+          optionList = List(getObject(row, getIngredientNameTableName()).asInstanceOf[IngredientNameRow]) ::: optionList
+        }
         if ( optionList.size == 0 ) None else Some(optionList)
       }
     }

@@ -69,7 +69,7 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
       IngredientNameRow( 
           id                = data("id").toInt
-        , name              = data("name").toString
+        , name              = data("name")
         , created_by        = data("created_by")
         , created_date      = created_date
         , last_updated_by   = data("last_updated_by") 
@@ -82,7 +82,7 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
       IngredientCoreRow( 
           id                = data("id").toInt
         , ingredient_id     = data("ingredient_id").toInt
-        , Type              = data("type").toString
+        , Type              = data("type")
         , type_id           = data("type_id").toInt
         , created_by        = data("created_by")
         , created_date      = created_date
@@ -95,7 +95,7 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
       IngredientAttributeRow( 
           id                = data("id").toInt
-        , name              = data("name").toString
+        , name              = data("name")
         , created_by        = data("created_by")
         , created_date      = created_date
         , last_updated_by   = data("last_updated_by") 
@@ -107,7 +107,7 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
       val last_updated_date : Timestamp = Timestamp.valueOf(data("last_updated_date").toString())
       IngredientSourceRow( 
           id                = data("id").toInt
-        , name              = data("name").toString
+        , name              = data("name")
         , created_by        = data("created_by")
         , created_date      = created_date
         , last_updated_by   = data("last_updated_by") 
