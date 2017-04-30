@@ -7,10 +7,10 @@ import com.app.recipe.Log.RecipeLogging
  * The Ingredient case class.
  */
 case class Ingredient(
-    id        : Option[Int]          = None
-  , name      : Option[String]       = None
-  , attribute : Option[List[String]] = None
-  , source    : Option[List[String]] = None 
+    id            : Option[Int]          = None
+  , name          : Option[String]       = None
+  , attribute     : Option[List[String]] = None
+  , source        : Option[List[String]] = None 
 )
 
 /**

@@ -1,13 +1,12 @@
 package com.app.recipe.Database.SQL.Core.Ingredient
 
-import com.app.recipe.Model.Ingredient
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientNameRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttribute
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSource
+import com.app.recipe.Model.IngredientManager
+import com.app.recipe.Model.Ingredient
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientCore
-import com.app.recipe.Model.IngredientManager
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSource
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttribute
 
 /**
  * The Ingredient Core Saver implementing required methods set by IngredientDatabaseCore 
@@ -15,25 +14,38 @@ import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
  */
 object SQLIngredientCoreSaver extends SQLIngredientCore {
 
+  /**
+   * Saving the ingredient to all respective tables.
+   * Ingredient must have an id, and the ingredient name must be known.
+   * 
+   * @param Ingredient
+   * @return Option[Ingredient]
+   */
   def saveIngredient( ingredient : Ingredient ) : Option[Ingredient] = {
-    // TODO: Each table stores part of the recipe. Set Akka actors to process these in parallel.
+    
+    // To save any ingredient, an id must be supplied.
+    if ( ingredient.id.isEmpty ) {
+      info(s"No ingredient.id supplied for ingredient $ingredient")
+      return None
+    }
+
+    // Look for the ingredient name.
     val ingredientName           = (new IngredientName()).saveRecord(ingredient)
 
     // If no ingredient name, then there is nothing linked to it.
     if ( ingredientName.isEmpty ) {
-      info(s"Could save name for ingredient $ingredient")
+      info(s"Ingredient name was not found for ingredient $ingredient")
       return None
     }
-    
+
+    // Given we have saved/updated the ingredient name, we can now check which id we have.
     val ingredientByName = (new IngredientName).getIngredientByName(ingredient.name.get)
 
-    // Update the original ingredient to save with the found/created ingredient id.
-    var updatedIngredient = IngredientManager.add(Map( "id" -> ingredientByName.get(0).asInstanceOf[IngredientNameRow].id))(Some(ingredient)).get
+    // Saving attributes and sources from the ingredient onto respective tables.
+    val ingredientAttributes     = (new IngredientAttribute()).saveRecord(ingredient)
+    val ingredientSources        = (new IngredientSource()).saveRecord(ingredient)
+    val ingredientCore           = (new IngredientCore()).saveRecord(ingredient)
 
-//    val ingredientAttributes     = (new IngredientAttribute()).saveRecord(updatedIn)
-//    val ingredientSources        = (new IngredientSource()).saveRecord(updatedIn)
-    val ingredientCore           = (new IngredientCore()).saveRecord(updatedIngredient)
-
-    SQLIngredientCoreRetriever.getIngredientAggregatedById(ingredientName.get.asInstanceOf[List[IngredientNameRow]](0).id)
+    SQLIngredientCoreRetriever.getIngredientAggregatedById(ingredient.id.get)
   }
 }

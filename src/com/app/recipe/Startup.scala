@@ -51,7 +51,8 @@ object Startup extends App {
 
     
     val i = Ingredient(
-       name      = Some("banana")
+       id        = Some(1) 
+     , name      = Some("banana")
      , source    = Some(List("Jamaica"))
      , attribute = Some(List("Yellow","Big"))
     )
@@ -60,7 +61,7 @@ object Startup extends App {
         "sources"      -> List(s"Vasco")
       , "attributes"   -> List(s"Vasco")
     ))(Some(i)).get
-//
+
 //    println(coreDB.saveRecord(i))
     println(coreDB.saveRecord(updatedIngredient))
 

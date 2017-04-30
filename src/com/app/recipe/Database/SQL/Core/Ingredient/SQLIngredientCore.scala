@@ -10,6 +10,7 @@ import java.sql.Timestamp
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientCoreRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttributeRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSourceRow
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientCore
 
 /**
  * The SQL Recipe Core abstract with all the shared implementations across all 
@@ -55,6 +56,7 @@ abstract trait SQLIngredientCore extends SQLTableAccess {
     case name if name.equals(getIngredientNameTableName())              => Some(new IngredientName())
     case name if name.equals(getIngredientAttributeTableName())         => Some(new IngredientAttribute())
     case name if name.equals(getIngredientSourceTableName())            => Some(new IngredientSource())
+    case name if name.equals(getIngredientCoreTableName())              => Some(new IngredientCore())
     case _ => throw new IllegalStateException(s"Not known table '$tableName'")
   }
   

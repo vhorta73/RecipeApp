@@ -1,17 +1,11 @@
 package com.app.recipe.Database.SQL.Core.Ingredient
 
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttribute
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientAttributeRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
+import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientCore
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientName
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientNameRow
 import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientTableRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientTableRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientTableRow
 import com.app.recipe.Log.RecipeLogging
 import com.app.recipe.Model.Ingredient
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSourceRow
-import com.app.recipe.Database.SQL.Core.Ingredient.Tables.IngredientSource
 
 /**
  * The Recipe Core implementing public methods required by RecipeDatabase 
@@ -30,16 +24,16 @@ object SQLIngredientCoreRetriever extends SQLIngredientCore with RecipeLogging {
     if ( ingredientName.isEmpty ) return None 
     
     // The multiple row results
-//    val ingredientAttributes : Option[List[IngredientTableRow]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getAttributeByIngredientId(id)
-//    val ingredientSources    : Option[List[IngredientTableRow]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getSourceByIngredientId(id)
+    val ingredientAttributes : Option[List[String]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getAttributeNamesForIngredientId(id)
+    val ingredientSources    : Option[List[String]] = getIngredientClass[IngredientCore](getIngredientCoreTableName()).getSourceNamesForIngredientId(id)
 
     // Each column comes from one or many rows from different tables.
     // Methods are called to aggregate each parameter to the expected value and type.
     Some(Ingredient(
         id                  = getIngredientId( ingredientName )
       , name                = getName( ingredientName )
-//      , attribute           = getAttributes( ingredientAttributes )
-//      , source              = getSources( ingredientSources )
+      , attribute           = ingredientAttributes
+      , source              = ingredientSources
     ))
   }
   
@@ -86,25 +80,5 @@ object SQLIngredientCoreRetriever extends SQLIngredientCore with RecipeLogging {
    */
   private final def getName( ingredientName : Option[IngredientTableRow] ) : Option[String] = 
     if ( ingredientName.isEmpty ) None else Some( ingredientName.get.asInstanceOf[IngredientNameRow].name )
-
-  /**
-   * The ingredient attributes.
-   * 
-   * @param ingredientAttributes : Option[List[TableValueClass]]
-   * @returns Option[List[String]]
-   */
-  private final def getAttributes( ingredientAttributes : Option[List[IngredientTableRow]] ) : Option[List[String]] = 
-    if ( ingredientAttributes.isEmpty ) None else Some(ingredientAttributes.get.toList
-      .map { row => row.asInstanceOf[IngredientAttributeRow].name })
-
-  /**
-   * The ingredient source.
-   * 
-   * @param ingredientSources : Option[List[TableValueClass]]
-   * @returns Option[List[String]]
-   */
-  private final def getSources( ingredientSources : Option[List[IngredientTableRow]] ) : Option[List[String]] = 
-    if ( ingredientSources.isEmpty ) None else Some(ingredientSources.get.toList
-      .map { row => row.asInstanceOf[IngredientSourceRow].name })
 
 }

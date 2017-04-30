@@ -1,8 +1,9 @@
 package com.app.recipe.Database.SQL.Core.Ingredient.Tables
 
+import java.sql.PreparedStatement
+
 import com.app.recipe.Database.SQL.Core.Ingredient.SQLIngredientTableAccess
 import com.app.recipe.Model.Ingredient
-import java.sql.PreparedStatement
 
 /**
  * This class knows all there is to know about the ingredient sources and
@@ -62,6 +63,42 @@ class IngredientCore() extends SQLIngredientTableAccess {
       }
     }
   }
+
+  /**
+   * The attribute rows that match supplied ingredient id.
+   */
+  def getAttributeNamesForIngredientId( id : Int ) : Option[List[String]] = getNamesForIngredientId(ATTRIBUTE_TYPE, id)
+  
+  /**
+   * The source rows that match supplied ingredient id.
+   */
+  def getSourceNamesForIngredientId( id : Int ) : Option[List[String]] = getNamesForIngredientId(SOURCE_TYPE, id)
+
+  /**
+   * Retrieving the string list of types as per request.
+   */
+  private final def getNamesForIngredientId( xType : String, id : Int ) : Option[List[String]] = {
+    val statement = getStatement(raw"SELECT * FROM ${getCoreDatabaseName()}.${getIngredientCoreTableName()} WHERE ingredient_id = ? AND type = ? ")
+    statement.setInt(1, id)
+    statement.setString(2, xType)
+    getHashMapFromSQL( statement, getIngredientCoreColumns() ) match {
+      case result if result.size == 0 => None
+      case result => {
+        var optionList : List[String] = List()
+        for( row <- result ) {
+          var typeId = getObject(row, getIngredientCoreTableName()).asInstanceOf[IngredientCoreRow].type_id
+          var typeName = xType match {
+            case x if x.equals(ATTRIBUTE_TYPE) => attributeDB.getRowId(typeId).get.name 
+            case x if x.equals(SOURCE_TYPE)    => sourceDB.getRowId(typeId).get.name
+            case _ => throw new IllegalStateException(s"Unknown type '$xType'")
+          }
+          optionList = List(typeName) ::: optionList
+        }
+        if ( optionList.size == 0 ) None else Some(optionList)
+      }
+    }
+  }
+    
 
   /**
    * Creates a new record with information supplied or updates existing row/rows
