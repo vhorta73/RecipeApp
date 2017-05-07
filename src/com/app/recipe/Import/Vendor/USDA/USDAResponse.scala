@@ -13,7 +13,18 @@ case class USDAReport(
     val sr        : String
   , val `type`    : String
   , val food      : USDAFood
+  , val sources   : Array[USDASources]
   , val footnotes : Array[String]
+  , val langual   : Array[String]
+)
+
+case class USDASources(
+    val id      : Int
+  , val title   : String
+  , val authors : String
+  , val vol     : String
+  , val iss     : String
+  , val year    : String
 )
 
 case class USDAFood(
@@ -30,6 +41,9 @@ case class USDANutrients(
   , val group       : String
   , val unit        : String
   , val value       : String
+  , val sourcecode  : Any
+  , val dp          : String
+  , val se          : String
   , val measures    : Array[USDAMeasures]
 )
 

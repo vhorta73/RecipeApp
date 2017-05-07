@@ -46,9 +46,11 @@ object Usda extends VendorBase {
 
     val response   = Http(USDA_BASE_URL)
       .postData(usdaJsonId)
-      .header("Content-Type", "application/json")
+      .header("Content-Type", "application/json") 
       .header("Charset", "UTF-8")
+      .param("format","json")// available in json or xml - chosen json for being cleaner
       .param("api_key",USDA_KEY_API)
+      .param("type","f")  // f - full report, b - basic, s - stats
       .timeout(connTimeOut, readTimeOut)
       .asString
 
@@ -60,6 +62,8 @@ object Usda extends VendorBase {
       val string = response.body
       usda = gson.fromJson(string, usda.getClass)
     }
+    println(usda)
+    usda.report.food.nutrients.foreach { n => println(n.sourcecode) }
     usda
   }
 
