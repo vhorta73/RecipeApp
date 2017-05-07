@@ -1,6 +1,6 @@
 package com.app.recipe.Import.Vendor
 
-import com.app.recipe.Import.Product.Model.ProductImport
+import com.app.recipe.Import.Product.Model.ProductBase
 import com.app.recipe.Log.RecipeLogging
 
 /**
@@ -13,12 +13,12 @@ abstract class VendorBase extends RecipeLogging {
   /**
    * Method to return the product details, implemented by each vendor class.
    */
-  def getProductImport( productId : String ) : ProductImport
+  def getProductImport( productId : String ) : ProductBase
   
   /**
    * To be implemented by vendors with their specific searching engine, 
    * to return a list of all ProductDetails found.
    */
-  def search( productName : String ) : List[Product]
+  def search( productName : String ) : List[ProductBase]
   
 }

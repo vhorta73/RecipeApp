@@ -15,17 +15,10 @@ import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsOnOffer
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchName
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPrice
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchPricePerUnit
-import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchProductDetails
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchProductDetails
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchQuantity
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSmallImage
@@ -33,7 +26,6 @@ import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetaria
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum.TESCO
 import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
-import com.app.recipe.Import.Vendor.VendorBase
 import com.app.recipe.Import.Vendor.VendorBase
 
 

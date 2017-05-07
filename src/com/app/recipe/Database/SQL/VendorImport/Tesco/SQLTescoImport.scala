@@ -2,8 +2,8 @@ package com.app.recipe.Database.SQL.VendorImport.Tesco
 
 import com.app.recipe.Database.SQL.SQLDatabaseHandle
 import com.app.recipe.Database.SQL.VendorImport.SQLRecipeDatabaseVendorImport
-import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Log.RecipeLogging
+import com.app.recipe.Import.Product.Model.ProductImport
 
 /**
  * This object implements the defined trait SQL methods and connects to the

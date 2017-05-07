@@ -8,6 +8,7 @@ import com.app.recipe.Import.Vendor.URL.Model.TESCOURLBuilder
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.URL.Model.URLBuilder
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum._
+import com.app.recipe.Import.Vendor.URL.Model.USDAURLBuilder
 
 /**
  * URLBuilder factory to return the built URL for the specific vendor.
@@ -18,11 +19,12 @@ object URLBuilderFactory {
    * or gives an exception.
    */
   def get(vendor : VendorEnum.VendorName) : URLBuilder = vendor match {
-    case ASDA      => ASDAURLBuilder
-    case MORRISONS => MORRISONSURLBuilder
-    case OCADO     => OCADOURLBuilder
-    case TESCO     => TESCOURLBuilder
-    case WAITROSE  => WAITROSEURLBuilder
+    case v if v.equals(VendorEnum.ASDA)      => ASDAURLBuilder
+    case v if v.equals(VendorEnum.MORRISONS) => MORRISONSURLBuilder
+    case v if v.equals(VendorEnum.OCADO)     => OCADOURLBuilder
+    case v if v.equals(VendorEnum.TESCO)     => TESCOURLBuilder
+    case v if v.equals(VendorEnum.USDA)      => USDAURLBuilder
+    case v if v.equals(VendorEnum.WAITROSE)  => WAITROSEURLBuilder
     case _ => throw new IllegalStateException("Unknown Vendor")
   }
 }

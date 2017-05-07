@@ -8,6 +8,12 @@ object VendorEnum extends Enumeration {
   type VendorName = Value
 
   // List of all known Vendors
-  val ASDA, MORRISONS, OCADO, TESCO, WAITROSE = Value
+  val ASDA, 
+      MORRISONS, 
+      OCADO, 
+      TESCO, 
+      USDA,      // The Unites States Department of Agriculture.
+      WAITROSE 
+    = Value
 }
  
