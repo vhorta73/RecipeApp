@@ -1,7 +1,9 @@
 package com.app.recipe.Log
 
-import com.typesafe.scalalogging.LazyLogging
+import java.util.Calendar
 import java.util.Date
+
+import com.typesafe.scalalogging.LazyLogging
 
 /**
  * Setting the logging structure.
@@ -83,7 +85,7 @@ trait RecipeLogging extends LazyLogging {
    * The converted hours, part of the current time.
    */
   private final def getHours(date : Date) : String = date match {
-    case x if x.getHours() < 10 => "0"+date.getHours()
+    case x if x.getHours() < 10 => "0"+date.getHours() 
     case _ => date.getHours.toString()
   }
 

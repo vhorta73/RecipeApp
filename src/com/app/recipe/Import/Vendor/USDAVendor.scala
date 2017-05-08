@@ -1,6 +1,6 @@
 package com.app.recipe.Import.Vendor
 
-import com.app.recipe.Import.Vendor.USDA.USDAReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAReportFullResponse
 
 /**
  * This is the food retailer interface with the methods that all child 

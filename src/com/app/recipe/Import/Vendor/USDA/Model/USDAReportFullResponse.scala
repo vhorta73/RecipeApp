@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Vendor.USDA
+package com.app.recipe.Import.Vendor.USDA.Model
 
 import com.app.recipe.Import.Product.Model.ProductBase
 

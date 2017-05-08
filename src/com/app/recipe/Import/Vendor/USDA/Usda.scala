@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
+import com.app.recipe.Import.Vendor.USDA.Model.USDAReportFullResponse
 
 /**
  * United States Department of Agriculture vendor access object.
