@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Vendor.URL.Model
+package com.app.recipe.Import.Vendor.URL
 
 import java.net.URL
 

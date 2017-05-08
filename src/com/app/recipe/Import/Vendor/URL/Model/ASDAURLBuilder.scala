@@ -4,6 +4,8 @@ import java.net.URL
 
 import scala.util.Random
 
+import com.app.recipe.Import.Vendor.URL.URLBuilder
+
 /**
  * Building a Vendor URL for Asda.
  */

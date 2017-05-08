@@ -3,16 +3,16 @@ package com.app.recipe.Import.Vendor.USDA
 import com.app.recipe.Import.Product.Model.ProductBase
 
 /**
- * The USDA response class.
+ * The USDA Report Full response class.
  */
-case class USDAResponse( val report : USDAReport = null ) extends ProductBase {
+case class USDAReportFullResponse( val report : USDAReport = null ) extends ProductBase {
   override val id : String = ""
 }
 
 case class USDAReport( 
     val sr        : String
   , val `type`    : String
-  , val food      : USDAFood
+  , val food      : USDAFood 
   , val sources   : Array[USDASources]
   , val footnotes : Array[String]
   , val langual   : Array[String]

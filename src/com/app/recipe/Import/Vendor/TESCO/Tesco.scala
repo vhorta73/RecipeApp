@@ -12,6 +12,7 @@ import com.app.recipe.Database.RecipeDatabaseVendorImport
 import com.app.recipe.Import.Product.Model.ProductDetails
 import com.app.recipe.Import.Product.Model.ProductImport
 import com.app.recipe.Import.Product.Units.Model.StandardUnits.Units
+import com.app.recipe.Import.Vendor.FoodVendor
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchExtraLargeImage
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchHalal
 import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchIsAvailable
@@ -26,10 +27,9 @@ import com.app.recipe.Import.Vendor.TESCO.ProductMatch.MatchSuitableForVegetaria
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum.TESCO
 import com.app.recipe.Import.Vendor.URL.URLBuilderFactory
-import com.app.recipe.Import.Vendor.VendorBase
 
 
-object Tesco extends VendorBase {
+object Tesco extends FoodVendor {
 
   /**
    * The maximum products allowed to be found in one search.

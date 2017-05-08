@@ -1,16 +1,8 @@
 package com.app.recipe
 
-import com.app.recipe.Database.DatabaseFactory
-import com.app.recipe.Database.Model.DatabaseMode
-import com.app.recipe.Database.RecipeDatabaseCore
-import com.app.recipe.Model.Recipe
-import com.app.recipe.Model.RecipeManager
-import com.app.recipe.Model.Stage
-import com.app.recipe.Model.Duration
-import java.sql.Time
-import com.app.recipe.Model.IngredientElement
-import com.app.recipe.Model.Ingredient
-import com.app.recipe.Model.IngredientManager
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
+import com.app.recipe.Import.Vendor.USDAVendor
+import com.app.recipe.Import.Vendor.VendorFactory
 
 
 /**
@@ -20,7 +12,10 @@ object Startup extends App {
 
   override def main(args: Array[String]): Unit = {
 
-    val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
+    val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
+    val response = v.getReportFullProduct("01009")
+    println(response)
+//    val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
 
 //    val r = Recipe(
 //         id    = Some(1)
@@ -50,19 +45,19 @@ object Startup extends App {
 //    println(coreDB.saveRecord(updatedRecipe))
 
     
-    val i = Ingredient(
-   //    id        = Some(10) 
-      name      = Some("cheese")
-     , source    = Some(List("Tesco"))
-     , attribute = Some(List("Large"))
-    )
-
-    var updatedIngredient = IngredientManager.add(Map(
-       "attributes"   -> List(s"Organic")
-    ))(Some(i)).get
-
-//    println(coreDB.saveRecord(i))
-    println(coreDB.saveRecord(updatedIngredient))
-
+//    val i = Ingredient(
+//   //    id        = Some(10) 
+//      name      = Some("cheese")
+//     , source    = Some(List("Tesco"))
+//     , attribute = Some(List("Large"))
+//    )
+//
+//    var updatedIngredient = IngredientManager.add(Map(
+//       "attributes"   -> List(s"Organic")
+//    ))(Some(i)).get
+//
+////    println(coreDB.saveRecord(i))
+//    println(coreDB.saveRecord(updatedIngredient))
+//
   }
 }

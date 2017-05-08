@@ -1,6 +1,7 @@
 package com.app.recipe.Import.Vendor.URL.Model
 
 import java.net.URL
+import com.app.recipe.Import.Vendor.URL.URLBuilder
 
 /**
  * Building a Vendor URL for Waitrose.

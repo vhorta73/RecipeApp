@@ -8,7 +8,10 @@ import com.app.recipe.Import.Vendor.USDA.Usda
  * The factory to return all the Vendor objects for query.
  */
 object VendorFactory {
-  
+
+  /**
+   * Returns the respective object.
+   */
   def get(vendor : VendorEnum.VendorName) : VendorBase = vendor match {
     case VendorEnum.TESCO => Tesco
     case VendorEnum.USDA  => Usda
