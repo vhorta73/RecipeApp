@@ -5,34 +5,34 @@ import com.app.recipe.Import.Product.Model.ProductBase
 /**
  * The USDA Report Full response class.
  */
-case class USDAReportFullResponse( val report : USDAReport = null ) extends ProductBase {
+case class USDAFoodReportFullResponse( val report : USDAFoodReport = null ) extends ProductBase {
   override val id : String = ""
 }
 
 /**
  * The USDA Report Basic response class.
  */
-case class USDAReportBasicResponse( val report : USDAReport = null ) extends ProductBase {
+case class USDAFoodReportBasicResponse( val report : USDAFoodReport = null ) extends ProductBase {
   override val id : String = ""
 }
 
 /**
  * The USDA Report Stats response class.
  */
-case class USDAReportStatsResponse( val report : USDAReport = null ) extends ProductBase {
+case class USDAFoodReportStatsResponse( val report : USDAFoodReport = null ) extends ProductBase {
   override val id : String = ""
 }
 
-case class USDAReport( 
+case class USDAFoodReport( 
     val sr        : String
   , val `type`    : String
   , val food      : USDAFood 
-  , val sources   : Array[USDASources]
+  , val sources   : Array[USDAFoodSources]
   , val footnotes : Array[String]
   , val langual   : Array[String]
 )
 
-case class USDASources(
+case class USDAFoodSources(
     val id      : Int
   , val title   : String
   , val authors : String

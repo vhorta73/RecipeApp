@@ -4,11 +4,11 @@ import com.app.recipe.Import.Vendor.HTTP.HttpBuilderFactory
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
-import com.app.recipe.Import.Vendor.USDA.Model.USDAReportBasicResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
 import com.app.recipe.Log.RecipeLogging
 import com.google.gson.Gson
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.USDA.Model.USDAReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
 
 /**
  * United States Department of Agriculture vendor access object dealing with
@@ -30,7 +30,7 @@ abstract trait USDABasicReport extends RecipeLogging {
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-  def getBasicReport(productId: String) : USDAReportBasicResponse = {
+  def getBasicReport(productId: String) : USDAFoodReportBasicResponse = {
     val request = (
         USDAHttpRequestFormat.JSON,       // JSON / XML
         USDAHttpRequestQueryType.REPORT,  // NUTRIENTS / SEARCH / LIST / REPORT 
@@ -41,7 +41,7 @@ abstract trait USDABasicReport extends RecipeLogging {
     val usdaHttpObj = HttpBuilderFactory.get(VendorEnum.USDA)
     val response = usdaHttpObj.get(request).asString
 
-    var usda = new USDAReportBasicResponse
+    var usda = new USDAFoodReportBasicResponse
     if ( ! response.code.equals(200) ) {
       error(s"Could not download details for product $productId")
     }
