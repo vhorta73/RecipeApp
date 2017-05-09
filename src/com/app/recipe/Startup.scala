@@ -13,7 +13,7 @@ object Startup extends App {
   override def main(args: Array[String]): Unit = {
 
     val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
-    val response = v.getReportBasicProduct("04037")
+    val response = v.getReportStatsProduct("04037")
     println(response)
 //    response.report.food.nutrients.foreach { nut => println(nut) }
 //    val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)

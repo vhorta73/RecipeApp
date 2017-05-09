@@ -64,7 +64,7 @@ object USDAURLBuilder extends HttpBuilder {
    */
   private def getType( requestType : USDAHttpRequestType.requestType ) : String = requestType match {
     case USDAHttpRequestType.FULL  => "f"
-    case USDAHttpRequestType.BASIC  => "b"
+    case USDAHttpRequestType.BASIC => "b"
     case USDAHttpRequestType.STATS => "s"
     case _ => throw new IllegalStateException(s"Cannot parse type $requestType")
   }

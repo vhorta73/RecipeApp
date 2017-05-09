@@ -9,11 +9,12 @@ import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
 import com.app.recipe.Import.Vendor.USDA.Model.USDAReportFullResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAReportBasicResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAReportStatsResponse
 
 /**
  * United States Department of Agriculture vendor access object.
  */
-object Usda extends USDAVendor with USDAFullReport with USDABasicReport {
+object Usda extends USDAVendor with USDAFullReport with USDABasicReport with USDAStatsReport {
 
   /**
    * Given an USDA ingredient ID, gets the respective ingredient details page,
@@ -31,7 +32,7 @@ object Usda extends USDAVendor with USDAFullReport with USDABasicReport {
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-//  override def getReportStatsProduct(productId: String) : USDAResponse = getStatsReport(productId)
+  override def getReportStatsProduct(productId: String) : USDAReportStatsResponse = getStatsReport(productId)
 }
 
 
