@@ -12,18 +12,23 @@ import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
 abstract class USDAVendor extends VendorBase {
 
   /**
-   * Returns an USDAReportFullResponse for the given product id. 
+   * Returns an USDAFoodReportFullResponse for the given product id. 
    */
-  def getReportFullProduct(productId: String) : USDAFoodReportFullResponse
+  def getFoodReportFullProduct(productId: String) : USDAFoodReportFullResponse
 
   /**
-   * Returns an USDAReportFullResponse for the given product id. 
+   * Returns an USDAFoodReportFullResponse for the given product id. 
    */
-  def getReportBasicProduct(productId: String) : USDAFoodReportBasicResponse
+  def getFoodReportBasicProduct(productId: String) : USDAFoodReportBasicResponse
   
   /**
-   * Returns an USDAReportFullResponse for the given product id. 
+   * Returns an USDAFoodReportFullResponse for the given product id. 
    */
-  def getReportStatsProduct(productId: String) : USDAFoodReportStatsResponse
+  def getFoodReportStatsProduct(productId: String) : USDAFoodReportStatsResponse
+
+  /**
+   * Returns an USDANutrientReportFullResponse for the given product id. 
+   */
+//  def getNutrientReportStatsProduct(productId: String*) : USDANutrientReportStatsResponse
 
 }

@@ -1,15 +1,12 @@
 package com.app.recipe.Import.Vendor.USDA
 
-import com.app.recipe.Import.Vendor.HTTP.HttpBuilderFactory
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.USDAVendor
-import com.google.gson.Gson
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.FoodReport.USDABasicReport
+import com.app.recipe.Import.Vendor.USDA.FoodReport.USDAFullReport
+import com.app.recipe.Import.Vendor.USDA.FoodReport.USDAStatsReport
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
+import com.app.recipe.Import.Vendor.USDAVendor
 
 /**
  * United States Department of Agriculture vendor access object.
@@ -20,19 +17,25 @@ object Usda extends USDAVendor with USDAFullReport with USDABasicReport with USD
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-  override def getReportFullProduct(productId: String) : USDAFoodReportFullResponse = getFullReport(productId)
+  override def getFoodReportFullProduct(productId: String) : USDAFoodReportFullResponse = getFullReport(productId)
   
   /**
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-  override def getReportBasicProduct(productId: String) : USDAFoodReportBasicResponse = getBasicReport(productId)
+  override def getFoodReportBasicProduct(productId: String) : USDAFoodReportBasicResponse = getBasicReport(productId)
 
   /**
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-  override def getReportStatsProduct(productId: String) : USDAFoodReportStatsResponse = getStatsReport(productId)
+  override def getFoodReportStatsProduct(productId: String) : USDAFoodReportStatsResponse = getStatsReport(productId)
+
+  /**
+   * Given an USDA ingredient ID, gets the respective ingredient details page,
+   * parse it and returns a well defined USDA typical ingredient object.
+   */
+//  override def getReportStatsProduct(productId: String) : USDAFoodReportStatsResponse = getStatsReport(productId)
 }
 
 
