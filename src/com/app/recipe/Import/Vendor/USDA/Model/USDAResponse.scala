@@ -9,6 +9,13 @@ case class USDAReportFullResponse( val report : USDAReport = null ) extends Prod
   override val id : String = ""
 }
 
+/**
+ * The USDA Report Basci response class.
+ */
+case class USDAReportBasicResponse( val report : USDAReport = null ) extends ProductBase {
+  override val id : String = ""
+}
+
 case class USDAReport( 
     val sr        : String
   , val `type`    : String

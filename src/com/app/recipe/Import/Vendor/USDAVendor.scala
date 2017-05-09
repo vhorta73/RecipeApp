@@ -1,6 +1,7 @@
 package com.app.recipe.Import.Vendor
 
 import com.app.recipe.Import.Vendor.USDA.Model.USDAReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAReportBasicResponse
 
 /**
  * This is the food retailer interface with the methods that all child 
@@ -14,11 +15,11 @@ abstract class USDAVendor extends VendorBase {
    */
   def getReportFullProduct(productId: String) : USDAReportFullResponse
 
-//  /**
-//   * Returns an USDAReportFullResponse for the given product id. 
-//   */
-//  def getReportBasicProduct(productId: String) : USDAReportBasicResponse
-//  
+  /**
+   * Returns an USDAReportFullResponse for the given product id. 
+   */
+  def getReportBasicProduct(productId: String) : USDAReportBasicResponse
+  
 //  /**
 //   * Returns an USDAReportFullResponse for the given product id. 
 //   */
