@@ -1,11 +1,12 @@
 package com.app.recipe.Import.Vendor.USDA.FoodReport
 
 import com.app.recipe.Import.Vendor.HTTP.HttpBuilderFactory
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
+import com.app.recipe.Import.Vendor.USDA.Model._
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
+import com.google.gson.Gson
 
 /**
  * United States Department of Agriculture vendor access object dealing with
@@ -18,6 +19,7 @@ abstract trait USDAStatsReport extends USDAFoodReport {
    * parse it and returns a well defined USDA typical ingredient object.
    */
   def getStatsReport(productId: String) : USDAFoodReportStatsResponse = {
+    val gson = new Gson
     val request = (
         USDAHttpRequestFormat.JSON,       // JSON / XML
         USDAHttpRequestQueryType.REPORT,  // NUTRIENTS / SEARCH / LIST / REPORT 

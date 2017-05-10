@@ -1,3 +1,7 @@
+/**
+ * Documentation source:
+ * https://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
+ */
 package com.app.recipe.Import.Vendor.USDA.FoodReport
 
 import com.app.recipe.Log.RecipeLogging
@@ -14,9 +18,4 @@ abstract trait USDAFoodReport extends RecipeLogging {
    */
   protected final case class USDAId( var ndbno : String ) 
 
-  /**
-   * The static gson to convert objects to JSON and vice-versa.
-   */
-  protected final val gson = new Gson
-  
 }

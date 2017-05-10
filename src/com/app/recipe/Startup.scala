@@ -1,8 +1,11 @@
 package com.app.recipe
 
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.USDAVendor
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
+import com.app.recipe.Import.Vendor.USDA.USDAVendor
 import com.app.recipe.Import.Vendor.VendorFactory
+import com.app.recipe.Import.Vendor.USDA.NutrientsReport.NutrientFactory
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
+import com.app.recipe.Import.Vendor.USDA.NutrientsReport.NutrientNames
 
 
 /**
@@ -12,9 +15,13 @@ object Startup extends App {
 
   override def main(args: Array[String]): Unit = {
 
-    val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
-    val response = v.getFoodReportStatsProduct("04037")
-    println(response)
+//    val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
+//  //    val response = v.getFoodReportStatsProduct("04037")
+//    val request = USDANutrientRequest(ndbno = "04037", nutrients = Array("203"), fg = Array("0500"))
+//    val response = v.getNutrientReport(request)
+//    println(response)
+    
+    println(NutrientFactory.get(NutrientNames.PROTEIN))
 //    response.report.food.nutrients.foreach { nut => println(nut) }
 //    val coreDB = DatabaseFactory.getInstance[RecipeDatabaseCore](DatabaseMode.CORE)
 
