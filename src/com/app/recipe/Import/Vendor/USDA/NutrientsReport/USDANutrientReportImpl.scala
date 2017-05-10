@@ -30,14 +30,14 @@ abstract trait USDANutrientReportImpl extends USDANutrientReport {
     )
     val usdaHttpObj = HttpBuilderFactory.get(VendorEnum.USDA)
     val response = usdaHttpObj.get(request).asString
-println(response.body)
+
     var usda = new USDANutrientReportResponse
-//    if ( ! response.code.equals(200) ) {
-//      error(s"Could not download details for nutrient request: $nutrientRequest")
-//    }
-//    else {
-//      usda = gson.fromJson(response.body, usda.getClass)
-//    }
+    if ( ! response.code.equals(200) ) {
+      error(s"Could not download details for nutrient request: $nutrientRequest")
+    }
+    else {
+      usda = gson.fromJson(response.body, usda.getClass)
+    }
     usda
   }
 }
