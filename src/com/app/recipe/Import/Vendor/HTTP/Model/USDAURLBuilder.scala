@@ -46,6 +46,7 @@ object USDAURLBuilder extends HttpBuilder {
    * @return HttpRequest
    */
   override def get( value : Any ) : HttpRequest = value match {
+    // Report
     case (format, responseType, requestType, productId) => {
       Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
@@ -55,6 +56,16 @@ object USDAURLBuilder extends HttpBuilder {
         .postData(productId.toString())
         .param("format",getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType]))
         .param("type",getType(requestType.asInstanceOf[USDAHttpRequestType.requestType]))
+    }
+    // Nutrients
+    case (format, responseType, request) => {
+      Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
+        .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
+        .header("Charset", "UTF-8")
+        .param("api_key",USDA_KEY_API)
+        .timeout(CONN_TIMEOUT, READ_TIMEOUT)
+        .postData(request.toString())
+        .param("format",getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType]))
     }
     case _ => throw new IllegalStateException(s"Do not know $value")
   }

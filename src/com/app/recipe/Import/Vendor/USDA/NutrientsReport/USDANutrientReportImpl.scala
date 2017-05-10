@@ -23,9 +23,8 @@ abstract trait USDANutrientReportImpl extends USDANutrientReport {
   def getNutrientsReport(nutrientRequest: USDANutrientRequest) : USDANutrientReportResponse = {
     val gson = new Gson
     val request = (
-        USDAHttpRequestFormat.JSON,       // JSON / XML
+        USDAHttpRequestFormat.JSON,          // JSON / XML
         USDAHttpRequestQueryType.NUTRIENTS,  // NUTRIENTS / SEARCH / LIST / REPORT 
-        USDAHttpRequestType.FULL,         // BASIC / STATS / FULL
         gson.toJson(nutrientRequest)
     )
     val usdaHttpObj = HttpBuilderFactory.get(VendorEnum.USDA)
