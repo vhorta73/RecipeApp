@@ -47,6 +47,7 @@ object USDAURLBuilder extends HttpBuilder {
    */
   override def get( value : Any ) : HttpRequest = value match {
     // Report
+    // https://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
     case (format, responseType, requestType, productId) => {
       Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
@@ -58,6 +59,7 @@ object USDAURLBuilder extends HttpBuilder {
         .param("type",getType(requestType.asInstanceOf[USDAHttpRequestType.requestType]))
     }
     // Nutrients
+    // https://ndb.nal.usda.gov/ndb/doc/apilist/API-NUTRIENT-REPORT.md
     case (format, responseType, request) => {
       Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
