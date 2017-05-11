@@ -347,5 +347,9 @@ object NutrientFactory {
     case NutrientNames.F18D1TN7_18_1_11T                    => get("859")
     case _ => throw new IllegalArgumentException("Nutrient not defined")
   }
-  
+
+  /**
+   * The full list of nutrient ids.
+   */
+  def getList() : List[String] = HASH.keySet.toList
 }
