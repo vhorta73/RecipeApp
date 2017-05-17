@@ -3,6 +3,9 @@ package com.app.recipe.Import.Vendor.USDA
 import com.app.recipe.Import.Vendor.USDA.FoodReport.USDABasicReport
 import com.app.recipe.Import.Vendor.USDA.FoodReport.USDAFullReport
 import com.app.recipe.Import.Vendor.USDA.FoodReport.USDAStatsReport
+import com.app.recipe.Import.Vendor.USDA.List.USDAListRequest
+import com.app.recipe.Import.Vendor.USDA.List.USDAListResponse
+import com.app.recipe.Import.Vendor.USDA.List.USDALists
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
@@ -14,7 +17,7 @@ import com.app.recipe.Import.Vendor.USDA.NutrientsReport.USDANutrientReportImpl
  * United States Department of Agriculture vendor access object.
  */
 object Usda extends USDAVendor with USDAFullReport with USDABasicReport with USDAStatsReport 
-  with USDANutrientReportImpl {
+  with USDANutrientReportImpl with USDALists {
 
   /**
    * Given an USDA ingredient ID, gets the respective ingredient details page,
@@ -39,6 +42,12 @@ object Usda extends USDAVendor with USDAFullReport with USDABasicReport with USD
    * parse it and returns a well defined USDA typical ingredient object.
    */
   override def getNutrientReport(request: USDANutrientRequest) : USDANutrientReportResponse = getNutrientsReport(request)
+
+  /**
+   * Given an USDA ingredient ID, gets the respective ingredient details page,
+   * parse it and returns a well defined USDA typical ingredient object.
+   */
+  override def getList(request: USDAListRequest) : USDAListResponse = getUSDAList(request)
 }
 
 

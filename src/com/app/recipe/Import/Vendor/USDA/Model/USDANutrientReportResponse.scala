@@ -20,6 +20,7 @@ case class USDANutrientReportResponse( val report : USDANutrientsReport = null )
   override val id : String = ""
 }
 
+// Some food groups
 case class USDANutrientsReport(
     val sr     : String
   , val groups : Array[USDANutrientsGroups]
@@ -30,6 +31,17 @@ case class USDANutrientsReport(
   , val foods  : Array[USDANutrientsFoods]
 )
 
+//// All food groups
+//case class USDANutrientsReport(
+//    val sr     : String
+//  , val groups : String
+//  , val subset : String
+//  , val end    : Int
+//  , val start  : Int
+//  , val total  : Int
+//  , val foods  : Array[USDANutrientsFoods]
+//)
+
 case class USDANutrientsGroups(
     val id           : String
   , val descriptions : String
@@ -38,7 +50,7 @@ case class USDANutrientsGroups(
 case class USDANutrientsFoods(
     val ndbno     : String
   , val name      : String
-  , val weight    : Double
+  , val weight    : String
   , val measure   : String
   , val nutrients : Array[USDANutrientsNutrients]
 )
@@ -48,5 +60,5 @@ case class USDANutrientsNutrients(
   , val nutrient    : String
   , val unit        : String
   , val value       : String
-  , val gm          : Double
+  , val gm          : String
 )

@@ -1,12 +1,11 @@
 package com.app.recipe
 
-import com.app.recipe.Import.Vendor.USDA.NutrientsReport.NutrientNames
-import com.app.recipe.Import.Vendor.USDA.NutrientsReport.NutrientFactory
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.USDA.USDAVendor
 import com.app.recipe.Import.Vendor.VendorFactory
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
-
+import com.app.recipe.Import.Vendor.USDA.List.USDAListRequest
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpListRequestType
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpSortRequestType
 
 /**
  * The startup for the Recipe project.
@@ -16,10 +15,38 @@ object Startup extends App {
   override def main(args: Array[String]): Unit = {
 
     val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
-//  //    val response = v.getFoodReportStatsProduct("04037")
-    val request = USDANutrientRequest(ndbno = "04037", nutrients = Array("203"), fg = Array("0500"))
-    val response = v.getNutrientReport(request)
-    println(response)
+////  //    val response = v.getFoodReportStatsProduct("04037")
+//    val request = USDANutrientRequest(
+////        nutrients = Array(NutrientFactory.get(NutrientNames.CAFFEINE).nutriend_id), 
+//        nutrients = Array(
+//            NutrientFactory.get(NutrientNames.TOTAL_LIPID_FAT).nutriend_id,
+//            NutrientFactory.get(NutrientNames.CHOLESTEROL).nutriend_id,
+//            NutrientFactory.get(NutrientNames.ENERGY_KCAL).nutriend_id,
+//            NutrientFactory.get(NutrientNames.ENERGY_KJ).nutriend_id,
+//            NutrientFactory.get(NutrientNames.LACTOSE).nutriend_id,
+//            NutrientFactory.get(NutrientNames.MAGNESIUM).nutriend_id,
+//            NutrientFactory.get(NutrientNames.PROTEIN).nutriend_id,
+//            NutrientFactory.get(NutrientNames.TOTAL_SUGARS).nutriend_id
+//        ),
+//        fg = Array(
+//            FoodGroupFactory.get(FoodGroupNames.VEGETABLES_AND_VEGETABLES_PRODUCTS).food_group_id
+//            ), 
+//        max = "1500",
+//        ndbno = "09040"        
+//    )
+    var offset : Int = 0
+    for( i <- 183900.to(184000).by(50) ) {
+      var response = v.getList(
+        USDAListRequest(
+          listType = USDAHttpListRequestType.FOOD, 
+          maxItems = "50", 
+          offset = s"$i",
+          sort = USDAHttpSortRequestType.NAME
+        )
+      )
+      response.list.item.foreach{ p => println(p.name)}
+    }
+//    println(response.list.item(0).name)
     
 //    println(NutrientFactory.get(NutrientNames.STARCH))
 

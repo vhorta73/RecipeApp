@@ -1,13 +1,15 @@
 package com.app.recipe.Import.Vendor.HTTP.Model
 
 import com.app.recipe.Import.Vendor.HTTP.HttpBuilder
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpListRequestType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpSortRequestType
 import com.typesafe.config.ConfigFactory
 
-import scalaj.http.HttpRequest
 import scalaj.http.Http
+import scalaj.http.HttpRequest
 
 /**
  * Building a Vendor URL for USDA, the United Stated Department of Agriculture.
@@ -42,7 +44,7 @@ object USDAURLBuilder extends HttpBuilder {
 
   /**
    * Single point of entry to collect the HttpRequest.
-   * @param (USDAHttpRequest, ndbno)
+   * @param Vector[Any]
    * @return HttpRequest
    */
   override def get( value : Any ) : HttpRequest = value match {
@@ -52,11 +54,11 @@ object USDAURLBuilder extends HttpBuilder {
       Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
         .header("Charset", "UTF-8")
-        .param("api_key",USDA_KEY_API)
         .timeout(CONN_TIMEOUT, READ_TIMEOUT)
-        .postData(productId.toString())
+        .param("api_key",USDA_KEY_API)
         .param("format",getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType]))
         .param("type",getType(requestType.asInstanceOf[USDAHttpRequestType.requestType]))
+        .postData(productId.toString())
     }
     // Nutrients
     // https://ndb.nal.usda.gov/ndb/doc/apilist/API-NUTRIENT-REPORT.md
@@ -64,16 +66,50 @@ object USDAURLBuilder extends HttpBuilder {
       Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
         .header("Charset", "UTF-8")
-        .param("api_key",USDA_KEY_API)
         .timeout(CONN_TIMEOUT, READ_TIMEOUT)
-        .postData(request.toString())
+        .param("api_key",USDA_KEY_API)
         .param("format",getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType]))
+        .postData(request.toString())
+    }
+    // List
+    // https://ndb.nal.usda.gov/ndb/doc/apilist/API-LIST.md
+    case(format, requestType, listType, maxNoItems, offset, sort) => {
+      Http(USDA_BASE_URL+getRequestType(requestType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
+        .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
+        .header("Charset", "UTF-8")
+        .timeout(CONN_TIMEOUT, READ_TIMEOUT)
+        .param("api_key",USDA_KEY_API)
+        .param("lt",getListType(listType.asInstanceOf[USDAHttpListRequestType.listRequestType]))
+        .param("maxNoItems",maxNoItems.asInstanceOf[String])
+        .param("offset",offset.asInstanceOf[String])
+        .param("sort",getSortType(sort.asInstanceOf[USDAHttpSortRequestType.sortRequestType]))
     }
     case _ => throw new IllegalStateException(s"Do not know $value")
   }
   
   /**
-   * The type of require to be returned.
+   * The sort type of required to be returned.
+   */
+  private def getSortType( requestType : USDAHttpSortRequestType.sortRequestType ) : String = requestType match {
+    case USDAHttpSortRequestType.NAME => "n"
+    case USDAHttpSortRequestType.ID   => "id"
+    case _ => throw new IllegalStateException(s"Cannot parse list sort type $requestType")
+  }
+
+  /**
+   * The type of required to be returned.
+   */
+  private def getListType( requestType : USDAHttpListRequestType.listRequestType ) : String = requestType match {
+    case USDAHttpListRequestType.ALL_NUTRIENTS                   => "n"
+    case USDAHttpListRequestType.FOOD                            => "f"
+    case USDAHttpListRequestType.FOOD_GROUP                      => "g"
+    case USDAHttpListRequestType.SPECIALTY_NUTRIENTS             => "ns"
+    case USDAHttpListRequestType.STANDARD_RELEASE_NUTRIENTS_ONLY => "ns"
+    case _ => throw new IllegalStateException(s"Cannot parse list type $requestType")
+  }
+
+  /**
+   * The type required to be returned.
    */
   private def getType( requestType : USDAHttpRequestType.requestType ) : String = requestType match {
     case USDAHttpRequestType.FULL  => "f"

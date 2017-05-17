@@ -1,11 +1,13 @@
 package com.app.recipe.Import.Vendor.USDA
 
-import com.app.recipe.Import.Vendor.VendorBase
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.List.USDAListRequest
+import com.app.recipe.Import.Vendor.USDA.List.USDAListResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
+import com.app.recipe.Import.Vendor.VendorBase
 
 /**
  * This is the food retailer interface with the methods that all child 
@@ -13,6 +15,7 @@ import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
  * and add logic to the required methods.
  */
 abstract class USDAVendor extends VendorBase {
+
   /**
    * Returns an USDAFoodReportFullResponse for the given product id. 
    */
@@ -32,5 +35,10 @@ abstract class USDAVendor extends VendorBase {
    * Returns an USDANutrientReportFullResponse for the given product id. 
    */
   def getNutrientReport(request : USDANutrientRequest) : USDANutrientReportResponse
+
+  /**
+   * Returns an USDAListResponse for the given request. 
+   */
+  def getList(request : USDAListRequest) : USDAListResponse
 
 }

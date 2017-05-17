@@ -1,14 +1,12 @@
 package com.app.recipe.Import.Vendor.USDA.NutrientsReport
 
 import com.app.recipe.Import.Vendor.HTTP.HttpBuilderFactory
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
-import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestType
-import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
 import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
 import com.google.gson.Gson
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
 import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
+import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
+import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 
 /**
  * United States Department of Agriculture vendor access object dealing with
@@ -27,6 +25,7 @@ abstract trait USDANutrientReportImpl extends USDANutrientReport {
         USDAHttpRequestQueryType.NUTRIENTS,  // NUTRIENTS / SEARCH / LIST / REPORT 
         gson.toJson(nutrientRequest)
     )
+
     val usdaHttpObj = HttpBuilderFactory.get(VendorEnum.USDA)
     val response = usdaHttpObj.get(request).asString
 
