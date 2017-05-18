@@ -18,7 +18,7 @@ abstract trait USDANutrientReportImpl extends USDANutrientReport {
    * Given an USDA ingredient ID, gets the respective ingredient details page,
    * parse it and returns a well defined USDA typical ingredient object.
    */
-  def getNutrientsReport(nutrientRequest: USDANutrientRequest) : USDANutrientReportResponse = {
+  def getUSDANutrientsReport(nutrientRequest: USDANutrientRequest) : USDANutrientReportResponse = {
     val gson = new Gson
     val request = (
         USDAHttpRequestFormat.JSON,          // JSON / XML
