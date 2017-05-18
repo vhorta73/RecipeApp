@@ -39,3 +39,11 @@ object USDAHttpSortRequestType extends Enumeration {
   type sortRequestType = Value
   val NAME, ID = Value
 }
+
+/**
+ * The searching sort types of query available for the USDA search API.
+ */
+object USDAHttpSearchSortType extends Enumeration {
+  type searchSortType = Value
+  val NAME, RELEVANCE = Value
+}

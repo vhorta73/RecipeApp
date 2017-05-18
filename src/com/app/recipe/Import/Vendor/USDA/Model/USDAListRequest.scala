@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Vendor.USDA.List
+package com.app.recipe.Import.Vendor.USDA.Model
 
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpListRequestType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat

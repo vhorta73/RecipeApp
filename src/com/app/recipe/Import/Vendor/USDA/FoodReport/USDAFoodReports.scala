@@ -39,7 +39,7 @@ abstract trait USDAFoodReports extends RecipeLogging {
         USDAHttpRequestType.STATS,         // BASE / STATS / FULL
         gson.toJson(USDAId(productId))
     )
-    
+
     var usda = new USDAFoodReportBasicResponse
     if ( ! response.code.equals(200) ) {
       error(s"Could not download details for product $productId")
@@ -62,7 +62,7 @@ abstract trait USDAFoodReports extends RecipeLogging {
         USDAHttpRequestType.FULL,         // BASE / STATS / FULL
         gson.toJson(USDAId(productId))
     )
-    
+
     var usda = new USDAFoodReportFullResponse
     if ( ! response.code.equals(200) ) {
       error(s"Could not download details for product $productId")

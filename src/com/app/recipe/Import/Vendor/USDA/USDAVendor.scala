@@ -1,13 +1,15 @@
 package com.app.recipe.Import.Vendor.USDA
 
-import com.app.recipe.Import.Vendor.USDA.List.USDAListRequest
-import com.app.recipe.Import.Vendor.USDA.List.USDAListResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
 import com.app.recipe.Import.Vendor.VendorBase
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportFullResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportBasicResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDASearchRequest
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAFoodReportStatsResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDASearchResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
+import com.app.recipe.Import.Vendor.USDA.Model.USDAListRequest
+import com.app.recipe.Import.Vendor.USDA.Model.USDAListResponse
 
 /**
  * This is the food retailer interface with the methods that all child 
@@ -40,5 +42,10 @@ abstract class USDAVendor extends VendorBase {
    * Returns an USDAListResponse for the given request. 
    */
   def getList(request : USDAListRequest) : USDAListResponse
+
+  /**
+   * Returns an USDASearchResponse for the given request. 
+   */
+  def search(request : USDASearchRequest) : USDASearchResponse
 
 }

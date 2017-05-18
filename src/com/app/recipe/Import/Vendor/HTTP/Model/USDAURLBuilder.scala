@@ -50,8 +50,8 @@ object USDAURLBuilder extends HttpBuilder {
   override def get( value : Any ) : HttpRequest = value match {
     // Report
     // https://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
-    case (format, responseType, requestType, productId) => {
-      Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
+    case (format, USDAHttpRequestQueryType.REPORT, requestType, productId) => {
+      Http(USDA_BASE_URL+getRequestType(USDAHttpRequestQueryType.REPORT))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
         .header("Charset", "UTF-8")
         .timeout(CONN_TIMEOUT, READ_TIMEOUT)
@@ -62,8 +62,8 @@ object USDAURLBuilder extends HttpBuilder {
     }
     // Nutrients
     // https://ndb.nal.usda.gov/ndb/doc/apilist/API-NUTRIENT-REPORT.md
-    case (format, responseType, request) => {
-      Http(USDA_BASE_URL+getRequestType(responseType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
+    case (format, USDAHttpRequestQueryType.NUTRIENTS, request) => {
+      Http(USDA_BASE_URL+getRequestType(USDAHttpRequestQueryType.NUTRIENTS))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
         .header("Charset", "UTF-8")
         .timeout(CONN_TIMEOUT, READ_TIMEOUT)
@@ -73,8 +73,8 @@ object USDAURLBuilder extends HttpBuilder {
     }
     // List
     // https://ndb.nal.usda.gov/ndb/doc/apilist/API-LIST.md
-    case(format, requestType, listType, maxNoItems, offset, sort) => {
-      Http(USDA_BASE_URL+getRequestType(requestType.asInstanceOf[USDAHttpRequestQueryType.requestQueryStyle]))
+    case(format, USDAHttpRequestQueryType.LIST, listType, maxNoItems, offset, sort) => {
+      Http(USDA_BASE_URL+getRequestType(USDAHttpRequestQueryType.LIST))
         .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
         .header("Charset", "UTF-8")
         .timeout(CONN_TIMEOUT, READ_TIMEOUT)
@@ -83,6 +83,16 @@ object USDAURLBuilder extends HttpBuilder {
         .param("maxNoItems",maxNoItems.asInstanceOf[String])
         .param("offset",offset.asInstanceOf[String])
         .param("sort",getSortType(sort.asInstanceOf[USDAHttpSortRequestType.sortRequestType]))
+    }
+    // Search
+    // https://ndb.nal.usda.gov/ndb/doc/apilist/API-SEARCH.md
+    case(format, USDAHttpRequestQueryType.SEARCH, request) => {
+      Http(USDA_BASE_URL+getRequestType(USDAHttpRequestQueryType.SEARCH))
+        .header("Content-Type", "application/"+getFormat(format.asInstanceOf[USDAHttpRequestFormat.formatType])) 
+        .header("Charset", "UTF-8")
+        .timeout(CONN_TIMEOUT, READ_TIMEOUT)
+        .param("api_key",USDA_KEY_API)
+        .postData(request.toString())
     }
     case _ => throw new IllegalStateException(s"Do not know $value")
   }

@@ -3,9 +3,10 @@ package com.app.recipe
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
 import com.app.recipe.Import.Vendor.USDA.USDAVendor
 import com.app.recipe.Import.Vendor.VendorFactory
-import com.app.recipe.Import.Vendor.USDA.List.USDAListRequest
+import com.app.recipe.Import.Vendor.USDA.Model.USDAListRequest
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpListRequestType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpSortRequestType
+import com.app.recipe.Import.Vendor.USDA.Model.USDASearchRequest
 
 /**
  * The startup for the Recipe project.
@@ -15,6 +16,12 @@ object Startup extends App {
   override def main(args: Array[String]): Unit = {
 
     val v = VendorFactory.get(VendorEnum.USDA).asInstanceOf[USDAVendor]
+//    println(v.getFoodReportFullProduct("01009"))
+    println(v.search(USDASearchRequest(q = "Banana, raw")))
+    
+    
+    
+    
 ////  //    val response = v.getFoodReportStatsProduct("04037")
 //    val request = USDANutrientRequest(
 ////        nutrients = Array(NutrientFactory.get(NutrientNames.CAFFEINE).nutriend_id), 
@@ -34,18 +41,19 @@ object Startup extends App {
 //        max = "1500",
 //        ndbno = "09040"        
 //    )
-    var offset : Int = 0
-    for( i <- 183900.to(184000).by(50) ) {
-      var response = v.getList(
-        USDAListRequest(
-          listType = USDAHttpListRequestType.FOOD, 
-          maxItems = "50", 
-          offset = s"$i",
-          sort = USDAHttpSortRequestType.NAME
-        )
-      )
-      response.list.item.foreach{ p => println(p.name)}
-    }
+
+//    var offset : Int = 0
+//    for( i <- 183900.to(184000).by(50) ) {
+//      var response = v.getList(
+//        USDAListRequest(
+//          listType = USDAHttpListRequestType.FOOD, 
+//          maxItems = "50", 
+//          offset = s"$i",
+//          sort = USDAHttpSortRequestType.NAME
+//        )
+//      )
+//      response.list.item.foreach{ p => println(p.name)}
+//    }
 //    println(response.list.item(0).name)
     
 //    println(NutrientFactory.get(NutrientNames.STARCH))

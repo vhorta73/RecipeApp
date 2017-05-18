@@ -1,4 +1,4 @@
-package com.app.recipe.Import.Vendor.USDA.List
+package com.app.recipe.Import.Vendor.USDA.Model
 
 /**
  * The Nutrient List Response

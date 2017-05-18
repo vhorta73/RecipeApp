@@ -1,18 +1,18 @@
 package com.app.recipe.Import.Vendor.USDA.NutrientsReport
 
 import com.app.recipe.Import.Vendor.HTTP.HttpBuilderFactory
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
-import com.google.gson.Gson
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestFormat
-import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.URL.Model.VendorEnum
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientReportResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDANutrientRequest
+import com.google.gson.Gson
 
 /**
  * United States Department of Agriculture vendor access object dealing with
  * the basic report query and responses.
  */
-abstract trait USDANutrientReportImpl extends USDANutrientReport {
+abstract trait USDANutrientReports extends USDANutrientReport {
 
   /**
    * Given an USDA ingredient ID, gets the respective ingredient details page,

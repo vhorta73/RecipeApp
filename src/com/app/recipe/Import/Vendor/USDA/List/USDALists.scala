@@ -8,6 +8,8 @@ import com.app.recipe.Import.Vendor.HTTP.USDAHttpRequestQueryType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpSortRequestType
 import com.app.recipe.Import.Vendor.HTTP.USDAHttpListRequestType
 import scalaj.http.HttpResponse
+import com.app.recipe.Import.Vendor.USDA.Model.USDAListRequest
+import com.app.recipe.Import.Vendor.USDA.Model.USDAListResponse
 
 /**
  * United States Department of Agriculture vendor access object dealing with
